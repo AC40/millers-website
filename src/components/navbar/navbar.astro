@@ -1,33 +1,45 @@
 ---
 import { Image } from "@astrojs/image/components";
+import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import Container from "@components/container.astro";
-import Link from "@components/ui/link.astro";
 import millersLogo from "/src/assets/millers/logo-millers.jpg";
 import Dropdown from "./dropdown.astro";
-import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 
 
 const menuitems = [
   {
+    title: "Home",
+    path: "/",
+  },
+  {
+    title: "News",
+    path: "#",
+    children: [
+      { title: "Beiträge", path: "beiträge", external: false} ,
+      { title: "Kalender", path: "spiele", external: false },
+      { title: "Spieler gesucht", path: "spieler-gesucht", external: false }
+    ]
+  },
+  {
     title: "Teams",
     path: "#",
     children: [
-      { title: "Millers", path: "/millers" },
-      { title: "Maniacs", path: "/maniacs" },
+      { title: "Millers", path: "/millers", external: false },
+      { title: "Maniacs", path: "/maniacs", external: false },
     ],
   },
   {
     title: "Verein",
     path: "#",
     children: [
-      { title: "Baseballpark - Millers Park", path: "/millers-park" },
-      { title: "Baseballcamp", path: "/baseballcamp" },
-      { title: "Historisches", path: "/geschichte" },
+      { title: "Baseballpark - Millers Park", path: "/millers-park", external: false },
+      { title: "Baseballcamp", path: "https://www.instagram.com/baseballcampminden/", external: true },
+      { title: "Historisches", path: "/geschichte", external: false },
     ]
   },
   {
-    title: "Marketing",
-    path: "/news",
+    title: "Sponsoren",
+    path: "/sponsoren",
   },
   {
     title: "Kontakt",

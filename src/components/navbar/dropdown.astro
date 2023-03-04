@@ -1,5 +1,6 @@
 ---
 import { Dropdown, DropdownItems } from "astro-navbar";
+import { Icon } from "astro-icon";
 const { title, lastItem, children } = Astro.props;
 ---
 
@@ -36,6 +37,17 @@ const { title, lastItem, children } = Astro.props;
               <a
                 href={item.path}
                 class="py-1 text-gray-600 hover:text-gray-900">
+                <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8'>Some Nice Tooltip Text</span>
+                {
+                  item.external 
+                    ? <span class="has-tooltip"><Icon 
+                        class="w-4 inline " 
+                        name="uil:external-link-alt" 
+                        data-te-toggle="tooltip"
+                        title="Hi! I'm tooltip"
+                      ></Icon><span class="tooltip rounded shadow-lg p-1 bg-gray-100  text-gray-500 text-sm -mx-20 -mt-8">Externer Link</span></span>
+                    : <span></span>
+                }
                 {item.title}
               </a>
             ))
@@ -45,3 +57,14 @@ const { title, lastItem, children } = Astro.props;
     </DropdownItems>
   </Dropdown>
 </li>
+
+<style>
+  .tooltip{
+    visibility: hidden;
+    position: absolute;
+  }
+  .has-tooltip:hover .tooltip {
+    visibility: visible;
+    z-index: 100;
+  }
+</style>
