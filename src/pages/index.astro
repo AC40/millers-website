@@ -7,14 +7,25 @@ import actionHero from "../assets/millers/black-white-team.jpg";
 ---
 
 <Layout title="">
-  <Picture 
-  src={actionHero} 
-  widths={[200, 400, 800]} sizes="(max-width: 800px) 100vw, 800px" 
-  alt="Ein Bild von einem Baseballspieler der über die 2. Base rennt" 
-  fit="cover"
-  class="w-full h-auto max-h-128 object-cover"
-  ></Picture>
-  <Container>
-    <h1>Das hier wird die Startseite</h1>
-  </Container>
+  <div class="w-full max-h-128 relative">
+      <Picture
+        src={actionHero}
+        widths={[200, 400, 800]}
+        sizes="(max-width: 800px) 100vw, 800px"
+        alt="Ein Bild von einem Baseballspieler der über die 2. Base rennt"
+        fit="cover"
+        class="absolute w-full  h-auto max-h-128 object-cover"
+      />
+
+      <Container class="absolute top-1/2 right-1/2">
+        <div>
+          Lokaler Sport.
+        </div>
+      </Container>
+  </div>
+	
+
+	<Container>
+		<h1>Das hier wird die Startseite</h1>
+	</Container>
 </Layout>
