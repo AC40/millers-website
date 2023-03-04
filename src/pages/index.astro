@@ -1,12 +1,20 @@
 ---
 import Container from "@components/container.astro";
-import Features from "@components/features.astro";
-import Hero from "@components/hero.astro";
+import { Picture } from "@astrojs/image/components";
 import Layout from "@layouts/Layout.astro";
+
+import actionHero from "../assets/millers/black-white-team.jpg";
 ---
 
 <Layout title="">
+  <Picture 
+  src={actionHero} 
+  widths={[200, 400, 800]} sizes="(max-width: 800px) 100vw, 800px" 
+  alt="Ein Bild von einem Baseballspieler der über die 2. Base rennt" 
+  fit="cover"
+  class="w-full h-auto max-h-128 object-cover"
+  ></Picture>
   <Container>
-  <h1>Das hier wird die Startseite</h1>
+    <h1>Das hier wird die Startseite</h1>
   </Container>
 </Layout>
