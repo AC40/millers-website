@@ -1,7 +1,7 @@
 ---
 titel: Neuer Neustart bei den Maniacs
 author: Tanja Müther
-datum: 2.9.22
+datum: 2.9.2022
 
 draft: false
 ---

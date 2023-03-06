@@ -11,7 +11,7 @@ const publishedNews = await getCollection("news", ({ data }) => {
 
 // Sort news by date
 publishedNews.sort(function (a, b) {
-  return b.data.datum.valueOf() - a.data.datum.valueOf();
+  return Date.parse(b.data.datum) - Date.parse(a.data.datum)
 });
 ---
 
