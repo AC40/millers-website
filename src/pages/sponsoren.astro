@@ -1,0 +1,47 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import { Picture } from "@astrojs/image/components";
+
+import baseballministerLogo from "../assets/sponsors/baseballminister-logo.png";
+---
+
+<Layout title="Sponsoren">
+	<Container>
+		<h1 class="text-2xl">Sponsoren</h1>
+
+		<div class="bg-green-100 rounded-xl md:max-w-lg w-auto p-10 sm:mx-10 my-10">
+			<Picture
+				src={baseballministerLogo}
+				alt="Das Logo von 'Baseballminister'"
+				widths={[1000]}
+				sizes="300px"
+                class=""
+			/>
+            <hr class="my-2 border-black">
+			<p>
+				Baseballminister ist <strong>die</strong> Anlaufstelle für jegliches
+				Baseballequipment, egal ob Handschuhe, Schläger oder Bälle. Seit
+				2010 besteht eine enge Kooperation mit Baseballminister.
+			</p>
+			<p>
+				Dadurch haben die Minden Millers dort ihren eigenen shop, wo man
+				ausgewähltes Equipment, sowie Merchandise erwerben kann.
+			</p>
+
+			<div class="grid gap-4 mt-5 grid-cols-1 sm:grid-cols-2 text-center">
+				<a
+					href="https://www.baseballminister.de/"
+					class="bg-green-800 rounded py-2 px-3 text-white ">
+					Baseballminister.de
+				</a>
+				<a
+					href="https://www.baseballminister.de/Teamshop-Minden-Millers"
+					class="bg-green-800 rounded py-2 px-3 text-white"
+                    >
+					Millers Fan Shop
+				</a>
+			</div>
+		</div>
+	</Container>
+</Layout>
