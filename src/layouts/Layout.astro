@@ -50,10 +50,16 @@ const makeTitle = title
       }}
     />
   </head>
-  <body>
-    <Navbar />
-    <slot />
-    <Footer />
+  <body class="absolute inset-0 table w-full h-full">
+    <header class="table-row">
+      <Navbar class="table-cell" />
+    </header>
+    <main class="table-row h-full">
+      <slot class="table-cell" />
+    </main>
+    <footer class="table-row">
+      <Footer class="table-cell" />
+    </footer>
     <style is:global>
       /* Improve Page speed */
       /* https://css-tricks.com/almanac/properties/c/content-visibility/ */

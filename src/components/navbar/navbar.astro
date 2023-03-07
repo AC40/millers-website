@@ -5,91 +5,98 @@ import Container from "@components/container.astro";
 import millersLogo from "/src/assets/millers/logo-millers.jpg";
 import Dropdown from "./dropdown.astro";
 
-
 const menuitems = [
-  {
-    title: "Home",
-    path: "/",
-  },
-  {
-    title: "News",
-    path: "#",
-    children: [
-      { title: "Beiträge", path: "beiträge", external: false} ,
-      { title: "Kalender", path: "spiele", external: false },
-      { title: "Spieler gesucht", path: "spieler-gesucht", external: false }
-    ]
-  },
-  {
-    title: "Teams",
-    path: "#",
-    children: [
-      { title: "Millers", path: "/millers", external: false },
-      { title: "Maniacs", path: "/maniacs", external: false },
-    ],
-  },
-  {
-    title: "Verein",
-    path: "#",
-    children: [
-      { title: "Baseballpark - Millers Park", path: "/millers-park", external: false },
-      { title: "Baseballcamp", path: "https://www.instagram.com/baseballcampminden/", external: true },
-      { title: "Historisches", path: "/geschichte", external: false },
-    ]
-  },
-  {
-    title: "Sponsoren",
-    path: "/sponsoren",
-  },
-  {
-    title: "Kontakt",
-    path: "/kontakt",
-  },
+	{
+		title: "Home",
+		path: "/",
+	},
+	{
+		title: "News",
+		path: "#",
+		children: [
+			{ title: "Beiträge", path: "beiträge", external: false },
+			{ title: "Kalender", path: "spiele", external: false },
+			{
+				title: "Spieler gesucht",
+				path: "spieler-gesucht",
+				external: false,
+			},
+		],
+	},
+	{
+		title: "Teams",
+		path: "#",
+		children: [
+			{ title: "Millers", path: "/millers", external: false },
+			{ title: "Maniacs", path: "/maniacs", external: false },
+		],
+	},
+	{
+		title: "Verein",
+		path: "#",
+		children: [
+			{
+				title: "Baseballpark - Millers Park",
+				path: "/millers-park",
+				external: false,
+			},
+			{
+				title: "Baseballcamp",
+				path: "https://www.instagram.com/baseballcampminden/",
+				external: true,
+			},
+			{ title: "Historisches", path: "/geschichte", external: false },
+		],
+	},
+	{
+		title: "Sponsoren",
+		path: "/sponsoren",
+	},
+	{
+		title: "Kontakt",
+		path: "/kontakt",
+	},
 ];
 ---
 
-<Container>
-  <header class="flex flex-col lg:flex-row justify-between items-center my-5">
-    <Astronav>
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg">
-          <Image src={millersLogo} width={125} alt="Das logo der Minden Millers" />
-        </a>
-        <div class="block lg:hidden">
-          <MenuIcon class="w-4 h-4 text-gray-800" />
-        </div>
-      </div>
-      <MenuItems class="hidden hover:auto w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
-          {
-            menuitems.map((item, index) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.title}
-                    children={item.children}
-                    lastItem={index === menuitems.length - 1}
-                  />
-                )}
+<Astronav class="flex flex-col lg:flex-row justify-between items-center my-5">
+	<div class="flex w-full lg:w-auto items-center justify-between">
+		<a href="/" class="text-lg">
+			<Image
+				src={millersLogo}
+				width={125}
+				alt="Das logo der Minden Millers"
+			/>
+		</a>
+		<div class="block lg:hidden">
+			<MenuIcon class="w-4 h-4 text-gray-800" />
+		</div>
+	</div>
+	<MenuItems class="hidden hover:auto w-full lg:w-auto mt-2 lg:flex lg:mt-0">
+		<ul class="flex flex-col lg:flex-row lg:gap-3">
+			{
+				menuitems.map((item, index) => (
+					<>
+						{item.children && (
+							<Dropdown
+								title={item.title}
+								children={item.children}
+								lastItem={index === menuitems.length - 1}
+							/>
+						)}
 
-                {!item.children && (
-                  <li>
-                    <a
-                      href={item.path}
-                      class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
-                      {item.title}
-                    </a>
-                  </li>
-                )}
-              </>
-            ))
-          }
-        </ul>
-      </MenuItems>
-    </Astronav>
-    <div>
-      <div class="hidden lg:flex items-center gap-4">
-      </div>
-    </div>
-  </header>
-</Container>
+						{!item.children && (
+							<li>
+								<a
+									href={item.path}
+									class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
+									{item.title}
+								</a>
+							</li>
+						)}
+					</>
+				))
+			}
+		</ul>
+	</MenuItems>
+</Astronav>
