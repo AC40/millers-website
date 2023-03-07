@@ -1,0 +1,29 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import { Picture } from "@astrojs/image/components";
+
+import bravesStadium from "../assets/stock/braves-stadium.jpg";
+---
+
+<Layout title="Baseballplatz">
+	<Container>
+		<h1 class="text-2xl">Baseballplatz - Millers Ballpark</h1>
+
+		<div class="relative">
+			<Picture
+				src={bravesStadium}
+				alt="Ein Bild von einem großen Baseballstadium"
+				widths={[100, 500, 1000]}
+				sizes={"auto"}
+				class="brightness-100 sepia"
+			/>
+            <img
+				src={bravesStadium.src}
+				alt="Ein Bild von einem großen Baseballstadium"
+				sizes={"auto"}
+				class="w-auto blur"
+			/>
+		</div>
+	</Container>
+</Layout>

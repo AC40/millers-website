@@ -11,13 +11,20 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 
 <Layout title="Historisches">
 	<Container>
-        <h1 class="text-2xl  mb-10">Die Geschichte der Minden Millers</h1>
+		<h1 class="text-2xl mb-10">Die Geschichte der Minden Millers</h1>
 
 		<div class="space-y-4">
 			<div class="">
-                <h2 class="text-xl">Die Anfänge in Bückeburg</h2>
-				<div class="grid grid-cols-2 gap-2">
-					<div class="basis-3/4 col-1">
+				<h2 class="text-xl">Die Anfänge in Bückeburg</h2>
+				<div class="lg:grid grid-cols-2 gap-2">
+					<Picture
+						src={hitterPortrait}
+						alt="Ein foto der Minden Bandits aus ihrer Anfangszeit"
+						widths={[400]}
+						sizes="300px"
+						class="col-start-2 col-end-2 lg:m-auto float-right lg:float-none"
+					/>
+					<div class="basis-3/4 row-start-1 row-end-1 col-start-1 col-end-1">
 						<p>
 							Der erste Baseball Verein der Region gründete sich
 							1993 in Bückeburg. Unter dem Vorsitzenden Norman
@@ -40,24 +47,16 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 							Nach einigen Gesprächen war klar: Ein Wechsel der
 							Vereins nach Minden bot langfristige Perspektiven.
 						</p>
-                        <Picture
-					src={bückeburgBanditsTeam}
-					alt="Ein foto der Minden Bandits aus ihrer Anfangszeit"
-					widths={[400]}
-					sizes="200px"
-					class=""
-				/>
+						<Picture
+							src={bückeburgBanditsTeam}
+							alt="Ein foto der Minden Bandits aus ihrer Anfangszeit"
+							widths={[400]}
+							sizes="200px"
+							class=""
+						/>
 					</div>
-					<Picture
-						src={hitterPortrait}
-						alt="Ein foto der Minden Bandits aus ihrer Anfangszeit"
-						widths={[400]}
-						sizes="300px"
-						class="col-2 m-auto"
-					/>
+					
 				</div>
-
-				
 			</div>
 
 			<hr class="my-3" />
@@ -85,16 +84,36 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 				</div>
 			</div>
 
-            <hr class="">
+			<hr class="" />
 
 			<div class="grid grid-cols-2">
-                <div class="col-2">
-                    <h2 class="text-xl">In Minden angekommen</h2>
-                    <p>Norman Arnold, langjähriger Vorsitzender und Trainer der Bandits hatte den Umzug noch begleitet, musste dann aber aus beruflichen Gründen seine Posten im Verein aufgeben. Der besonders schmerzliche Verlust des qualifizierten Trainers und präsenten Organisators traf das Team. Volker Türk übernahm die Leitung des Vereins und glücklicherweise konnte wenig später mit dem Amerikaner Keith Meeker, dem US Verbindungsoffizier der Heeresflieger Waffenschule in Bückeburg, ein hervorragender Trainer gefunden werden. So führte Meeker das nun als Millers bekannte Team 1998 zur Kreismeisterschaft und stand für konstante Leistungen in der Bezirksliga in den folgenden Jahren.</p>
-                </div>
+				<div class="col-2">
+					<h2 class="text-xl">In Minden angekommen</h2>
+					<p>
+						Norman Arnold, langjähriger Vorsitzender und Trainer der
+						Bandits hatte den Umzug noch begleitet, musste dann aber
+						aus beruflichen Gründen seine Posten im Verein aufgeben.
+						Der besonders schmerzliche Verlust des qualifizierten
+						Trainers und präsenten Organisators traf das Team.
+						Volker Türk übernahm die Leitung des Vereins und
+						glücklicherweise konnte wenig später mit dem Amerikaner
+						Keith Meeker, dem US Verbindungsoffizier der
+						Heeresflieger Waffenschule in Bückeburg, ein
+						hervorragender Trainer gefunden werden. So führte Meeker
+						das nun als Millers bekannte Team 1998 zur
+						Kreismeisterschaft und stand für konstante Leistungen in
+						der Bezirksliga in den folgenden Jahren.
+					</p>
+				</div>
 
-                <Picture src={newField1} alt="Ein foto des neu gebauten Millers Ballpark" widths={[100, 200]} sizes="200px" class="col-2" />
-            </div>
+				<Picture
+					src={newField1}
+					alt="Ein foto des neu gebauten Millers Ballpark"
+					widths={[100, 200]}
+					sizes="200px"
+					class="col-2"
+				/>
+			</div>
 		</div>
 	</Container>
 </Layout>
