@@ -7,7 +7,7 @@ const { title, lastItem, children } = Astro.props;
 <li class="relative z-50">
   <Dropdown class="group">
     <button
-      class="flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 text-gray-600 hover:text-gray-900">
+      class="flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 text-nav-a hover:text-nav-a-hover">
       <span>{title}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -30,14 +30,20 @@ const { title, lastItem, children } = Astro.props;
             ? "lg:right-0 origin-top-right"
             : "lg:left-0 origin-top-left",
         ]}>
-        <div
-          class="px-3 lg:py-2 lg:bg-white lg:rounded-md lg:shadow lg:border flex flex-col">
+        <div class=" lg:bg-slate-700/75 backdrop-blur-xl lg:rounded-md lg:shadow lg:border lg:border-slate-800 flex flex-col">
           {
-            children.map((item) => (
+            children.map((item, i) => (
               <a
                 href={item.path}
-                class="py-1 text-gray-600 hover:text-gray-900">
-                <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8'>Some Nice Tooltip Text</span>
+                class:list={[
+                  "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-gray-300/50 px-3 lg:py-2", 
+                  lastItem
+                    ? "lg:rounded-b-md"
+                    : "",
+                  (i == 0)
+                    ? "lg:rounded-t-md"
+                    : ""
+                ]}>
                 {
                   item.external 
                     ? <span class="has-tooltip"><Icon 
