@@ -57,10 +57,12 @@ const menuitems = [
 		path: "/kontakt",
 	},
 ];
+
+const path = Astro.url.pathname.toString()
 ---
 <Astronav
 	class="justify-between items-center p-5 m-5 ">
-	<div class="lg:grid lg:grid-cols-[auto_auto] p-4 items-center bg-nav-bg">
+	<div class="lg:grid lg:grid-cols-[auto_auto] p-4 items-center bg-slate-900">
 		<div class="flex grid-col-1 w-full lg:w-auto items-center justify-between m-4">
 			<a href="/" class="text-lg">
 				<Image
@@ -91,7 +93,12 @@ const menuitems = [
 								<li>
 									<a
 										href={item.path}
-										class="flex lg:px-3 py-2 text-nav-a hover:text-nav-a-hover">
+										class:list={[
+											"flex lg:px-3 py-2 text-nav-a hover:text-millers-yellow",
+											(path == item.path)
+												? "text-millers-gold"
+												: ""
+										]}>
 										{item.title}
 									</a>
 								</li>
