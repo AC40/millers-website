@@ -1,25 +1,26 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
+const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors')
+
 module.exports = {
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
       colors: {
-        'nav-bg': '#0f172a',
-        "nav-a": "#64748b",
-        "nav-a-hover": "#cbd5e1",
-        "footer": "#FFF",
-        "millers-red": "#BE301A",
-        "millers-yellow": "#FAEA0D",
-        "millers-gold": "#BC9404"
+        'nav-bg': '#333333',
+        'nav-a': colors.slate[100],
+        'nav-a-hover': colors.yellow[300],
+        'millers-red': '#FF4B4B',
+        'millers-yellow': colors.yellow,
+        'millers-gold': '#BC9404',
       },
       fontFamily: {
-        sans: ["InterVariable", "Inter", ...defaultTheme.fontFamily.sans],
+        sans: ['InterVariable', 'Inter', ...defaultTheme.fontFamily.sans],
       },
       spacing: {
         '128': '32rem',
       }
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require('@tailwindcss/typography')],
 };

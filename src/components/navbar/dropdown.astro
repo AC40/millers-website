@@ -7,7 +7,7 @@ const { title, lastItem, children } = Astro.props;
 <li class="relative z-50">
   <Dropdown class="group">
     <button
-      class="flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 text-nav-a hover:text-nav-a-hover">
+      class="flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 text-nav-a hover:text-millers-gold">
       <span>{title}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@ const { title, lastItem, children } = Astro.props;
               <a
                 href={item.path}
                 class:list={[
-                  "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-gray-300/50 px-3 lg:py-2", 
+                  "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-yellow-100/50 px-3 lg:py-2", 
                   lastItem
                     ? "lg:rounded-b-md"
                     : "",

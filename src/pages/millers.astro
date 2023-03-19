@@ -1,11 +1,40 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
+import { Picture } from "@astrojs/image/components";
 
+import team from "../assets/millers/team.jpg";
 ---
 
 <Layout title="Millers">
-    <Container>
-        <h1>Hier werden Millers vorgestellt</h1>
-    </Container>
+    <section class="relative w-full max-h-[calc(100vh_-_115px)]">
+        <Picture
+            src={team}
+            alt="Ein Teamfoto der Minden Millers"
+            widths={[400, 800, 1600]}
+            sizes="100%"
+            class="w-full max-h-[calc(100vh_-_115px)] object-cover"
+        />
+        <div class="absolute bottom-0 w-full md:h-24 h-12 md:text-3xl text-xl text-white bg-gray-800/75 ">
+            <h3 class="text-center my-auto align-middle md:leading-[6rem] leading-[3rem]">Herrenmannschaft</h3>
+        </div>
+    </section>
+	
+	<Container>
+        <h3 class="text-xl">Trainer</h3>
+        <section class="flex flex-wrap gap-4 pb-4">
+
+            <div class="grow p-5 bg-slate-200 rounded-sm">
+                <strong>Dario Erhardt</strong>
+                <p>trainer.millers@mindenmillers.de</p>
+                <p>0160 6350069</p>
+            </div>
+
+            <div class="grow p-5 bg-slate-200 rounded-sm">
+                <strong>Dennis Hasfeld</strong>
+                <p>d.hasfeld@mindenmillers.de</p>
+            </div>
+        </section>
+        <h3 class="text-lg">Hier können noch weitere informationen veröffentlicht werden.</h3>
+	</Container>
 </Layout>
