@@ -3,25 +3,42 @@ import Container from "@components/container.astro";
 import { Picture } from "@astrojs/image/components";
 import Layout from "@layouts/Layout.astro";
 
-import actionHero from "../assets/millers/black-white-team.jpg";
+import actionHero from "../assets/millers/action-hero.jpg";
 ---
 
 <Layout title="Home">
   <div class="w-full max-h-128 relative">
-      <Picture
-        src={actionHero}
-        widths={[200, 400, 800]}
-        sizes="(max-width: 800px) 100vw, 800px"
-        alt="Ein Bild von einem Baseballspieler der über die 2. Base rennt"
-        fit="cover"
-        class="absolute w-full  h-auto max-h-128 object-cover"
-      />
+      <div class="relative">
+        <Picture
+          src={actionHero}
+          widths={[200, 400, 800]}
+          sizes="(max-width: 800px) 100vw, 800px"
+          alt="Ein Bild von einem Baseballspieler der über die 2. Base rennt"
+          fit="cover"
+          class="w-full min-h-32 h-auto max-h-128 object-cover z-0"
+        />
+        <div class="absolute w-full top-0 left-0 h-full  maxh-128 bg-black/70 z-10">
+          <Container class="text-white">
+            <div class="my-4 md:my-8 md:ml-8">
+              <h2 class="text-2xl">Der Baseballverein in Minden</h2>
+              <h2 class="text-3xl mb-10">Echt. Lokal. Nah.</h2>
+            </div>
+          </Container>
 
-      <Container class="absolute top-1/2 right-1/2">
-        <div>
-          Lokaler Sport.
+          <div class="w-full h-1/2 flex items-center text-white">
+            <div class="mx-4 md:mx-auto w-auto md:w-128 p-8 bg-gray-700/50 rounded-lg">
+              <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p>
+              <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
+              <div class="text-center font-medium text-lg">
+                <p>Dienstag, 18:00-20:00 Uhr</p>
+                <p>Samstags, 10:00-12:00 Uhr</p>
+              </div>
+            </div>
+          </div>
+
+
         </div>
-      </Container>
+      </div>
   </div>
 	
 
