@@ -6,6 +6,9 @@ module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      screens: {
+        'xs': '320px',
+      },
       colors: {
         'nav-bg': '#333333',
         'nav-a': colors.slate[100],
@@ -13,6 +16,9 @@ module.exports = {
         'millers-red': '#FF4B4B',
         'millers-yellow': colors.yellow,
         'millers-gold': '#BC9404',
+      },
+      backgroundImage: {
+        'index-hero': `url('/action-hero.JPG'}')`,
       },
       fontFamily: {
         sans: ['InterVariable', 'Inter', ...defaultTheme.fontFamily.sans],
