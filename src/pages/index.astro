@@ -1,12 +1,27 @@
 ---
 import Container from "@components/container.astro";
-import { Picture } from "@astrojs/image/components";
 import Layout from "@layouts/Layout.astro";
 import actionHero from "../assets/millers/action-hero.jpg";
+import { Picture } from "@astrojs/image/components";
+import { getCollection } from "astro:content";
+
+
+
+const publishedNews = await getCollection("news", ({ data }) => {
+  return !data.draft;
+});
+
+// Sort news by date
+publishedNews.sort(function (a, b) {
+  return Date.parse(b.data.datum) - Date.parse(a.data.datum)
+});
+
+const newest = publishedNews.slice(0, 2)
 
 ---
 
 <Layout title="Home">
+  <!-- Header img -->
   <div class:list={["w-full md:min-h-0 max-h-128 relative"]}>
         <Picture
           src={actionHero}
@@ -54,23 +69,50 @@ import actionHero from "../assets/millers/action-hero.jpg";
       </div>
 
     </div> -->
-		<h1 class="">Das hier wird die Startseite</h1>
+ 
+    <!-- HISTORY -->
+    <section class="mb-16 lg:w-3/5">
+      <div class="text-2xl">
+        <strong>
+          <span class="align-middle inline-block">Geschichte</span>
+          <i class="bi bi-clock-history inline-block ml-6 text-4xl "></i>
+        </strong>
+      </div>
+      <p class="py-8">Aus dem damals ersten Baseballverein der Region, den Bückeburg Bandits, haben sich um 1996 die Minden Bandits entwickelt, und vertreten somit seit über über 25 Jahren im Kreis Minden-Lübbecke den Sport Baseball.</p>
+      <br>
+      <a href="/geschichte" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Weiterlesen</a>
+    </section>
+    
+    <!-- NEWS -->
+    <section class="text-right">
+      <div class="text-2xl">
+        <strong>
+          <i class="bi bi-megaphone-fill inline-block mr-8 text-5xl -rotate-45"></i>
+          <span class="align-middle inline-block">News</span>
+        </strong>
+      </div>
+
+      <div class="grid grid-cols-6 p-6 mt-8 mb-6 ml-8 xs:ml-auto w-auto xs:w-3/4 md:w-3/5 text-left bg-gray-300 rounded-xl bubble speech-br">
+        <span class="col-span-5">
+          <span class="text">{newest[0].data.titel}</span>
+          <br>
+          <span class="text-sm text-gray-600">{newest[0].data.datum}</span>
+        </span>
+        <span class="col-6 self-center text-right"><a href="/TODO: Link to post"></a><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></span>
+      </div>
+      
+      <div class="grid grid-cols-6 p-4 mb-8 mr-8 xs:mr-auto w-auto xs:w-3/4 md:w-3/5 bg-gray-300 rounded-lg text-left bubble speech-bl ">
+        <span class="col-span-5">
+          <span class="text">{newest[1].data.titel}</span>
+          <br>
+          <span class="text-sm text-gray-600">{newest[1].data.datum}</span>
+        </span>
+        <span class="col-6 self-center text-right"><a href="/TODO: Link to post"></a><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></span>
+      </div>
+
+      <a href="/beiträge" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Mehr News</a>
+    </section>
+
+    <!-- DATES -->
 	</Container>
 </Layout>
-
-   <!-- <Container class="h-full text-white">
-            <div class="my-4 md:my-8 md:ml-8">
-              <h2 class="text-2xl">Der Baseballverein in Minden</h2>
-              <h2 class="text-3xl mb-10">Echt. Lokal. Nah.</h2>
-            </div>
-
-              
-          </Container>
-          <div class="absolute w-full md:mx-auto bottom-0 md:w-128 p-8 bg-gray-700/50 backdrop-blur-sm md:rounded-lg text-white">
-            <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p>
-            <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
-            <div class="text-center font-medium text-lg">
-              <p>Dienstag, 18:00-20:00 Uhr</p>
-              <p>Samstags, 10:00-12:00 Uhr</p>
-            </div>
-          </div> -->
