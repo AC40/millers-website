@@ -1,0 +1,38 @@
+---
+---
+
+<head>
+    <!-- FullCalendar -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
+
+    <script>
+        import { Calendar } from "fullcalendar";
+        import dayGridPlugin from '@fullcalendar/daygrid';
+        import timeGridPlugin from '@fullcalendar/timegrid';
+        import listPlugin from '@fullcalendar/list';
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('game-calendar');
+
+        if (calendarEl == null) {
+            return;
+        }
+
+        var calendar = new Calendar(calendarEl, {
+            locale: 'de',
+            plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ],
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,listWeek'
+            },
+            });
+
+        calendar.render();
+      });
+
+    </script>
+</head>
+<div id="game-calendar"></div>
