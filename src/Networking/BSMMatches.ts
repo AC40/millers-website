@@ -1,4 +1,4 @@
-export interface AllMatches {
+export interface Match {
     id:                                    number;
     match_id:                              string;
     time:                                  string;
@@ -175,11 +175,11 @@ export enum AllMatchState {
 
 // Converts JSON strings to/from your types
 export class Convert {
-    public static toAllMatches(json: string): AllMatches[] {
+    public static toAllMatches(json: string): Match[] {
         return JSON.parse(json);
     }
 
-    public static allMatchesToJson(value: AllMatches[]): string {
+    public static allMatchesToJson(value: Match[]): string {
         return JSON.stringify(value);
     }
 }
