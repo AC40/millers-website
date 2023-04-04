@@ -16,11 +16,6 @@ const menuitems = [
 		children: [
 			{ title: "Beiträge", path: "beiträge", external: false },
 			{ title: "Kalender", path: "spiele", external: false },
-			{
-				title: "Spieler gesucht",
-				path: "spieler-gesucht",
-				external: false,
-			},
 		],
 	},
 	{
@@ -51,6 +46,14 @@ const menuitems = [
 	{
 		title: "Sponsoren",
 		path: "/sponsoren",
+	},
+	{
+		title: "Vorstand",
+		path: "#",
+		children: [
+			{ title: "Vorstand Minden Bandits", path: "/vorstand", external: false },
+			{ title: "Mitgliedsantrag", path: "/misc/Mitgliedsantrag.pdf", external: false, mitgliedsantrag: true},
+		]
 	},
 	{
 		title: "Kontakt",

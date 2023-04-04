@@ -33,30 +33,46 @@ const { title, lastItem, children } = Astro.props;
         <div class=" lg:bg-slate-700/75 backdrop-blur-xl lg:rounded-md lg:shadow lg:border lg:border-slate-800 flex flex-col">
           {
             children.map((item, i) => (
+              (!item.mitgliedsantrag)
+              ?
+                <a
+                  href={item.path}
+                  class:list={[
+                    "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-yellow-100/50 px-3 lg:py-2", 
+                    (i == children.length - 1)
+                      ? "lg:rounded-b-md"
+                      : "",
+                    (i == 0)
+                      ? "lg:rounded-t-md"
+                      : ""
+                  ]}>
+                  {
+                    item.external 
+                      ? <span class="has-tooltip"><Icon 
+                          class="w-4 inline " 
+                          name="uil:external-link-alt" 
+                          title={"Dieser Externe Link führt zu " + item.path }
+                        ></Icon><span class="tooltip rounded shadow-lg p-1 bg-gray-100  text-gray-500 text-xs -mx-20 -mt-8">Externer Link</span></span>
+                      : <span></span>
+                  }
+                  {item.title}
+                </a>
+              :
               <a
-                href={item.path}
-                class:list={[
-                  "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-yellow-100/50 px-3 lg:py-2", 
-                  lastItem
-                    ? "lg:rounded-b-md"
-                    : "",
-                  (i == 0)
-                    ? "lg:rounded-t-md"
-                    : ""
-                ]}>
-                {
-                  item.external 
-                    ? <span class="has-tooltip"><Icon 
-                        class="w-4 inline " 
-                        name="uil:external-link-alt" 
-                        data-te-delay="0.1"
-                        data-te-toggle="tooltip"
-                        title={"Dieser Externe Link führt zu " + item.path }
-                      ></Icon><span class="tooltip rounded shadow-lg p-1 bg-gray-100  text-gray-500 text-xs -mx-20 -mt-8">Externer Link</span></span>
-                    : <span></span>
-                }
-                {item.title}
-              </a>
+                  href={item.path}
+                  class:list={[
+                    "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-yellow-100/50 px-3 lg:py-2", 
+                    (i == children.length - 1)
+                      ? "lg:rounded-b-md"
+                      : "",
+                    (i == 0)
+                      ? "lg:rounded-t-md"
+                      : ""
+                  ]}
+                  download
+                  >
+                  {item.title}
+                </a>
             ))
           }
         </div>
