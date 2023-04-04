@@ -3,31 +3,35 @@
 
 <head>
 	<!-- FullCalendar -->
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"
+	></script>
 
 	<script>
 		import { Calendar } from "fullcalendar";
 		import dayGridPlugin from "@fullcalendar/daygrid";
 		import listPlugin from "@fullcalendar/list";
-        import { Match } from "Networking/BSMMatches";
-        import { api }  from "Networking/api";
+		import { Match } from "Networking/BSMMatches";
 
-		var prevWidth = 0
+		var prevWidth = 0;
 
-        function fetchGames(): Match[] {
-            fetch("https://bsm.baseball-softball.de/clubs/354/matches.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw", {
-                mode: 'no-cors'})
-                .then((response) => {
-                    console.log(response)
-                    console.log(response.json())
-                })
-                .catch((error) => { 
-                    console.log("Error: " + error)
-                })
-                
+		function fetchGames(): Match[] {
+			fetch(
+				"https://bsm.baseball-softball.de/clubs/354/matches.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw",
+				{
+					mode: "no-cors",
+				}
+			)
+				.then((response) => {
+					console.log(response);
+					console.log(response.json());
+				})
+				.catch((error) => {
+					console.log("Error: " + error);
+				});
 
-            return []
-        }
+			return [];
+		}
 
 		function getWidth() {
 			return Math.max(
@@ -50,7 +54,23 @@
 				locale: "de",
 				firstDay: 1,
 				plugins: [dayGridPlugin, listPlugin],
-				initialView: (getWidth() >= 600) ? "dayGridMonth" : "listMonth",
+				events: [
+					{
+						title: "event1",
+						start: "2023-04-01",
+					},
+					{
+						title: "event2",
+						start: "2023-04-05",
+						end: "2023-04-07",
+					},
+					{
+						title: "event3",
+						start: "2023-04-09T12:30:00",
+						allDay: false, // will make the time show
+					},
+				],
+				initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
 				headerToolbar: {
 					left: "prev,next today",
 					center: "title",
@@ -67,23 +87,23 @@
 				height: "100%",
 			});
 
-			window.addEventListener("resize", function() {
+			window.addEventListener("resize", function () {
 				const width = getWidth();
 				console.log("ran");
 				if (width >= 600 && prevWidth < 600) {
-					calendar.changeView('dayGridMonth');
+					calendar.changeView("dayGridMonth");
 				} else if (width < 600 && prevWidth > 600) {
-					calendar.changeView('listMonth');
+					calendar.changeView("listMonth");
+					calendar;
 				}
-				prevWidth = width
+				prevWidth = width;
 			});
 
-            fetchGames()
+			fetchGames();
 			calendar.render();
 		});
-
-		
 	</script>
 </head>
 
-<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto overflow-hidden"></div>
+<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto overflow-hidden">
+</div>
