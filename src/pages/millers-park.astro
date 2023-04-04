@@ -2,28 +2,82 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import { Picture } from "@astrojs/image/components";
+import { Icon } from "astro-icon";
 
-import bravesStadium from "../assets/stock/braves-stadium.jpg";
+import abstechenImg from "../assets/millers/historie/ballpark-stechen.jpg";
+import plans from "../assets/millers/historie/plans.jpg";
+import backstop from "../assets/millers/historie/backstop.jpg";
 ---
 
 <Layout title="Baseballplatz">
 	<Container>
-		<h1 class="text-2xl">Baseballplatz - Millers Ballpark</h1>
+		<h1 class="text-2xl mb-10">Baseballplatz - Millers Ballpark</h1>
 
-		<div class="relative">
-			<Picture
-				src={bravesStadium}
-				alt="Ein Bild von einem großen Baseballstadium"
-				widths={[100, 500, 1000]}
-				sizes={"auto"}
-				class="brightness-100 sepia"
-			/>
-            <img
-				src={bravesStadium.src}
-				alt="Ein Bild von einem großen Baseballstadium"
-				sizes={"auto"}
-				class="w-auto blur"
-			/>
-		</div>
+		<section class="mb-8">
+			<div class="md:flex grid-cols-2">
+				<div>
+					<h2 class="text-xl font-bold">Anfahrt</h2>
+					<p>Tietzelweg 7</p>
+					<p>Innenstadt</p>
+					<p>32425 Minden</p>
+					<p>Deutschland</p>
+					<p class="mt-4">
+						
+						<a href="https://goo.gl/maps/bUZrfPfqXhRzAjxj6" target="_blank" class="p-2 bg-green-100 border-green-600 hover:border-green-800 hover:bg-green-800 border-2 rounded border-solid hover:text-white " ><Icon 
+							class="w-4 inline mb-1" 
+							name="uil:external-link-alt" 
+							title={"Dieser Externe Link führt zu 'https://goo.gl/maps/bUZrfPfqXhRzAjxj6'"}
+						  ></Icon>
+						  In Google Maps öffnen</a>
+					</p>
+					<div class="mt-8">
+						<a href={`https://maps.apple.com/?address=Tietzelweg%207,%20Innenstadt,%2032425%20Minden,%20Germany&ll=52.310181,8.880242&q=Tietzelweg%207`} target="_blank" class="p-2 bg-blue-100 border-blue-600 hover:border-blue-800 hover:bg-blue-800 border-2 rounded border-solid hover:text-white " ><Icon 
+							class="w-4 inline mb-1" 
+							name="uil:external-link-alt" 
+							title={"Dieser Externe Link führt zu " + `https://maps.apple.com/?address=Tietzelweg%207,%20Innenstadt,%2032425%20Minden,%20Germany&ll=52.310181,8.880242&q=Tietzelweg%207`}
+						  ></Icon>
+						  In Apple Maps öffnen</a>
+					</div>
+				</div>
+				<div class="mt-8 md:mt-0 md:ml-8 grow">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3096.795593103269!2d8.87579599964047!3d52.31015809503097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ba745c9e3f3d65%3A0x61c39557574948ad!2sTietzelweg%207%2C%2032425%20Minden!5e1!3m2!1sen!2sde!4v1680634939620!5m2!1sen!2sde" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				</div>
+			</div>
+		</section>
+
+		<hr>
+		<br>
+		<section>
+			<h2 class="text-xl font-bold">Historie</h2>
+			<Picture src={abstechenImg} alt="Ein historisches Bild des Abstechens" sizes="auto" widths={[161]} class="float-right w-auto xs:w-64  ml-5 mb-5" />
+			<p>
+				Im Jahr 1996 fiel die Entscheidung den Vereinssitz nach Minden zu verlegen. Nach dem Abzug der Britischen StreitkrÃ¤fte lagen dort viele Sportflächen über Jahre brach und so war auch schnell ein Gelände für die Millers gefunden - das ehemalige Cricketfield in den Kingsley Barracks.
+			</p>
+			<br>
+			<p>
+				Mit einem Sportplatz hatte die Wiese nicht mehr viel gemeinsam, was sich aber bald unter Einsatz vereinter Kräfte der Millers und durch die wohlwollende Unterstützung der Stadt ändern sollte.
+			</p>
+			<br>
+			<p>
+			Am Anfang gab es einen Plan und eine Vision. Am Ende stand ein Baseballfeld mit Aschenlaufbahn, Mound und Backstop. Hinzu kam der Traum vom eigenen Haus. Zwischen dem Traum und dem vollendeten Ballpark lagen mehrere Jahre harter kontinuierlicher Arbeit.
+			</p>
+			<br>
+			<p>
+				Als 1997 die Arbeiten begannen, wurde als erstes die noch vorhandene Kunstrasen Bahn des alten Cricketfield entfernt und die Ausrichtung des Spielfeldes festgelegt. Dann stachen die Millers die Graskanten des Innfields ab, damit schließlich eine vom Grünflächenamt beauftragte Firma die Aschenbahn anlegen konnte. Mitte des Jahres wurde der Backstop in Eigenleistung errichtet. Die wilde Wiese wurde regelmäßig gemäht und gewalzt, so dass sie sich langsam aber sicher wieder in einen Sportrasen verwandelte. Sand und Mutterboden wurden verteilt, um Unebenheiten auszugleichen und für einige Millers schien der tägliche Gang über das Feld, bewaffnet mit Eimerchen und Schäufelchen schon zu einer zwanghaften Handlung zu werden. So nahm der Platz langsam gestalt an und nach der 97er Saison, mit Doppelbelastung durch Platzbau und Spiele auf dem (Fußball-)Ausweichplatz am Weserstadion, konnten die Millers 1998 das erste Spiel im Miller Park austragen.
+			</p>
+			<br>
+			<p>
+				Fast noch mehr Arbeit bedeutete die Übernahme des neben dem Feld gelegenen Umkleide- und Duschgebäudes. Nach einer notwendigen Dachsanierung ging es ans Innenleben. Die ersten Duschen waren 2001 nutzbar und im Winter 2002/2003 nahmen - dank des unermesslichen Einsatzes von Martin Carden - endlich auch die Umkleideräume gestalt an. Inzwischen sind die meisten Räume gestrichen und nutzbar.
+			</p>
+			<br>
+			<p>
+				Um <i>Haus und Hof</i> haben sich mittlerweile eine Reihe weiterer Annehmlichkeiten angesammelt, wie ein Container zur Lagerung von Geräten und ein Battingcage.
+			</p>
+
+			<div class="xs:flex flex-wrap gap-4 my-8 justify-start">
+				<Picture src={plans} alt="Ein historisches Bild der originalen Skizzen für den Millers ballpark" sizes="" widths={[161]} class="xs:w-64" />
+				<Picture src={backstop} alt="Ein Bild des ersten backstops im Millers Ballpark" sizes="" widths={[161]} class="xs:w-64 mt-4 xs:mt-0" />
+			</div>
+		</section>
 	</Container>
 </Layout>
