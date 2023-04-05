@@ -15,10 +15,12 @@ Example of custom class in tailwind
 	}
 
 	.message {
-    @apply relative;
-  }
-
+		@apply relative;
+	}
   
+	.footer-a {
+		@apply text-gray-700 hover:underline hover:text-blue-500;
+	}
 }
 
 .bubble {
@@ -75,4 +77,26 @@ Example of custom class in tailwind
 
 .bubble-border.speech-br:before {
   border-color: #333 #333 transparent transparent;
+}
+
+/* Global placeholder shimmer */
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
+}
+.linear-background {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 1000px 104px;
+    position: relative;
+    overflow: hidden;
 }

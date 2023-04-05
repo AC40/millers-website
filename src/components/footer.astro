@@ -1,12 +1,16 @@
-<div class="grid grid-cols-3  bg-yellow-200/75 w-full py-8 px-8">
+<div class="grid grid-cols-3 bg-yellow-200/75 w-full py-8 px-8">
 	<div>
-		<a href="/impressum" class=" hover:underline">Impressum</a>
+		<a href="/impressum" class="footer-a">Impressum</a>
 		<br />
-		<a href="/Datenschutzerkärung" class="hover:underline">Datenschutzerkärung</a>
+		<a href="/datenschutz" class="footer-a">Datenschutzerkärung</a>
+		<br>
+		<a href="/kontakt" class="footer-a">Kontakt</a>
 	</div>
-	<div>
+	<div class="mt-auto">
 		<p class="text-center text-sm text-slate-500">
-			Copyright © {new Date().getFullYear()} Minden Bandits/Millers. Alle Rechte vorbehalten.
+			<span class="inline-block">Copyright © {new Date().getFullYear()} Minden </span>
+			<span class="inline-block">Bandits/Millers |</span>
+			<span class="inline-block">Alle Rechte vorbehalten.</span>
 		</p>
 		<!--
 			Can we ask you a favor 🙏
@@ -22,5 +26,11 @@
 				Web3Templates
 			</a>
 		</p>
+	</div>
+
+	<div class="text-right mt-auto">
+		<a href="mailto:minden@millers.de" class="footer-a">minden.millers@gmail.com</a>
+		<br>
+		<a href="/mitgliedsantrag.pdf" class="footer-a">Mitgliedsantrag</a>
 	</div>
 </div>
