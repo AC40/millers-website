@@ -1,7 +1,9 @@
 ---
 import { Dropdown, DropdownItems } from "astro-navbar";
 import { Icon } from "astro-icon";
+
 const { title, lastItem, children } = Astro.props;
+const path = Astro.url.pathname.toString()
 ---
 
 <li class="relative z-50">
@@ -33,46 +35,32 @@ const { title, lastItem, children } = Astro.props;
         <div class=" lg:bg-slate-700/75 backdrop-blur-xl lg:rounded-md lg:shadow lg:border lg:border-slate-800 flex flex-col">
           {
             children.map((item, i) => (
-              (!item.mitgliedsantrag)
-              ?
-                <a
-                  href={item.path}
-                  class:list={[
-                    "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-yellow-100/50 px-3 lg:py-2", 
-                    (i == children.length - 1)
-                      ? "lg:rounded-b-md"
-                      : "",
-                    (i == 0)
-                      ? "lg:rounded-t-md"
-                      : ""
-                  ]}>
-                  {
-                    item.external 
-                      ? <span class="has-tooltip"><Icon 
-                          class="w-4 inline " 
-                          name="uil:external-link-alt" 
-                          title={"Dieser Externe Link führt zu " + item.path }
-                        ></Icon><span class="tooltip rounded shadow-lg p-1 bg-gray-100  text-gray-500 text-xs -mx-20 -mt-8">Externer Link</span></span>
-                      : <span></span>
-                  }
-                  {item.title}
-                </a>
-              :
               <a
-                  href={item.path}
-                  class:list={[
-                    "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-yellow-100/50 px-3 lg:py-2", 
-                    (i == children.length - 1)
-                      ? "lg:rounded-b-md"
-                      : "",
-                    (i == 0)
-                      ? "lg:rounded-t-md"
+                href={item.path}
+                class:list={[
+                  "py-1 text-nav-a hover:text-nav-a-hover lg:text-gray-300 lg:hover:bg-yellow-100/20 px-3 lg:py-2", 
+                  (i == children.length - 1)
+                    ? "lg:rounded-b-md"
+                    : "",
+                  (i == 0)
+                    ? "lg:rounded-t-md"
+                    : "",
+                  (item.path == path)
+                      ? "text-millers-gold lg:text-millers-gold"
                       : ""
-                  ]}
-                  download
-                  >
-                  {item.title}
-                </a>
+                ]}>
+                
+                {
+                  item.external 
+                    ? <Icon 
+                        class="w-4 inline " 
+                        name="uil:external-link-alt" 
+                        title={"Dieser Externe Link führt zu " + item.path }
+                      ></Icon>
+                    : <span></span>
+                }
+                { item.title }
+              </a>
             ))
           }
         </div>
@@ -80,14 +68,3 @@ const { title, lastItem, children } = Astro.props;
     </DropdownItems>
   </Dropdown>
 </li>
-
-<style>
-  .tooltip{
-    visibility: hidden;
-    position: absolute;
-  }
-  .has-tooltip:hover .tooltip {
-    visibility: visible;
-    z-index: 100;
-  }
-</style>

@@ -1,24 +1,10 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Container from "@components/container.astro";
 ---
 
 <Layout title="Mitgliedsantrag">
-    <Container>
-        <a id="mitgliedsantrag-btn" href="/misc/Mitgliedsantrag.pdf" class="hidden" download>Mitgliedsantrag herunterladen</a>
-
-        <script>
-            const btn = document.getElementById("mitgliedsantrag-btn");
-
-            if (btn == null) {
-                return
-            }
-
-            // Trigger file download
-            btn.click();
-
-            // Reroute to Index as page is empty
-            window.location.replace("/")
-        </script>
-    </Container>
+<script>
+    window.location.replace("/mitgliedsantrag.pdf")
+    console.log("Attempted to replace");
+</script>
 </Layout>
