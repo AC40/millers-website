@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '@components/container.astro';
+
+const { slug } = Astro.params;
+
+let res = await fetch(`https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?slug=${slug}`)
+let [post] = await res.json();
+
+// The getStaticPaths() is required for static Astro sites.
+// If using SSR, you will not need this function.
+export async function getStaticPaths() {
+  let data = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts")
+  let posts = await data.json();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post: post },
+  }));
+}
+---
+<Layout title={post.title.rendered}>
+  <Container class="h-full">
+    
+    <article class="wordpress max-w-screen-md mx-auto p-8 mb-8 bg-gray-200 shadow-xl rounded-lg h-full">
+      <h1 class="text-2xl mb-4 font-medium" set:html={post.title.rendered} />
+      <Fragment set:html={post.content.rendered} />
+    </article>
+
+  </Container>
+</Layout>

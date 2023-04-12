@@ -2,17 +2,14 @@
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import Picture from "@astrojs/image/components/Picture.astro";
+import { lime } from "tailwindcss/colors";
 
-import { getCollection } from "astro:content";
+const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
+const posts = await res.json()
 
-const publishedNews = await getCollection("news", ({ data }) => {
-  return !data.draft;
-});
-
-// Sort news by date
-publishedNews.sort(function (a, b) {
-  return Date.parse(b.data.datum) - Date.parse(a.data.datum)
-});
+function formatDate(date): string {
+    return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+}
 ---
 
 <Layout title="Beiträge">
@@ -21,16 +18,17 @@ publishedNews.sort(function (a, b) {
 
         <ul>
             {
-                publishedNews.map((news, index) => (
-                    <li class="my-4 p-4 bg-slate-200 rounded-md">
-                        <div class="grid">
-                            <a href={"/news/" + news.slug}>
-                                <h2 class="text-slate-900 text-xl">{news.data.titel}</h2>
-                                <h4 class="text-slate-700 text-sm">{news.data.datum}</h4>   
+                posts.map((post) => (
+                    <li class="my-4 p-4 bg-slate-200 rounded-md w-full">
+                        <div class="grid ">
+                            <a href={"/beiträge/" + post.slug + "/"}>
+                                <h2 class="text-slate-900 text-xl" set:html={post.title.rendered}></h2>
+
+                                <h3 class="text-slate-700 text-md">{ formatDate(new Date(post.date)) }</h3>
                             </a>
                         </div>
                         
-
+                        
                     </li>
                 ))
             }

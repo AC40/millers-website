@@ -5,19 +5,19 @@ import actionHero from "../assets/millers/action-hero.jpg";
 import { Picture } from "@astrojs/image/components";
 import { getCollection } from "astro:content";
 
-
-
-const publishedNews = await getCollection("news", ({ data }) => {
-  return !data.draft;
-});
+const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
+const posts = await res.json()
 
 // Sort news by date
-publishedNews.sort(function (a, b) {
-  return Date.parse(b.data.datum) - Date.parse(a.data.datum)
+posts.sort(function (a, b) {
+  return Date.parse(b.date) - Date.parse(a.date)
 });
 
-const newest = publishedNews.slice(0, 2)
+const newest = posts.slice(0, 2)
 
+function formatDate(date): string {
+    return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+}
 ---
 
 <Layout title="Home">
@@ -94,20 +94,20 @@ const newest = publishedNews.slice(0, 2)
 
       <div class="grid grid-cols-6 p-6 mt-8 mb-6 ml-8 2xs:ml-auto w-auto 2xs:w-3/4 md:w-3/5 text-left bg-gray-300 rounded-xl bubble speech-br">
         <span class="col-span-5">
-          <span class="text">{newest[0].data.titel}</span>
+          <span class="text">{newest[0].title.rendered}</span>
           <br>
-          <span class="text-sm text-gray-600">{newest[0].data.datum}</span>
+          <span class="text-sm text-gray-600">{formatDate(new Date(newest[0].date))}</span>
         </span>
-        <span class="col-6 self-center text-right"><a href="/TODO: Link to post"></a><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></span>
+        <span class="col-6 self-center text-right"><a href={"/beiträge/" + newest[0].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
       </div>
       
       <div class="grid grid-cols-6 p-4 mb-8 mr-8 2xs:mr-auto w-auto 2xs:w-3/4 md:w-3/5 bg-gray-300 rounded-lg text-left bubble speech-bl ">
         <span class="col-span-5">
-          <span class="text">{newest[1].data.titel}</span>
+          <span class="text">{newest[1].title.rendered}</span>
           <br>
-          <span class="text-sm text-gray-600">{newest[1].data.datum}</span>
+          <span class="text-sm text-gray-600">{formatDate(new Date(newest[1].date))}</span>
         </span>
-        <span class="col-6 self-center text-right"><a href="/TODO: Link to post"></a><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></span>
+        <span class="col-6 self-center text-right"><a href={"/beiträge/" + newest[1].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
       </div>
 
       <a href="/beiträge" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Mehr News</a>
