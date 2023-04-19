@@ -3,10 +3,11 @@ import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import actionHero from "../assets/millers/action-hero.jpg";
 import { Picture } from "@astrojs/image/components";
-import { getCollection } from "astro:content";
+import { getImage } from "Networking/wordpress";
 
-const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
-const posts = await res.json()
+// Remote posts
+const postRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
+const posts = await postRes.json()
 
 // Sort news by date
 posts.sort(function (a, b) {
@@ -18,6 +19,9 @@ const newest = posts.slice(0, 2)
 function formatDate(date): string {
     return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
 }
+
+// Hero img
+const heroRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=startseite-action-hero")
 ---
 
 <Layout title="Home">

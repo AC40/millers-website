@@ -2,8 +2,13 @@
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import { Picture } from "@astrojs/image/components";
+import { getImage } from "Networking/wordpress";
 
-import team from "../assets/maniacs/team.jpg";
+const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=maniacs-team")
+const data = await res.json()
+
+const WPimage = getImage(data)
+
 ---
 
 <Layout title="Maniacs">
@@ -11,11 +16,12 @@ import team from "../assets/maniacs/team.jpg";
         <!-- Works as placeholder while image is loading -->
         <div class="w-full aspect-[4/3] max-h-[calc(100vh_-_115px)] linear-background">
             <Picture
-                src={team}
+                src={WPimage.url}
                 alt="Ein Teamfoto der Minden Maniacs"
                 widths={[400, 800, 1600]}
                 sizes="100%"
                 class="w-full max-h-[calc(100vh_-_115px)] object-cover"
+                aspectRatio={WPimage.width/WPimage.height}
             />
         </div>
             
