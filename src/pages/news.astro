@@ -1,8 +1,6 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
-import Picture from "@astrojs/image/components/Picture.astro";
-import { lime } from "tailwindcss/colors";
 
 const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
 const posts = await res.json()
@@ -12,7 +10,7 @@ function formatDate(date): string {
 }
 ---
 
-<Layout title="Beiträge">
+<Layout title="News">
     <Container>
         <h1 class="text-2xl">Neues von den Millers</h1>
 
@@ -21,14 +19,12 @@ function formatDate(date): string {
                 posts.map((post) => (
                     <li class="my-4 p-4 bg-slate-200 rounded-md w-full">
                         <div class="grid ">
-                            <a href={"/beiträge/" + post.slug + "/"}>
+                            <a href={"/news/" + post.slug + "/"}>
                                 <h2 class="text-slate-900 text-xl" set:html={post.title.rendered}></h2>
 
                                 <h3 class="text-slate-700 text-md">{ formatDate(new Date(post.date)) }</h3>
                             </a>
                         </div>
-                        
-                        
                     </li>
                 ))
             }

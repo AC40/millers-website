@@ -98,7 +98,7 @@ function formatDate(date): string {
           <br>
           <span class="text-sm text-gray-600">{formatDate(new Date(newest[0].date))}</span>
         </span>
-        <span class="col-6 self-center text-right"><a href={"/beiträge/" + newest[0].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
+        <span class="col-6 self-center text-right"><a href={"/news/" + newest[0].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
       </div>
       
       <div class="grid grid-cols-6 p-4 mb-8 mr-8 2xs:mr-auto w-auto 2xs:w-3/4 md:w-3/5 bg-gray-300 rounded-lg text-left bubble speech-bl ">
@@ -107,10 +107,10 @@ function formatDate(date): string {
           <br>
           <span class="text-sm text-gray-600">{formatDate(new Date(newest[1].date))}</span>
         </span>
-        <span class="col-6 self-center text-right"><a href={"/beiträge/" + newest[1].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
+        <span class="col-6 self-center text-right"><a href={"/news/" + newest[1].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
       </div>
 
-      <a href="/beiträge" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Mehr News</a>
+      <a href="/news" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Mehr News</a>
     </section>
 
     <!-- DATES -->
