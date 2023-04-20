@@ -29,6 +29,22 @@ Example of custom class in tailwind
 	}
 }
 
+/* Remove tailwind stylign */
+.remove-default-styling {
+	all: revert;
+}
+
+.remove-default-styling * {
+	all: revert;
+}
+
+.rich-text-styling blockquote {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
+}
+
 /* Bubbles on index page */
 .bubble {
 	position: relative;
