@@ -1,10 +1,56 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
+import { Picture } from "@astrojs/image/components";
+import { getVorstandsMitglieder } from "Networking/vorstand";
+import { getImage } from "Networking/wordpress"
+import { Icon } from "astro-icon";
+
+// Get member data
+const data = await (await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/vorstandsmitglieder")).json()
+const members = getVorstandsMitglieder(data)
+
+// Get image data
+const imgData = await (await (fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=vorstand"))).json()
+const image = getImage(imgData)
 ---
 
 <Layout title="Vorstand">
     <Container>
-        <h2 class="text-2xl">Der Vorstand der Minden Bandits</h2>
+        <h2 class="text-2xl mb-8">Der Vorstand der Minden Bandits</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <Picture src={image.url} alt={image.alt} widths={[400, 800, 1600]} sizes="100%" aspectRatio={image.width/image.height} class="rounded"></Picture>
+        <div>
+            {
+                members.map((member) => (
+                    
+                    <h3 class="text-lg"><span class="text-gray-900">{ member.role }: </span> <span class="font-medium">{ member.name }</span></h3>
+    
+                    <div class="mb-4">
+                    
+                        <span class="text-gray-600">
+                            <a href={"mailto:" + member.email} class="hover:text-blue-500 hover:underline"><Icon name="uil:envelope" class="w-4 inline mr-1 mb-1" />{ member.email }</a>
+                            <br class="sm:hidden">
+                            <span>
+                                {
+                                    (member.phone != "" && member.phone != undefined)
+                                    ? <span class="hidden sm:inline"> | </span><a href={"tel:" + member.phone} class="hover:text-blue-500 hover:underline"><Icon name="uil:phone" class="w-4 inline mr-1 mb-1" />{ member.phone }</a>
+                                    : <span></span>
+                                }
+                            </span>
+                        </span>
+    
+                    </div>
+                    
+                    
+    
+                ))
+            }
+        </div>
+
+        </div>
+        
     </Container>
 </Layout>

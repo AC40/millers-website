@@ -29,7 +29,8 @@ Example of custom class in tailwind
 	}
 }
 
-/* Remove tailwind stylign */
+/* The following two classes to what the say respectivly while applying basic styles to everything hat can be done in wp richtext fields */
+/* Remove tailwind styling */
 .remove-default-styling {
 	all: revert;
 }
