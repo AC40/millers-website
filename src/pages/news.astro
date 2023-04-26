@@ -1,12 +1,14 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
+import { Picture } from "@astrojs/image/components";
 
-const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
+// const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
+const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/news")
 const posts = await res.json()
 
 function formatDate(date): string {
-    return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+    return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
 }
 ---
 
@@ -17,12 +19,20 @@ function formatDate(date): string {
         <ul>
             {
                 posts.map((post) => (
-                    <li class="my-4 p-4 bg-slate-200 rounded-md w-full">
-                        <div class="grid ">
-                            <a href={"/news/" + post.slug + "/"}>
-                                <h2 class="text-slate-900 text-xl" set:html={post.title.rendered}></h2>
+                    <li class="my-4 bg-slate-200 rounded-md w-full">
+                        <div class="grid grid-cols-3">
+                            {
+                                (post.acm_fields.coverBild.media_details != undefined)
+                                ? <Picture src={post.acm_fields.coverBild.source_url} alt={post.acm_fields.coverBild.alt_text} widths={[300, 656]} sizes="" aspectRatio={post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height} class="col-span-1 rounded-l-md" />
+                                : <span class="hidden"/>
+                            }
+                            <a href={"/news/" + post.slug + "/"} class:list={[(post.acm_fields.coverBild != null) ? "col-span-2" : "col-span-3", "p-4"]}>
+                                <h2 class="text-slate-900 text-xl" set:html={post.acm_fields.titel}></h2>
 
-                                <h3 class="text-slate-700 text-md">{ formatDate(new Date(post.date)) }</h3>
+                                <div class="flex text-slate-700 text-md">
+                                    <p class="">{ formatDate(new Date(post.date)) }</p>
+                                    <p>{ (post.acm_fields.newsauthor != "") ? "●" + post.acm_fields.newsauthor : "" }</p>
+                                </div>
                             </a>
                         </div>
                     </li>

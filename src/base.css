@@ -39,6 +39,14 @@ Example of custom class in tailwind
 	all: revert;
 }
 
+/*
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  height: 1px;
+}
+*/
 .rich-text-styling blockquote {
   margin-top: 10px;
   margin-bottom: 10px;
