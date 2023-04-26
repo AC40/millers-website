@@ -22,7 +22,7 @@ export function getImage(res: any): WPimage {
 
 // Create img data
 // Remote posts
-const postRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
+const postRes = await fetch(wpEndpoint + "news")
 const posts = await postRes.json()
 
 // Sort news by date

@@ -24,26 +24,39 @@ export async function getStaticPaths() {
 function formatDate(date): string {
     return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
 }
+
+function imageIsWiderThanHigh(post: any): boolean {
+  return ((post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height) > 1)
+}
 ---
 <Layout title={post.titel}>
   <Container class="h-full">
     <article class="max-w-screen-md mx-auto p-7 mb-7 bg-gray-200 shadow-xl rounded-lg h-full">
 
-      <a href="/news" class="font-medium font-sans hover:underline text-gray-700 hover:text-gray-900"><Icon class="w-8 h-8 inline" name="uil:arrow-left" ></Icon>Alle News</a>
+      <a href="/news" class="font-medium font-sans hover:underline text-gray-500 hover:text-gray-900"><Icon class="w-8 h-8 inline" name="uil:arrow-left" ></Icon>Alle News</a>
 
       <hr class="bg-gray-600 h-[3px] my-3">
 
       <div class="wordpress">
         
         <h1 class="text-2xl font-medium" set:html={post.acm_fields.titel} />
-        <div class="flex text-slate-700 text-md mb-4 mt-2">
+        <div class="flex text-slate-700 text-md mb-4 mt-2 ">
           <p class="">{ formatDate(new Date(post.date)) }</p>
           <p>{ (post.acm_fields.newsauthor != "") ? "●" + post.acm_fields.newsauthor : "" }</p>
         </div>
 
         {
           (post.acm_fields.coverBild.media_details != undefined)
-          ? <Picture src={post.acm_fields.coverBild.source_url} alt={post.acm_fields.coverBild.alt_text} widths={[300, 656]} sizes="" aspectRatio={post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height} class="rounded-md mb-4" />
+          ? <div class:list={[`w-[${post.acm_fields.coverBild.media_details.width}px] sm:w-auto h-[${post.acm_fields.coverBild.media_details.height}px] sm:h-auto bg-clear`]} >
+              <Picture 
+                  src={post.acm_fields.coverBild.source_url} 
+                  alt={post.acm_fields.coverBild.alt_text} 
+                  widths={[300, 600, 900, post.acm_fields.coverBild.media_details.width]} 
+                  sizes="" 
+                  aspectRatio={post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height} 
+                  class:list={["rounded-md mb-4", (imageIsWiderThanHigh(post)) ? "" : "sm:float-right sm:ml-4 mb-4 max-h-96 w-full sm:w-auto object-cover"]} 
+                />
+            </div>
           : <span class="hidden"/>
         }
         <Fragment set:html={post.acm_fields.text} />
