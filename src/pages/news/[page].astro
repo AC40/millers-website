@@ -1,0 +1,35 @@
+---
+import Container from "@components/container.astro";
+import Layout from "@layouts/Layout.astro";
+import { Picture } from "@astrojs/image/components";
+import PaginationController from "@components/pagination-controller.astro";
+import NewsPreview from "@components/news-preview.astro";
+import { formatDate, previewHTML } from "Networking/Utility"
+
+export async function getStaticPaths({ paginate }) {
+    const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/news?per_page=15&page=1")
+    const posts = await res.json()
+
+    // Generate pages from our array of posts, with 2 to a page
+    return paginate(posts, { pageSize: 2 });
+}
+
+const { page } = Astro.props
+---
+
+<Layout title="News">
+    <Container class="max-w-3xl">
+        <h1 class="text-2xl">Neues von den Millers</h1>
+
+            <ul id="millers-news-feed" class="max-h-full">
+                {
+                    page.data.map((post) => (
+                        <NewsPreview post={post} />
+                    ))
+                }
+                
+            </ul>
+            
+            <PaginationController page={page} class="table-footer-group" />
+    </Container>
+</Layout>

@@ -4,7 +4,7 @@ import Container from '@components/container.astro';
 import { Icon } from 'astro-icon';
 import { Picture } from "@astrojs/image/components";
 
-const { slug } = Astro.params;
+const { slug, originPage } = Astro.params;
 
 let res = await fetch(`https://wordpress.mindenmillers.de/wp-json/wp/v2/news?slug=${slug}`)
 let [post] = await res.json();
@@ -33,7 +33,7 @@ function imageIsWiderThanHigh(post: any): boolean {
   <Container class="h-full">
     <article class="max-w-screen-md mx-auto p-7 mb-7 bg-gray-200 shadow-xl rounded-lg h-full">
 
-      <a href="/news" class="font-medium font-sans hover:underline text-gray-500 hover:text-gray-900"><Icon class="w-8 h-8 inline" name="uil:arrow-left" ></Icon>Alle News</a>
+      <a href="/news/1" class="font-medium font-sans hover:underline text-gray-500 hover:text-gray-900"><Icon class="w-8 h-8 inline" name="uil:arrow-left" ></Icon>Alle News</a>
 
       <hr class="bg-gray-600 h-[3px] my-3">
 

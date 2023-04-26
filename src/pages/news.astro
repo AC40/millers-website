@@ -2,75 +2,32 @@
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import { Picture } from "@astrojs/image/components";
+import PaginationController from "@components/pagination-controller.astro";
+import NewsPreview from "@components/news-preview.astro";
+import { formatDate, previewHTML } from "Networking/Utility"
 
-// const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
-const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/news")
+const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/news?per_page=15&page=1")
+const total = res.headers.get("X-WP-Total")
+const totalPages = res.headers.get("X-WP-TotalPages")
 const posts = await res.json()
 
-function formatDate(date): string {
-    return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
-}
-
-function previewHTML(str: string): string {
-    return str.replace(/<[^\r\n>]+>/gm, "")
-}
 ---
 
 <Layout title="News">
     <Container class="max-w-3xl">
         <h1 class="text-2xl">Neues von den Millers</h1>
-
-        <ul>
-            <!-- Test News -->
-            <li class="my-4 mb-6 last:mb-0 bg-slate-200 rounded-md w-full">
-                <a href={"/news/" + "foo" + "/"} class="grid grid-cols-1 sm:grid-cols-3 sm:h-48">
-                    
-                    <div class:list={["sm:col-span-3", "col-span-1 row-span-1 p-4 relative"]}>
-                        <h2 class="text-slate-900 text-lg sm:text-xl" set:text={"A very long title describing a tediously specific event!"}></h2>
-
-                        <div class="flex text-slate-700 text-sm sm:text-md">
-                            <p class="">{ formatDate(new Date("23.4.22")) }</p>
-                            <p>{" ● " + "Dennis Rodman"}</p>
-                        </div>
-
-                        <div class="relative h-24 sm:h-32 overflow-hidden mt-2 fade-out-bottom-text text-slate-800">
-                            <Fragment set:html={previewHTML("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.")}/>    
-                        </div>
-                        
-                    </div>
-                </a>
-                
-            </li>
+        <ul id="millers-news-feed" >
             {
                 posts.map((post) => (
-                    <li class="my-4 mb-6 last:mb-0 bg-slate-200 rounded-md w-full">
-                            <a href={"/news/" + post.slug + "/"} class="grid grid-cols-1 sm:grid-cols-3 sm:h-48">
-                                {
-                                    (post.acm_fields.coverBild.media_details != undefined)
-                                    ? <Picture src={post.acm_fields.coverBild.source_url} alt={post.acm_fields.coverBild.alt_text} widths={[300, 656]} sizes="" aspectRatio={post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height} class="col-span-1 row-span-2 rounded-t-md sm:rounded-tr-none sm:rounded-l-md object-cover object-center h-48 w-full" />
-                                    : <span class="hidden"/>
-                                }
-
-                                <div class:list={[(post.acm_fields.coverBild.media_details != undefined) ? "sm:col-span-2" : "sm:col-span-3", "col-span-1 row-span-1 px-4 sm:pb-4 pt-4 relative"]}>
-                                    <h2 class="text-slate-900 text-lg sm:text-xl" set:html={post.acm_fields.titel}></h2>
-
-                                    <div class="flex text-slate-700 text-sm sm:text-md">
-                                        <p class="">{ formatDate(new Date(post.date)) }</p>
-                                        <p>{ (post.acm_fields.newsauthor != "") ? " ● " + post.acm_fields.newsauthor : "" }</p>
-                                    </div>
-
-                                    <div class="relative h-24 sm:h-32 overflow-hidden mt-2 fade-out-bottom-text text-slate-800">
-                                        <Fragment set:html={previewHTML(post.acm_fields.text)}/>    
-                                    </div>
-                                    
-                                </div>
-                            </a>
-                            
-                    </li>
+                    <NewsPreview post={post} />
                 ))
             }
             
         </ul>
+        <script>
+            window.location.replace("/news/1")
+        </script>
         
+        <PaginationController total={total} totalPages={totalPages ?? 1} />
     </Container>
 </Layout>
