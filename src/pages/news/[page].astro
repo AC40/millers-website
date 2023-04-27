@@ -11,7 +11,7 @@ export async function getStaticPaths({ paginate }) {
     const posts = await res.json()
 
     // Generate pages from our array of posts, with 2 to a page
-    return paginate(posts, { pageSize: 2 });
+    return paginate(posts, { pageSize: 25 });
 }
 
 const { page } = Astro.props
@@ -21,7 +21,7 @@ const { page } = Astro.props
     <Container class="max-w-3xl">
         <h1 class="text-2xl">Neues von den Millers</h1>
 
-            <ul id="millers-news-feed" class="max-h-full">
+            <ul id="millers-news-feed" class="max-h-full lg:mx-16">
                 {
                     page.data.map((post) => (
                         <NewsPreview post={post} />

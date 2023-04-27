@@ -1,13 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Container from '@components/container.astro';
+import MdTable from '@components/md-table.astro';
 import { Icon } from 'astro-icon';
 import { Picture } from "@astrojs/image/components";
+import { marked } from 'marked';
+import { log } from 'astro/dist/core/logger/core';
 
 const { slug, originPage } = Astro.params;
 
 let res = await fetch(`https://wordpress.mindenmillers.de/wp-json/wp/v2/news?slug=${slug}`)
-let [post] = await res.json();
+var [post] = await res.json();
 
 // The getStaticPaths() is required for static Astro sites.
 // If using SSR, you will not need this function.
@@ -20,6 +23,30 @@ export async function getStaticPaths() {
     props: { post: post },
   }));
 }
+
+// Get md from post
+const mds = post.acm_fields.text.match(/<pre[\S\s]+<\/pre>/gm)
+post.acm_fields.text = post.acm_fields.text.replace(/<pre[\S\s]+<\/pre>/gm, "")
+
+const parsed: string[] = (mds != null) ? mds.map(md => {
+  if (md != null && md != undefined) {
+    const modified = md.replace(/<[^\r\n>]+>/gm, "")
+    var parsed = marked.parse(modified)
+
+    var cellStyles = "border: 1px solid black; width: 2em; text-align:center;"
+
+    parsed = parsed.replaceAll("<table>", "<table style=\"border: 1px solid black;\" >")
+    parsed = parsed.replaceAll("<thead>", "<thead style=\"background-color: lightgray\" >")
+    parsed = parsed.replaceAll("<td>", `<td style=\"${cellStyles}\" >`)
+    parsed = parsed.replaceAll("<th>", `<th style=\"${cellStyles}\" >`)
+
+    return parsed
+  } else {
+    return ""
+  }
+}) : []
+
+// post = post.acm_fields.text.replace(/<pre.*<\/pre>/gm, "")
 
 function formatDate(date): string {
     return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
@@ -42,7 +69,7 @@ function imageIsWiderThanHigh(post: any): boolean {
         <h1 class="text-2xl font-medium" set:html={post.acm_fields.titel} />
         <div class="flex text-slate-700 text-md mb-4 mt-2 ">
           <p class="">{ formatDate(new Date(post.date)) }</p>
-          <p>{ (post.acm_fields.newsauthor != "") ? "●" + post.acm_fields.newsauthor : "" }</p>
+          <p>{ (post.acm_fields.newsauthor != "") ? " • " + post.acm_fields.newsauthor : "" }</p>
         </div>
 
         {
@@ -61,6 +88,13 @@ function imageIsWiderThanHigh(post: any): boolean {
         }
         <Fragment set:html={post.acm_fields.text} />
 
+        {
+          parsed.map(parsedMD => (
+          <div class="">
+              <div class="mdTable" set:html={parsedMD} />
+          </div>
+          ))
+        }
       </div>
       
     </article>
