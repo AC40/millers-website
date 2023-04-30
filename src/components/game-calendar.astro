@@ -1,4 +1,8 @@
 ---
+const json = await (await fetch("https://bsm.baseball-softball.de/clubs/354/matches.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw")).json()
+
+const str = JSON.stringify(json)
+
 ---
 
 <head>
@@ -14,24 +18,29 @@
 		import { Match } from "Networking/BSMMatches";
 
 		var prevWidth = 0;
+		const storageEl = document.querySelector('#bsm-data-storage')
 
-		function fetchGames(): Match[] {
-			fetch(
-				"https://bsm.baseball-softball.de/clubs/354/matches.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw",
-				{
-					mode: "no-cors",
-				}
-			)
-				.then((response) => {
-					console.log(response);
-					console.log(response.json());
-				})
-				.catch((error) => {
-					console.log("Error: " + error);
-				});
-
-			return [];
+		function createMatchTitle(match) {
+			return match.away_team_name + " @ " + match.home_team_name
 		}
+
+		function createMatchDescription(match) {
+			return  `${createMatchTitle(match)}<br>\nWo: ${match.field?.name}`
+		}
+
+		const json = JSON.parse((storageEl as HTMLElement).dataset.bsmstorage ?? "")
+		const matches = json.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
+
+		const valid = matches.map((match) => Object.create({
+			start: new Date(match.time.replace(/-/g, "/")).toISOString(),
+			title: createMatchTitle(match),
+			extendedProps: {
+				match: match,
+			},
+			description: createMatchDescription(match)
+		}))
+
+		console.log(valid);
 
 		function getWidth() {
 			return Math.max(
@@ -54,22 +63,7 @@
 				locale: "de",
 				firstDay: 1,
 				plugins: [dayGridPlugin, listPlugin],
-				events: [
-					{
-						title: "event1",
-						start: "2023-04-01",
-					},
-					{
-						title: "event2",
-						start: "2023-04-05",
-						end: "2023-04-07",
-					},
-					{
-						title: "event3",
-						start: "2023-04-09T12:30:00",
-						allDay: false, // will make the time show
-					},
-				],
+				events: valid,
 				initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
 				headerToolbar: {
 					left: "prev,next today",
@@ -85,6 +79,13 @@
 				},
 				views: {},
 				height: "100%",
+				eventDidMount: function(info) {
+					info.el.classList.add("tooltip")
+					const tooltip = document.createElement('div')
+					tooltip.className = "tooltiptext"
+					tooltip.innerHTML = createMatchDescription(info.event.extendedProps.match)
+					info.el.appendChild(tooltip)
+				},
 			});
 
 			window.addEventListener("resize", function () {
@@ -99,7 +100,7 @@
 				prevWidth = width;
 			});
 
-			fetchGames();
+			// fetchGames();
 			calendar.render();
 		});
 	</script>
@@ -107,3 +108,4 @@
 
 <div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto overflow-hidden">
 </div>
+<span id="bsm-data-storage" data-bsmstorage={str} ></span>

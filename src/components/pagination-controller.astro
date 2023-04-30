@@ -9,37 +9,44 @@ const pages = Array.from(Array(page.lastPage).keys())
 
 <div class="flex justify-around">
     <div class:list={["flex justify-center text-lg mt-4", className]}>
-        <div class="rounded-t-md sm:rounded-md border border-gray-200 shadow-sm flex">
-    
-            <a href={page.url.prev} class:list={["pgnt-step-btn pgnt-step-prev border-r", (page.url.prev == null) ? "disabled" : ""]}>
-                <Icon name="uil:angle-left" class="inline w-8 mb-1" />
-                Zurück
-            </a>
-    
-            {
-                pages.map(i => (
-                    <a href={"/news/" + (i+1)} class:list={["pgnt-page-btn text-center w-12 h-12 hover:bg-gray-100 selected:border selected:border-black rounded-sm leading-12 hidden sm:block", (i+1 == page.currentPage) ? "selected disabled" : ""]} >{i+1}</a>
-                ))
-            }
-    
-            <a href={page.url.next} class:list={["pgnt-step-btn pgnt-step-next border-l", (page.url.next == null) ? "disabled" : ""]}>
-                Weiter
-                <Icon name="uil:angle-right" class="inline w-8 mb-1" />
-            </a>
-            
-        </div>
 
-        <div class="rounded-b-md border-b border-x justify-evenly border-gray-200 shadow-sm flex">
-            <a href={"/news/" + "1"} class:list={[" pgnt-step-btn border-r sm:hidden", (page.currentPage == 1) ? "disabled" : ""]}>
-                <Icon name="uil:angle-double-left" class="inline w-8 mb-1" />
-                Start
-            </a>
+        {
+            (page.lastPage != 1)
+            ? <div class="rounded-t-md sm:rounded-md border border-gray-200 shadow-sm flex">
     
-            <a href={"/news/" + page.lastPage} class:list={["pgnt-step-btn border-l sm:hidden", (page.lastPage == page.currentPage) ? "disabled" : ""]}>
-                Ende
-                <Icon name="uil:angle-double-right" class="inline w-8 mb-1" />
-            </a>
-        </div>
+                <a href={page.url.prev} class:list={["pgnt-step-btn pgnt-step-prev border-r", (page.url.prev == null) ? "disabled" : ""]}>
+                    <Icon name="uil:angle-left" class="inline w-8 mb-1" />
+                    Zurück
+                </a>
+
+                {
+                    pages.map(i => (
+                        <a href={"/news/" + (i+1)} class:list={["pgnt-page-btn text-center w-12 h-12 hover:bg-gray-100 selected:border selected:border-black rounded-sm leading-12 hidden sm:block", (i+1 == page.currentPage) ? "selected disabled" : ""]} >{i+1}</a>
+                    ))
+                }
+
+                <a href={page.url.next} class:list={["pgnt-step-btn pgnt-step-next border-l", (page.url.next == null) ? "disabled" : ""]}>
+                    Weiter
+                    <Icon name="uil:angle-right" class="inline w-8 mb-1" />
+                </a>
+                
+            </div>
+
+            <div class="rounded-b-md border-b border-x justify-evenly border-gray-200 shadow-sm flex">
+                <a href={"/news/" + "1"} class:list={[" pgnt-step-btn border-r sm:hidden", (page.currentPage == 1) ? "disabled" : ""]}>
+                    <Icon name="uil:angle-double-left" class="inline w-8 mb-1" />
+                    Start
+                </a>
+
+                <a href={"/news/" + page.lastPage} class:list={["pgnt-step-btn border-l sm:hidden", (page.lastPage == page.currentPage) ? "disabled" : ""]}>
+                    Ende
+                    <Icon name="uil:angle-double-right" class="inline w-8 mb-1" />
+                </a>
+            </div>
+
+            : <span></span>
+        }
+        
         
     </div>
 </div>
