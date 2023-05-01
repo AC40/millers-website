@@ -7,9 +7,7 @@ const str = JSON.stringify(json)
 
 <head>
 	<!-- FullCalendar -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"
-	></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
 
 	<script>
 		import { Calendar } from "fullcalendar";
@@ -21,11 +19,12 @@ const str = JSON.stringify(json)
 		const storageEl = document.querySelector('#bsm-data-storage')
 
 		function createMatchTitle(match) {
-			return match.away_team_name + " @ " + match.home_team_name
+			// return match.away_team_name + " @ " + match.home_team_name
+			return match.home_league_entry.team.short_name == "MIN" ? "Heimspiel" : "Auswärts"
 		}
 
 		function createMatchDescription(match) {
-			return  `${createMatchTitle(match)}<br>\nWo: ${match.field?.name}`
+			return  `<div class=\"custom-event-description\">${match.away_team_name + " @ " + match.home_team_name}<br>Wo: ${match.field?.name}</div>`
 		}
 
 		const json = JSON.parse((storageEl as HTMLElement).dataset.bsmstorage ?? "")
@@ -85,6 +84,14 @@ const str = JSON.stringify(json)
 					tooltip.className = "tooltiptext"
 					tooltip.innerHTML = createMatchDescription(info.event.extendedProps.match)
 					info.el.appendChild(tooltip)
+
+					// const fcTitle = info.el.querySelector('.fc-event-title')
+					
+					// if (fcTitle != null) {
+					// 	fcTitle.insertAdjacentHTML("beforeend","<br/>" + createMatchDescription(info.event.extendedProps.match)); 
+					// } else {
+					// 	console.log("EEE");
+					// }
 				},
 			});
 

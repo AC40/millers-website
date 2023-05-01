@@ -185,3 +185,7 @@ hr {
 	visibility: visible;
 	opacity: 1;
 }
+
+.custom-event-description {
+	font-weight: 500;
+}

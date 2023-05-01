@@ -1,3 +1,6 @@
+---
+import Secret from "./Secret.astro";
+---
 <div
 	class="grid grid-cols-1 sm:grid-cols-3 text-center gap-y-4 bg-yellow-200/75 w-full py-8 px-8">
 	<div class="md:text-left my-auto">
@@ -15,11 +18,11 @@
 			<span class="inline-block">Bandits/Millers |</span>
 			<span class="inline-block">Alle Rechte vorbehalten.</span>
 		</p>
-		<!--
+		{/*
 			Can we ask you a favor 🙏
 			Please keep this backlink on your website if possible.
 			or Purchase a commercial license from https://web3templates.com
-		-->
+		*/}
 		<p class="text-center text-xs text-slate-500 mt-1">
 			Made by <a
 				href="https://web3templates.com"
@@ -32,9 +35,14 @@
 	</div>
 
 	<div class="md:text-right my-auto">
-		<a href="mailto:minden@millers.de" class="footer-a"
-			>minden.millers@gmail.com</a
-		>
+		<a href="mailto:minden@millers.de" class="footer-a">
+			<Secret
+				string="minden.millers@gmail.com"
+				link="mailto:minden.millers@gmail.com"
+				nostyle={true}
+			/>
+			
+		</a>
 		<br />
 		<a href="/mitgliedsantrag.pdf" class="footer-a">Mitgliedsantrag</a>
 	</div>

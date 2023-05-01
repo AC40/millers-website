@@ -1,0 +1,5 @@
+---
+import Secret from "@components/Secret.astro"
+const { phone, class: className } = Astro.props
+---
+<span><Secret string={phone} link={"tel:" + phone} nostyle={true} class={className} /></span>

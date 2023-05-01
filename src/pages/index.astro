@@ -19,7 +19,7 @@ import { indexData, formatDate } from "Networking/wordpress";
           class="w-full hidden sm:block min-h-32 h-auto max-h-128 object-cover"
         />
 
-        <!-- For some reason, on this image i can set a min-height. So it could work with the code-block below instead of the colorful card beneath -->
+        {/* For some reason, on this image i can set a min-height. So it could work with the code-block below instead of the colorful card beneath */}
         <img src={indexData.heroImg.url} alt="foo" class="block sm:hidden w-full min-h-[500px] h-full object-cover overflow-hidden">
         
         <div class="absolute w-full top-0 left-0 h-full  maxh-128 bg-[#262626b3] z-10">
@@ -32,12 +32,12 @@ import { indexData, formatDate } from "Networking/wordpress";
 
           <div class="md:block absolute md:static bottom-0  w-full items-center text-white">
             <div class="md:mx-auto mt-auto md:w-128 p-8 bg-gray-400/40 backdrop-blur-sm md:rounded-lg">
-              <!-- <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p> -->
+              {/* <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p> */}
               <p set:html={indexData.heroText}></p>
               <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
               <div class="text-center font-medium text-lg">
-                <!-- <p class="">Dienstag, 18:00-20:00 Uhr</p> -->
-                <!-- <p class="">Samstags, 10:00-12:00 Uhr</p> -->
+                {/* <p class="">Dienstag, 18:00-20:00 Uhr</p> */}
+                {/* <p class="">Samstags, 10:00-12:00 Uhr</p> */}
                 <p set:html={indexData.training1}></p>
                 <p set:html={indexData.training2}></p>
               </div>
@@ -48,8 +48,8 @@ import { indexData, formatDate } from "Networking/wordpress";
 	
 
 	<Container>
-    <!-- Alternative placement for view currently place on header img -->
-    <!-- <div class="md:hidden p-8 bg-gradient-to-br from-yellow-300/50 to-red-300/50 rounded-md">
+    {/* Alternative placement for view currently place on header img */}
+    {/* <div class="md:hidden p-8 bg-gradient-to-br from-yellow-300/50 to-red-300/50 rounded-md">
 
       <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p>
       <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
@@ -58,7 +58,7 @@ import { indexData, formatDate } from "Networking/wordpress";
         <p>Samstags, 10:00-12:00 Uhr</p>
       </div>
 
-    </div> -->
+    </div> */}
  
     <!-- HISTORY -->
     <section class="mb-24 lg:w-3/5">

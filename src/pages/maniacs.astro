@@ -3,6 +3,7 @@ import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import { Picture } from "@astrojs/image/components";
 import { getImage } from "Networking/wordpress";
+import Secret from "@components/Secret.astro"
 
 const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=maniacs-team")
 const data = await res.json()
@@ -13,7 +14,7 @@ const WPimage = getImage(data)
 
 <Layout title="Maniacs">
     <section class="relative w-full max-h-[calc(100vh_-_115px)]">
-        <!-- Works as placeholder while image is loading -->
+        {/* Works as placeholder while image is loading */}
         <div class="w-full aspect-[4/3] max-h-[calc(100vh_-_115px)] linear-background">
             <Picture
                 src={WPimage.url}
@@ -36,13 +37,13 @@ const WPimage = getImage(data)
 
             <div class="grow p-5 bg-slate-200 rounded-sm">
                 <strong>Tanja Müthers</strong>
-                <p>trainer.maniacs@mindenmillers.de</p>
-                <p>0160 6350069</p>
+                <p><Secret string="trainer.maniacs@mindenmillers.de" link="mailto:trainer.maniacs@mindenmillers.de" nostyle={true} /></p>
+                <p><Secret string="0160 6350069" link="tel:0160 6350069" nostyle={true} /></p>
             </div>
 
             <div class="grow p-5 bg-slate-200 rounded-sm">
                 <strong>Annika Hartmann</strong>
-                <p>a.hartmann@mindenmillers.de</p>
+                <p class=""><Secret string="a.hartmann@mindenmillers.de" link="mailto:a.hartmann@mindenmillers.de" nostyle={true} /></p>
             </div>
         </section>
         <h3 class="text-lg">Hier können noch weitere informationen veröffentlicht werden.</h3>

@@ -1,5 +1,3 @@
-import { string } from "astro/zod";
-
 //MARK: Constants
 const wpEndpoint = "https://wordpress.mindenmillers.de/wp-json/wp/v2/"
 

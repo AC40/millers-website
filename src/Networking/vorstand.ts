@@ -14,5 +14,5 @@ export function getVorstandsMitglieder(json: [any]): VorstandsMitglied[] {
 
     console.log("After loop: " + members)
 
-    return members
+    return members.reverse()
 }
