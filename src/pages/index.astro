@@ -9,42 +9,47 @@ import { indexData, formatDate } from "Networking/wordpress";
 <Layout title="Home">
   <!-- Header img -->
   <div class:list={["w-full md:min-h-0 max-h-128 relative"]}>
-        <Picture
-          src={indexData.heroImg.url}
-          widths={[200, 400, 800, 1000]}
-          sizes="(max-width: 800px) 100vw, 800px"
-          alt={indexData.heroImg.alt}
-          fit="cover"
-          aspectRatio={indexData.heroImg.width/indexData.heroImg.height}
-          class="w-full hidden sm:block min-h-32 h-auto max-h-128 object-cover"
-        />
 
-        {/* For some reason, on this image i can set a min-height. So it could work with the code-block below instead of the colorful card beneath */}
-        <img src={indexData.heroImg.url} alt="foo" class="block sm:hidden w-full min-h-[500px] h-full object-cover overflow-hidden">
-        
-        <div class="absolute w-full top-0 left-0 h-full  maxh-128 bg-[#262626b3] z-10">
-         <Container class="text-white">
-            <div class="my-4 md:my-8 md:ml-8">
-              <h2 class="text-xl sm:text-2xl">Der Baseballverein in Minden</h2>
-              <h2 class="text-2xl sm:text-3xl mb-10">Echt. Lokal. Nah.</h2>
-            </div>
-          </Container>
+    <section class:list={["relative w-full linear-background", `aspect-[2560/1707]`]}>
+      {/*  <img src={WPimage.url} alt={WPimage.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */}
+      <Picture
+        src={indexData.heroImg.url}
+        widths={[200, 400, 800, 1000]}
+        sizes="(max-width: 800px) 100vw, 800px"
+        alt={indexData.heroImg.alt}
+        fit="cover"
+        aspectRatio={indexData.heroImg.width/indexData.heroImg.height}
+        class="w-full hidden sm:block min-h-32 h-auto max-h-128 object-cover relative"
+      />
+  </section>
+      
 
-          <div class="md:block absolute md:static bottom-0  w-full items-center text-white">
-            <div class="md:mx-auto mt-auto md:w-128 p-8 bg-gray-400/40 backdrop-blur-sm md:rounded-lg">
-              {/* <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p> */}
-              <p set:html={indexData.heroText}></p>
-              <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
-              <div class="text-center font-medium text-lg">
-                {/* <p class="">Dienstag, 18:00-20:00 Uhr</p> */}
-                {/* <p class="">Samstags, 10:00-12:00 Uhr</p> */}
-                <p set:html={indexData.training1}></p>
-                <p set:html={indexData.training2}></p>
-              </div>
+      {/* For some reason, on this image i can set a min-height. So it could work with the code-block below instead of the colorful card beneath */}
+      <img src={indexData.heroImg.url} alt="foo" class="block sm:hidden w-full min-h-[500px] h-full object-cover overflow-hidden">
+      
+      <div class="absolute w-full top-0 left-0 h-full  maxh-128 bg-[#262626b3] z-10">
+        <Container class="text-white">
+          <div class="my-4 md:my-8 md:ml-8">
+            <h2 class="text-xl sm:text-2xl">Der Baseballverein in Minden</h2>
+            <h2 class="text-2xl sm:text-3xl mb-10">Echt. Lokal. Nah.</h2>
+          </div>
+        </Container>
+
+        <div class="md:block absolute md:static bottom-0  w-full items-center text-white">
+          <div class="md:mx-auto mt-auto md:w-128 p-8 bg-gray-400/40 backdrop-blur-sm md:rounded-lg">
+            {/* <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p> */}
+            <p set:html={indexData.heroText}></p>
+            <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
+            <div class="text-center font-medium text-lg">
+              {/* <p class="">Dienstag, 18:00-20:00 Uhr</p> */}
+              {/* <p class="">Samstags, 10:00-12:00 Uhr</p> */}
+              <p set:html={indexData.training1}></p>
+              <p set:html={indexData.training2}></p>
             </div>
-          </div> 
-      </div>
-  </div>
+          </div>
+        </div> 
+    </div>
+</div>
 	
 
 	<Container>
