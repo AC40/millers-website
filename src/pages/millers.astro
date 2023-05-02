@@ -1,6 +1,7 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
+import Standings from "@components/standings.astro"
 import { Picture } from "@astrojs/image/components";
 import { getImage } from "Networking/wordpress";
 import Secret from "@components/Secret.astro"
@@ -29,6 +30,12 @@ const WPimage = getImage(data)
     </section>
 	
 	<Container>
+
+        <h3 class="text-lg">Rangliste der aktuellen Saison</h3>
+        <section>
+            <Standings url="https://bsm.baseball-softball.de/leagues/1564/table.json"/>
+        </section>
+
         <h3 class="text-xl">Trainer</h3>
         <section class="flex flex-wrap gap-4 pb-4">
 
@@ -43,6 +50,5 @@ const WPimage = getImage(data)
                 <p><Secret string="d.hasfeld@mindenmillers.de" link="d.hasfeld@mindenmillers.de" nostyle={true} /></p>
             </div>
         </section>
-        <h3 class="text-lg">Hier können noch weitere informationen veröffentlicht werden.</h3>
 	</Container>
 </Layout>
