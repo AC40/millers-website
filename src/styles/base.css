@@ -54,63 +54,6 @@ hr {
   border-left: 3px solid #ccc;
 }
 
-/* Bubbles on index page */
-.bubble {
-	position: relative;
-	line-height: 1.4em;
-	border: 2px solid transparent;
-	font-family: sans-serif;
-	font-size: large;
-}
-
-.bubble:before,
-.bubble:after {
-	content: ' ';
-	position: absolute;
-	width: 0;
-	height: 0;
-}
-
-.speech-bl:before {
-	left: 30px;
-	bottom: -30px;
-	border: 15px solid;
-	border-color: transparent transparent transparent transparent;
-}
-
-.speech-bl:after {
-	left: 32px;
-	bottom: -25px;
-	border: 15px solid;
-	border-color: rgb(209 213 219) transparent transparent rgb(209 213 219);
-}
-
-.speech-br:before {
-	right: 30px;
-	bottom: -30px;
-	border: 15px solid;
-	border-color: transparent transparent transparent transparent;
-}
-
-.speech-br:after {
-	right: 32px;
-	bottom: -25px;
-	border: 15px solid;
-	border-color: rgb(209 213 219) rgb(209 213 219) transparent transparent ;
-}
-
-.bubble-border {
-  border-color: #333;
-}
-
-.bubble-border.speech-bl:before {
-  border-color: #333 transparent transparent #333;
-}
-
-.bubble-border.speech-br:before {
-  border-color: #333 #333 transparent transparent;
-}
-
 /* Wordpress styling */
 .wordpress a {
 	color: blue

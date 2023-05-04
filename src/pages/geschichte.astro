@@ -3,6 +3,8 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import { Picture } from "@astrojs/image/components";
 
+import "../styles/timeline.css";
+
 import bückeburgBanditsTeam from "../assets/millers/historie/bückeburg-bandits.jpg";
 import hitterPortrait from "../assets/millers/historie/schlagmann.jpg";
 import mindenMillersTeam from "../assets/millers/historie/minden-millers.jpg";
@@ -11,8 +13,102 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 
 <Layout title="Historisches">
 	<Container>
-		<h1 class="text-2xl mb-10">Die Geschichte der Minden Millers</h1>
+		<h1 class="text-2xl mb-2">Die Geschichte der Minden Millers</h1>
 
+		<div class="mb-8">
+			<div class="section-header">
+				<hr />
+			</div>
+			<div class="steps">
+				<div class="steps-container">
+					<div class="content">
+						<h2>Anfänge in Bückeburg</h2>
+						<p>
+							Der erste Baseball Verein der Region gründete sich
+							in Bückeburg. Unter dem Vorsitzenden Norman Arnold
+							spielten die Bückeburg Bandits ihre erste Saison in
+							Niedersachsen.
+						</p>
+					</div>
+					<i class="step-line"></i>
+					<div class="date">1993</div>
+				</div>
+				<div class="steps-container">
+					<div class="content">
+						<h2>Das erste Spielfeld</h2>
+						<p>
+							Nach einigen Problemen, ein passendes Spielfeld zu
+							finden, erfolgte 1995 die Fusion mit dem VfR Evesen.
+							Doch auf hier gab es Probleme: Das Baseballfeld
+							musste improvisiert werden und lag zum größten Teil
+							auf einem Fußballplatz. Da Baseballspiele in der
+							Regen keiner Zeitbegrenzung unterliegen, kam es zu
+							Abstimmungsproblemen mit der Fußballabteilung.
+						</p>
+					</div>
+					<i class="step-line"></i>
+					<div class="date">1995 A</div>
+				</div>
+				<div class="steps-container">
+					<div class="content">
+						<h2>Die Idee des Umzugs</h2>
+						<p>
+							Noch im gleichen Jahr entstanden durch intensive
+							Bemühungen von Voker Türk erste Kontakte zu Stadt
+							Minden, die die nötige Weitsicht besaß mit der
+							Ansiedlung eines Baseballvereins das sportliche
+							Angebot insbesondere für Jugendliche zu erweitern.
+							Nach einigen Gesprächen war klar: Ein Wechsel der
+							Vereins nach Minden bot langfristige Perspektiven.
+						</p>
+					</div>
+					<i class="step-line"></i>
+					<div class="date">1995 B</div>
+				</div>
+				<div class="steps-container">
+					<div class="content">
+						<h2>Der Umzug nach Minden</h2>
+						<p>
+							Im folgenden Jahr wurde der Umzug dann formell
+							vollzogen und der Verein Minden Bandits Baseball und
+							Softball Team 1996 e. V. gegründet. Da im
+							nordrhein-westfälischen Landesverband jedoch bereits
+							eine Mannschaft mit Namen Bandits spielte, musste
+							ein neuer Name für das spielende Team her. Nach
+							kurzer Überlegung kam man überein, dass das Herren
+							Team als Minden Millers, in Anspielung auf den
+							Mühlenkreis, in der Kreisliga antreten sollte.
+						</p>
+					</div>
+					<i class="step-line"></i>
+					<div class="date">1996</div>
+				</div>
+				<div class="steps-container">
+					<div class="content">
+						<h2>In Minden angekommen</h2>
+						<p>
+							Norman Arnold, langjähriger Vorsitzender und Trainer der
+							Bandits hatte den Umzug noch begleitet, musste dann aber
+							aus beruflichen Gründen seine Posten im Verein aufgeben.
+							Der besonders schmerzliche Verlust des qualifizierten
+							Trainers und präsenten Organisators traf das Team.
+							Volker Türk übernahm die Leitung des Vereins und
+							glücklicherweise konnte wenig später mit dem Amerikaner
+							Keith Meeker, dem US Verbindungsoffizier der
+							Heeresflieger Waffenschule in Bückeburg, ein
+							hervorragender Trainer gefunden werden. So führte Meeker
+							das nun als Millers bekannte Team 1998 zur
+							Kreismeisterschaft und stand für konstante Leistungen in
+							der Bezirksliga in den folgenden Jahren.
+						</p>
+					</div>
+					<i class="step-line"></i>
+					<div class="date">1998</div>
+				</div>
+			</div>
+		</div>
+
+		{/*
 		<div class="space-y-4">
 			<div class="">
 				<h2 class="text-xl">Die Anfänge in Bückeburg</h2>
@@ -24,7 +120,8 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 						sizes="300px"
 						class="col-start-2 col-end-2 lg:m-auto float-right lg:float-none"
 					/>
-					<div class="basis-3/4 row-start-1 row-end-1 col-start-1 col-end-1">
+					<div
+						class="basis-3/4 row-start-1 row-end-1 col-start-1 col-end-1">
 						<p>
 							Der erste Baseball Verein der Region gründete sich
 							1993 in Bückeburg. Unter dem Vorsitzenden Norman
@@ -55,7 +152,6 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 							class=""
 						/>
 					</div>
-					
 				</div>
 			</div>
 
@@ -115,5 +211,6 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 				/>
 			</div>
 		</div>
+		*/}
 	</Container>
 </Layout>

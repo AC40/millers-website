@@ -4,13 +4,14 @@ import Layout from "@layouts/Layout.astro";
 import { Picture } from "@astrojs/image/components";
 import { indexData, formatDate } from "Networking/wordpress";
 
+import "../styles/speech-bubble.css"
 ---
 
 <Layout title="Home">
   <!-- Header img -->
   <div class:list={["w-full md:min-h-0 max-h-128 relative"]}>
 
-    <section class:list={["relative w-full linear-background", `aspect-[2560/1707]`]}>
+    <section class:list={["relative w-full linear-background max-h-128", `aspect-[2560/1707]`]}>
       {/*  <img src={WPimage.url} alt={WPimage.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */}
       <Picture
         src={indexData.heroImg.url}
