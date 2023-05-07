@@ -1,8 +1,5 @@
 ---
-const json = await (await fetch("https://bsm.baseball-softball.de/clubs/354/matches.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw")).json()
-
-const str = JSON.stringify(json)
-
+import { eventsJSON } from "../Networking/events"
 ---
 
 <head>
@@ -38,8 +35,6 @@ const str = JSON.stringify(json)
 			},
 			description: createMatchDescription(match)
 		}))
-
-		console.log(valid);
 
 		function getWidth() {
 			return Math.max(
@@ -97,7 +92,6 @@ const str = JSON.stringify(json)
 
 			window.addEventListener("resize", function () {
 				const width = getWidth();
-				console.log("ran");
 				if (width >= 600 && prevWidth < 600) {
 					calendar.changeView("dayGridMonth");
 				} else if (width < 600 && prevWidth > 600) {
@@ -115,4 +109,4 @@ const str = JSON.stringify(json)
 
 <div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto overflow-hidden">
 </div>
-<span id="bsm-data-storage" data-bsmstorage={str} ></span>
+<span id="bsm-data-storage" data-bsmstorage={eventsJSON} ></span>

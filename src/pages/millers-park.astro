@@ -1,12 +1,14 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
+import CookieBanner from "@components/cookie-banner.astro"
 import { Picture } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
 
 import abstechenImg from "../assets/millers/historie/ballpark-stechen.jpg";
 import plans from "../assets/millers/historie/plans.jpg";
 import backstop from "../assets/millers/historie/backstop.jpg";
+import OsmMap from "@components/osm-map.astro";
 ---
 
 <Layout title="Baseballplatz">
@@ -21,11 +23,26 @@ import backstop from "../assets/millers/historie/backstop.jpg";
 					<p>Innenstadt</p>
 					<p>32425 Minden</p>
 					<p>Deutschland</p>
-					<p class="mt-4">
+					<hr class="mt-2 h-2">
+					<div class="mt-4">
+						<a
+							href="https://osm.org/go/0Gw2EZ1fU-?m="
+							target="_blank"
+							class="p-2 bg-green-100 border-green-600 hover:border-green-800 hover:bg-green-800 border-2 rounded border-solid hover:text-white"
+							><Icon
+								class="w-4 inline mb-1"
+								name="uil:external-link-alt"
+								title={"Dieser Externe Link führt zu 'https://osm.org/go/0Gw2EZ1fU-?m='"}
+							/>
+							In Open Street Maps öffnen</a
+						>
+					</div>
+					<div class="mt-8">
+						
 						<a
 							href="https://goo.gl/maps/bUZrfPfqXhRzAjxj6"
 							target="_blank"
-							class="p-2 bg-green-100 border-green-600 hover:border-green-800 hover:bg-green-800 border-2 rounded border-solid hover:text-white"
+							class="p-2 bg-orange-100 border-orange-400 hover:border-orange-600 hover:bg-orange-600 border-2 rounded border-solid hover:text-white"
 							><Icon
 								class="w-4 inline mb-1"
 								name="uil:external-link-alt"
@@ -33,7 +50,7 @@ import backstop from "../assets/millers/historie/backstop.jpg";
 							/>
 							In Google Maps öffnen</a
 						>
-					</p>
+					</div>
 					<div class="mt-8">
 						<a
 							href={`https://maps.apple.com/?address=Tietzelweg%207,%20Innenstadt,%2032425%20Minden,%20Germany&ll=52.310181,8.880242&q=Tietzelweg%207`}
@@ -48,16 +65,21 @@ import backstop from "../assets/millers/historie/backstop.jpg";
 							In Apple Maps öffnen</a
 						>
 					</div>
+					
 				</div>
-				<div class="mt-8 md:mt-0 md:ml-8 grow">
-					<iframe
+				<div class="mt-8 md:mt-0 md:ml-8 grow border border-slate-900">
+					<OsmMap />
+					{/* <CookieBanner />
+					<iframe id="osm-embedding-map" width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=8.876717090606691%2C52.30703546237885%2C8.88424873352051%2C52.31307018749841&amp;layer=mapnik&amp;marker=52.310052927774194%2C8.880482912063599" style="border: 1px solid black"></iframe> -->
+					<!-- <iframe
 						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3096.795593103269!2d8.87579599964047!3d52.31015809503097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ba745c9e3f3d65%3A0x61c39557574948ad!2sTietzelweg%207%2C%2032425%20Minden!5e1!3m2!1sen!2sde!4v1680634939620!5m2!1sen!2sde"
 						width="100%"
 						height="600"
 						style="border:0;"
 						allowfullscreen=""
 						loading="lazy"
-						referrerpolicy="no-referrer-when-downgrade"></iframe>
+						referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+					*/}
 				</div>
 			</div>
 		</section>
@@ -75,7 +97,7 @@ import backstop from "../assets/millers/historie/backstop.jpg";
 			/>
 			<p>
 				Im Jahr 1996 fiel die Entscheidung den Vereinssitz nach Minden
-				zu verlegen. Nach dem Abzug der Britischen StreitkrÃ¤fte lagen
+				zu verlegen. Nach dem Abzug der Britischen Streitkräfte lagen
 				dort viele Sportflächen über Jahre brach und so war auch schnell
 				ein Gelände für die Millers gefunden - das ehemalige
 				Cricketfield in den Kingsley Barracks.

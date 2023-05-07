@@ -3,8 +3,10 @@ import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import { Picture } from "@astrojs/image/components";
 import { indexData, formatDate } from "Networking/wordpress";
+import { Event, nextEvents } from "Networking/events"
 
 import "../styles/speech-bubble.css"
+import { lime } from "tailwindcss/colors";
 ---
 
 <Layout title="Home">
@@ -66,21 +68,30 @@ import "../styles/speech-bubble.css"
 
     </div> */}
  
-    <!-- HISTORY -->
-    <section class="mb-24 lg:w-3/5">
-      <div class="text-2xl">
+    
+    <!-- NEXT EVENTS -->
+    <section class="mb-24">
+      <div class="text-2xl mb-4">
         <strong>
-          <span class="align-middle inline-block">Geschichte</span>
-          <i class="bi bi-clock-history inline-block ml-6 text-4xl "></i>
+          <span class="align-middle inline-block">Anstehende Events</span>
+          <i class="bi bi-calendar-range inline-block ml-6 text-5xl"></i>
         </strong>
       </div>
-      <p class="py-8">Aus dem damals ersten Baseballverein der Region, den Bückeburg Bandits, haben sich um 1996 die Minden Bandits entwickelt, und vertreten somit seit über über 25 Jahren im Kreis Minden-Lübbecke den Sport Baseball.</p>
-      <br>
-      <a href="/geschichte" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Weiterlesen</a>
+
+      <ul class="list-disc ml-4">
+        {
+          nextEvents(3).map((event) => (
+            <li class="mb-4 last:mb-0">
+              <h4 class="text-lg">{event.home} vs. {event.away}</h4>
+              <p class="text-md text-gray-600">{event.date.toLocaleDateString()} | {event.fieldName}</p>
+            </li>
+          ))
+        }
+      </ul>
     </section>
     
     <!-- NEWS -->
-    <section class="text-right">
+    <section class="text-right mb-24">
       <div class="text-2xl">
         <strong>
           <i class="bi bi-megaphone-fill inline-block mr-8 text-5xl -rotate-45"></i>
@@ -110,6 +121,17 @@ import "../styles/speech-bubble.css"
       <a href="/news" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Mehr News</a>
     </section>
 
-    <!-- DATES -->
+    <!-- HISTORY -->
+    <section class="mb-24 lg:w-3/5">
+      <div class="text-2xl">
+        <strong>
+          <span class="align-middle inline-block">Geschichte</span>
+          <i class="bi bi-clock-history inline-block ml-6 text-5xl "></i>
+        </strong>
+      </div>
+      <p class="py-8">Aus dem damals ersten Baseballverein der Region, den Bückeburg Bandits, haben sich um 1996 die Minden Bandits entwickelt, und vertreten somit seit über über 25 Jahren im Kreis Minden-Lübbecke den Sport Baseball.</p>
+      <br>
+      <a href="/geschichte" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Weiterlesen</a>
+    </section>
 	</Container>
 </Layout>
