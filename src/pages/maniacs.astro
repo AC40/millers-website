@@ -12,9 +12,6 @@ const data = await res.json()
 const coachesRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/trainer?team=6")
 const coachesData = await coachesRes.json()
 
-console.log(coachesData);
-
-
 const coaches = coachesData.map((coach) => (coach.acm_fields))
 
 // Force unwrapping

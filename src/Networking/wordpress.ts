@@ -36,18 +36,14 @@ export function getCompressedImage(img: any, resolution: WPResolution, altText: 
 
     if (details == undefined) {
         details = sizes.medium
-        console.log("Switched to md");
-        
     }
 
     if (details == undefined) {
         details = sizes.medium_large
-        console.log("Switched to mdlg");
     }
 
     if (details == undefined) {
         details = sizes.full
-        console.log("Switched to full");
     }
 
     const url = details.source_url
