@@ -8,6 +8,15 @@ import Secret from "@components/Secret.astro"
 const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=maniacs-team")
 const data = await res.json()
 
+// team=6 checks for the team 'millers'
+const coachesRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/trainer?team=6")
+const coachesData = await coachesRes.json()
+
+console.log(coachesData);
+
+
+const coaches = coachesData.map((coach) => (coach.acm_fields))
+
 // Force unwrapping
 const img = getCompressedImage(data[0].acm_fields.bild, WPResolution.full, data[0].acm_fields.beschreibung)!
 ---
@@ -34,18 +43,18 @@ const img = getCompressedImage(data[0].acm_fields.bild, WPResolution.full, data[
 	<Container>
         <h3 class="text-xl">Trainer</h3>
         <section class="flex flex-wrap gap-4 pb-4">
-
-            <div class="grow p-5 bg-slate-200 rounded-sm">
-                <strong>Tanja Müthers</strong>
-                <p><Secret string="trainer.maniacs@mindenmillers.de" link="mailto:trainer.maniacs@mindenmillers.de" nostyle={true} /></p>
-                <p><Secret string="0160 6350069" link="tel:0160 6350069" nostyle={true} /></p>
-            </div>
-
-            <div class="grow p-5 bg-slate-200 rounded-sm">
-                <strong>Annika Hartmann</strong>
-                <p class=""><Secret string="a.hartmann@mindenmillers.de" link="mailto:a.hartmann@mindenmillers.de" nostyle={true} /></p>
-            </div>
-        </section>
-        <h3 class="text-lg">Hier können noch weitere informationen veröffentlicht werden.</h3>
+            {
+                coaches.map((coach) => (
+                    <div class="grow p-5 bg-slate-200 rounded">
+                        <strong>{coach.name}</strong>
+                        <p><Secret string={coach.email} link={"mailto:" + coach.email} nostyle={true} /></p>
+                        {
+                            (coach.telefon_nummer != "")
+                            ? <p><Secret string={coach.telefon_nummer} link={"tel:" + coach.telefon_nummer} nostyle={true} /></p>
+                            : <span></span>
+                        }
+                    </div>
+                ))
+            }
 	</Container>
 </Layout>

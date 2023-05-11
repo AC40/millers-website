@@ -6,11 +6,17 @@ import { Picture } from "@astrojs/image/components";
 import { getCompressedImage, WPResolution } from "Networking/wordpress";
 import Secret from "@components/Secret.astro"
 
-const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=millers")
-const data = await res.json()
+const imgRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=millers")
+const imgData = await imgRes.json()
+
+// team=5 checks for the team 'millers'
+const coachesRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/trainer?team=5")
+const coachesData = await coachesRes.json()
+
+const coaches = coachesData.map((coach) => (coach.acm_fields))
 
 // Force unwrapping
-const img = getCompressedImage(data[0].acm_fields.bild, WPResolution.full, data[0].acm_fields.beschreibung)!
+const img = getCompressedImage(imgData[0].acm_fields.bild, WPResolution.full, imgData[0].acm_fields.beschreibung)!
 ---
 
 <Layout title="Millers">
@@ -32,24 +38,28 @@ const img = getCompressedImage(data[0].acm_fields.bild, WPResolution.full, data[
 	
 	<Container>
 
+        {/* 
+        <!-- Dieses feature existiert (scheinbar nur für unsere Liga) nicht -->
         <h3 class="text-lg">Rangliste der aktuellen Saison</h3>
         <section>
-            <Standings url="https://bsm.baseball-softball.de/leagues/1564/table.json"/>
+            <Standings url="https://bsm.baseball-softball.de/leagues/5275/table.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw"/>
         </section>
-
+        */}
         <h3 class="text-xl">Trainer</h3>
         <section class="flex flex-wrap gap-4 pb-4">
-
-            <div class="grow p-5 bg-slate-200 rounded-sm">
-                <strong>Dario Erhardt</strong>
-                <p><Secret string="trainer.millers@mindenmillers.de" link="mailto:trainer.millers@mindenmillers.de" nostyle={true} /></p>
-                <p><Secret string="0160 6350069" link="tel:0160 6350069" nostyle={true} /></p>
-            </div>
-
-            <div class="grow p-5 bg-slate-200 rounded-sm">
-                <strong>Dennis Hasfeld</strong>
-                <p><Secret string="d.hasfeld@mindenmillers.de" link="d.hasfeld@mindenmillers.de" nostyle={true} /></p>
-            </div>
+            {
+                coaches.map((coach) => (
+                    <div class="grow p-5 bg-slate-200 rounded">
+                        <strong>{coach.name}</strong>
+                        <p><Secret string={coach.email} link={"mailto:" + coach.email} nostyle={true} /></p>
+                        {
+                            (coach.telefon_nummer != "")
+                            ? <p><Secret string={coach.telefon_nummer} link={"tel:" + coach.telefon_nummer} nostyle={true} /></p>
+                            : <span></span>
+                        }
+                    </div>
+                ))
+            }
         </section>
 	</Container>
 </Layout>
