@@ -4,14 +4,20 @@ import Button from "./ui/button.astro";
 
 const { page, class: className } = Astro.props
 
-const pages = Array.from(Array(page.lastPage).keys())
+var pages: number[] = [4, 5, 6]
+
+if (page == undefined) {
+    console.log("Page in pagination controller == undefined");
+} else {
+    pages = Array.from(Array(page.lastPage).keys())
+}
 ---
 
 <div class="flex justify-around">
     <div class:list={["flex justify-center text-lg mt-4", className]}>
 
         {
-            (page.lastPage != 1)
+            (page != undefined && page.lastPage != 1)
             ? <div class="rounded-t-md sm:rounded-md border border-gray-200 shadow-sm flex">
     
                 <a href={page.url.prev} class:list={["pgnt-step-btn pgnt-step-prev border-r", (page.url.prev == null) ? "disabled" : ""]}>

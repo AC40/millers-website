@@ -4,7 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Standings from "@components/standings.astro"
 import { Picture } from "@astrojs/image/components";
 import { getCompressedImage, WPResolution } from "Networking/wordpress";
-import Secret from "@components/Secret.astro"
+import Secret from "../components/Secret.astro"
 
 const imgRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=millers")
 const imgData = await imgRes.json()

@@ -4,8 +4,8 @@ import Container from "@components/container.astro";
 import Email from "@components/email.astro"
 import Phone from "@components/phone.astro"
 import { Picture } from "@astrojs/image/components";
-import { getVorstandsMitglieder } from "Networking/vorstand";
-import { getImage } from "Networking/wordpress"
+import { getVorstandsMitglieder } from "../Networking/vorstand"
+import { WPResolution, getCompressedImage } from "Networking/wordpress"
 import { Icon } from "astro-icon";
 
 // Get member data
@@ -14,7 +14,7 @@ const members = getVorstandsMitglieder(data)
 
 // Get image data
 const imgData = await (await (fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitebilder?slug=vorstand"))).json()
-const image = getImage(imgData)
+const image = getCompressedImage(imgData[0].acm_fields.bild, WPResolution.mdlg, imgData[0].acm_fields.bild.alt_text)
 ---
 
 <Layout title="Vorstand">
@@ -23,35 +23,41 @@ const image = getImage(imgData)
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <Picture src={image.url} alt={image.alt} widths={[400, 800, 1600]} sizes="100%" aspectRatio={image.width/image.height} class="rounded"></Picture>
-        <div>
             {
-                members.map((member) => (
-                    
-                    <h3 class="text-lg"><span class="text-gray-900">{ member.role }: </span> <span class="font-medium">{ member.name }</span></h3>
-    
-                    <div class="mb-4">
-                    
-                        <span class="text-gray-600">
-                            <Icon name="uil:envelope" class="w-4 inline mb-1" />
-                            <Email email={member.email} class="hover:text-blue-500 hover:underline"/>
-                            <br class="sm:hidden">
-                            <span>
-                                {
-                                    (member.phone != "" && member.phone != undefined)
-                                    ? <span class="hidden sm:inline"> | </span><Icon name="uil:phone" class="w-4 inline mb-1" /><Phone phone={member.phone} class="hover:text-blue-500 hover:underline" />
-                                    : <span></span>
-                                }
-                            </span>
-                        </span>
-    
-                    </div>
-                    
-                    
-    
-                ))
+                (image != undefined)
+                ?  <Picture src={image.url} alt={image.alt} widths={[400, 800, 1600]} sizes="100%" aspectRatio={image.width/image.height} class="rounded"></Picture>
+                : <span></span>
             }
-        </div>
+
+           
+            <div>
+                {
+                    members.map((member) => (
+                        
+                        <h3 class="text-lg"><span class="text-gray-900">{ member.role }: </span> <span class="font-medium">{ member.name }</span></h3>
+        
+                        <div class="mb-4">
+                        
+                            <span class="text-gray-600">
+                                <Icon name="uil:envelope" class="w-4 inline mb-1" />
+                                <Email email={member.email} class="hover:text-blue-500 hover:underline"/>
+                                <br class="sm:hidden">
+                                <span>
+                                    {
+                                        (member.phone != "" && member.phone != undefined)
+                                        ? <span class="hidden sm:inline"> | </span><Icon name="uil:phone" class="w-4 inline mb-1" /><Phone phone={member.phone} class="hover:text-blue-500 hover:underline" />
+                                        : <span></span>
+                                    }
+                                </span>
+                            </span>
+        
+                        </div>
+                        
+                        
+        
+                    ))
+                }
+          </div>
 
         </div>
         
