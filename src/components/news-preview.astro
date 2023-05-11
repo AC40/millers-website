@@ -1,0 +1,38 @@
+---
+import { Picture } from "@astrojs/image/components";
+import { formatDate, previewHTML } from "Networking/Utility"
+import { WPResolution, getCompressedImage, WPimage } from "Networking/wordpress";
+
+// Get post object as prop
+const { post } = Astro.props
+
+var img: WPimage | undefined 
+
+if (post != undefined && post.acm_fields.coverBild != undefined) {
+    img = getCompressedImage(post.acm_fields.coverBild, WPResolution.small, post.acm_fields.coverBild.alt_text)
+}
+---
+<li class="my-4 mb-6 last:mb-0 bg-slate-200 rounded-md w-full overflow-hidden">
+    <a href={"/news/" + post.slug + "/"} class="grid grid-cols-1 sm:grid-cols-3 sm:h-48">
+        {
+            (img != undefined)
+            ? <Picture src={img.url} alt={img.alt} widths={[300, 656, img.width]} sizes="" aspectRatio={img.width/img.height} class="col-span-1 row-span-2 rounded-t-md sm:rounded-tr-none sm:rounded-l-md object-cover object-center h-48 w-full" />
+            : <span class="hidden"/>
+        }
+
+        <div class:list={[(post.acm_fields.coverBild.media_details != undefined) ? "sm:col-span-2" : "sm:col-span-3", "col-span-1 row-span-1 px-4 sm:pb-4 pt-4 relative"]}>
+            <h2 class="text-slate-900 text-lg sm:text-xl" set:html={post.acm_fields.titel}></h2>
+
+            <div class="flex text-slate-700 text-sm sm:text-md">
+                <p class="">{ formatDate(new Date(post.date)) } </p>
+                <p> { (post.acm_fields.newsauthor != "") ? " • " + post.acm_fields.newsauthor : "" }</p>
+            </div>
+
+            <div class="relative h-24 sm:h-32 overflow-hidden mt-2 fade-out-bottom-text text-slate-800">
+                <Fragment set:html={previewHTML(post.acm_fields.text)}/>    
+            </div>
+            
+        </div>
+    </a>
+    
+</li>

@@ -1,0 +1,5 @@
+---
+import Secret from "@components/Secret.astro"
+const { email, class: className } = Astro.props
+---
+<span><Secret string={email} link={"mailto:" + email} nostyle={true} class={className} /></span>

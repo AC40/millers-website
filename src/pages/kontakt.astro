@@ -5,40 +5,54 @@ import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
 import Button from "@components/ui/button.astro";
 import Contactform from "@components/contactform.astro";
+import Secret from "@components/Secret.astro";
 ---
 
 <Layout title="Kontakt">
-  <Container>
-    <Sectionhead>
-      <Fragment slot="title">Kontakt</Fragment>
-      <Fragment slot="desc">Wie können wir helfen?</Fragment>
-    </Sectionhead>
+	<Container>
+		<Sectionhead>
+			<Fragment slot="title">Kontakt</Fragment>
+			<Fragment slot="desc">Wie können wir helfen?</Fragment>
+		</Sectionhead>
 
-    <div class="grid md:grid-cols-2 gap-10 mx-auto max-w-4xl mt-16">
-      <div>
-        <h2 class="font-medium text-2xl text-gray-800">Kontaktieren sie uns</h2>
-        <p class="text-lg leading-relaxed text-slate-500 mt-3">
-          Sie haben fragen oder anliegen? Kontaktieren sie uns
-        </p>
-        <div class="mt-5">
-          <div class="flex items-center mt-2 space-x-2 text-gray-600">
-            <Icon class="text-gray-400 w-4 h-4" name="uil:map-marker" />
-            <span>Tietzelweg 7, 23245 Minden</span>
-          </div><div class="flex items-center mt-2 space-x-2 text-gray-600">
-            <Icon class="text-gray-400 w-4 h-4" name="uil:envelope" /><a
-              href="mailto:minden@millers.de"
-              >minden@millers.de</a
-            >
-          </div><div class="flex items-center mt-2 space-x-2 text-gray-600">
-            <Icon class="text-gray-400 w-4 h-4" name="uil:phone" /><a
-              href="tel:0176 1234567899">0176 123456789</a
-            >
-          </div>
-        </div>
-      </div>
-      <div>
-        <Contactform />
-      </div>
-    </div>
-  </Container>
+		<div class="grid md:grid-cols-2 gap-10 mx-auto max-w-4xl mt-16">
+			<div>
+				<h2 class="font-medium text-2xl text-gray-800">
+					Kontaktiere uns jetzt
+				</h2>
+				<p class="text-lg leading-relaxed text-slate-500 mt-3">
+					Du hast Fragen oder Anliegen? Kontaktiere uns per Email oder Telefon!
+				</p>
+				<div class="mt-5">
+					<div class="flex items-center mt-2 space-x-2 text-gray-600">
+						<Icon
+							class="text-gray-400 w-4 h-4"
+							name="uil:map-marker"
+						/>
+						<span class="hover:underline"><a href="https://goo.gl/maps/bUZrfPfqXhRzAjxj6" target="_blank">Tietzelweg 7, 23245 Minden</a></span>
+					</div><div
+						class="flex items-center mt-2 space-x-2 text-gray-600">
+						<Icon
+							class="text-gray-400 w-4 h-4"
+							name="uil:envelope"
+						/>
+						
+            <span><Secret string="minden@millers.de" link="mailto:minden@millers.de" nostyle={true} /></span>
+					</div>
+            
+            <div
+						class="flex items-center mt-2 space-x-2 text-gray-600">
+						<Icon
+							class="text-gray-400 w-4 h-4"
+							name="uil:phone"
+						/>
+            <p><Secret string="0176 1234567899" link="tel:0176 1234567899" nostyle={true} /></p>
+					</div>
+				</div>
+			</div>
+			<div>
+				<Contactform />
+			</div>
+		</div>
+	</Container>
 </Layout>

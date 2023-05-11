@@ -1,0 +1,79 @@
+---
+import { Icon } from "astro-icon";
+import Button from "./ui/button.astro";
+
+const { page, class: className } = Astro.props
+
+const pages = Array.from(Array(page.lastPage).keys())
+---
+
+<div class="flex justify-around">
+    <div class:list={["flex justify-center text-lg mt-4", className]}>
+
+        {
+            (page.lastPage != 1)
+            ? <div class="rounded-t-md sm:rounded-md border border-gray-200 shadow-sm flex">
+    
+                <a href={page.url.prev} class:list={["pgnt-step-btn pgnt-step-prev border-r", (page.url.prev == null) ? "disabled" : ""]}>
+                    <Icon name="uil:angle-left" class="inline w-8 mb-1" />
+                    Zurück
+                </a>
+
+                {
+                    pages.map(i => (
+                        <a href={"/news/" + (i+1)} class:list={["pgnt-page-btn text-center w-12 h-12 hover:bg-gray-100 selected:border selected:border-black rounded-sm leading-12 hidden sm:block", (i+1 == page.currentPage) ? "selected disabled" : ""]} >{i+1}</a>
+                    ))
+                }
+
+                <a href={page.url.next} class:list={["pgnt-step-btn pgnt-step-next border-l", (page.url.next == null) ? "disabled" : ""]}>
+                    Weiter
+                    <Icon name="uil:angle-right" class="inline w-8 mb-1" />
+                </a>
+                
+            </div>
+
+            <div class="rounded-b-md border-b border-x justify-evenly border-gray-200 shadow-sm flex">
+                <a href={"/news/" + "1"} class:list={[" pgnt-step-btn border-r sm:hidden", (page.currentPage == 1) ? "disabled" : ""]}>
+                    <Icon name="uil:angle-double-left" class="inline w-8 mb-1" />
+                    Start
+                </a>
+
+                <a href={"/news/" + page.lastPage} class:list={["pgnt-step-btn border-l sm:hidden", (page.lastPage == page.currentPage) ? "disabled" : ""]}>
+                    Ende
+                    <Icon name="uil:angle-double-right" class="inline w-8 mb-1" />
+                </a>
+            </div>
+
+            : <span></span>
+        }
+        
+        
+    </div>
+</div>
+
+
+<style>
+    .pgnt-step-btn {
+        @apply grow shrink basis-0 w-32 text-center px-2 leading-12;
+    }
+
+    .pgnt-step-btn.disabled {
+        @apply text-gray-500 pointer-events-none;
+    }
+
+    .pgnt-step-btn.disabled:hover {
+        @apply bg-transparent;
+    }
+
+    .pgnt-step-btn:hover {
+        @apply bg-gray-100;
+    }
+
+    .pgnt-page-btn.selected {
+        @apply border border-black rounded-sm text-gray-500 pointer-events-none;
+    }
+
+    .pgnt-page-btn.selected:hover {
+        @apply bg-transparent;
+    }
+</style>

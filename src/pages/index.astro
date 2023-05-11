@@ -1,65 +1,63 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
-import actionHero from "../assets/millers/action-hero.jpg";
 import { Picture } from "@astrojs/image/components";
-import { getCollection } from "astro:content";
+import { indexData, formatDate } from "Networking/wordpress";
+import { Event, nextEvents } from "Networking/events"
 
-const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
-const posts = await res.json()
-
-// Sort news by date
-posts.sort(function (a, b) {
-  return Date.parse(b.date) - Date.parse(a.date)
-});
-
-const newest = posts.slice(0, 2)
-
-function formatDate(date): string {
-    return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
-}
+import "../styles/speech-bubble.css"
+import { lime } from "tailwindcss/colors";
 ---
 
 <Layout title="Home">
   <!-- Header img -->
   <div class:list={["w-full md:min-h-0 max-h-128 relative"]}>
-        <Picture
-          src={actionHero}
-          widths={[200, 400, 800, 1000]}
-          sizes="(max-width: 800px) 100vw, 800px"
-          alt="Ein Bild von einem Baseballspieler der über die 2. Base rennt"
-          fit="cover"
-          class="w-full hidden sm:block min-h-32 h-auto max-h-128 object-cover"
-        />
 
-        <!-- For some reason, on this image i can set a min-height. So it could work with the code-block below instead of the colorful card beneath -->
-        <img src={actionHero.src} alt="foo" class="block sm:hidden w-full min-h-[500px] h-full object-cover overflow-hidden">
-        
-        <div class="absolute w-full top-0 left-0 h-full  maxh-128 bg-[#262626b3] z-10">
-         <Container class="text-white">
-            <div class="my-4 md:my-8 md:ml-8">
-              <h2 class="text-xl sm:text-2xl">Der Baseballverein in Minden</h2>
-              <h2 class="text-2xl sm:text-3xl mb-10">Echt. Lokal. Nah.</h2>
-            </div>
-          </Container>
+    <section class:list={["hidden sm:block", "relative w-full linear-background max-h-128", `aspect-[2560/1707]`]}>
+      {/*  <img src={WPimage.url} alt={WPimage.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */}
+      <Picture
+        src={indexData.heroImg.url}
+        widths={[200, 400, 800, 1000]}
+        sizes="(max-width: 800px) 100vw, 800px"
+        alt={indexData.heroImg.alt}
+        fit="cover"
+        aspectRatio={indexData.heroImg.width/indexData.heroImg.height}
+        class="w-full hidden sm:block min-h-32 h-auto max-h-128 object-cover relative"
+      />
+  </section>
+      
 
-          <div class="md:block absolute md:static bottom-0  w-full items-center text-white">
-            <div class="md:mx-auto mt-auto md:w-128 p-8 bg-gray-400/40 backdrop-blur-sm md:rounded-lg">
-              <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p>
-              <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
-              <div class="text-center font-medium text-lg">
-                <p class="">Dienstag, 18:00-20:00 Uhr</p>
-                <p class="">Samstags, 10:00-12:00 Uhr</p>
-              </div>
+      {/* For some reason, on this image i can set a min-height. So it could work with the code-block below instead of the colorful card beneath */}
+      <img src={indexData.heroImg.url} alt="foo" class="block sm:hidden w-full min-h-[500px] h-full object-cover overflow-hidden linear-background">
+      
+      <div class="absolute w-full top-0 left-0 h-full  maxh-128 bg-[#262626b3] z-10">
+        <Container class="text-white">
+          <div class="my-4 md:my-8 md:ml-8">
+            <h2 class="text-xl sm:text-2xl">Der Baseballverein in Minden</h2>
+            <h2 class="text-2xl sm:text-3xl mb-10">Echt. Lokal. Nah.</h2>
+          </div>
+        </Container>
+
+        <div class="md:block absolute md:static bottom-0  w-full items-center text-white">
+          <div class="md:mx-auto mt-auto md:w-128 p-8 bg-gray-400/40 backdrop-blur-sm md:rounded-lg">
+            {/* <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p> */}
+            <p set:html={indexData.heroText}></p>
+            <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
+            <div class="text-center font-medium text-lg">
+              {/* <p class="">Dienstag, 18:00-20:00 Uhr</p> */}
+              {/* <p class="">Samstags, 10:00-12:00 Uhr</p> */}
+              <p set:html={indexData.training1}></p>
+              <p set:html={indexData.training2}></p>
             </div>
-          </div> 
-      </div>
-  </div>
+          </div>
+        </div> 
+    </div>
+</div>
 	
 
 	<Container>
-    <!-- Alternative placement for view currently place on header img -->
-    <!-- <div class="md:hidden p-8 bg-gradient-to-br from-yellow-300/50 to-red-300/50 rounded-md">
+    {/* Alternative placement for view currently place on header img */}
+    {/* <div class="md:hidden p-8 bg-gradient-to-br from-yellow-300/50 to-red-300/50 rounded-md">
 
       <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p>
       <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
@@ -68,23 +66,32 @@ function formatDate(date): string {
         <p>Samstags, 10:00-12:00 Uhr</p>
       </div>
 
-    </div> -->
+    </div> */}
  
-    <!-- HISTORY -->
-    <section class="mb-24 lg:w-3/5">
-      <div class="text-2xl">
+    
+    <!-- NEXT EVENTS -->
+    <section class="mb-24">
+      <div class="text-2xl mb-4">
         <strong>
-          <span class="align-middle inline-block">Geschichte</span>
-          <i class="bi bi-clock-history inline-block ml-6 text-4xl "></i>
+          <span class="align-middle inline-block">Anstehende Events</span>
+          <i class="bi bi-calendar-range inline-block ml-6 text-5xl"></i>
         </strong>
       </div>
-      <p class="py-8">Aus dem damals ersten Baseballverein der Region, den Bückeburg Bandits, haben sich um 1996 die Minden Bandits entwickelt, und vertreten somit seit über über 25 Jahren im Kreis Minden-Lübbecke den Sport Baseball.</p>
-      <br>
-      <a href="/geschichte" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Weiterlesen</a>
+
+      <ul class="list-disc ml-4">
+        {
+          nextEvents(3).map((event) => (
+            <li class="mb-4 last:mb-0">
+              <h4 class="text-lg">{event.home} vs. {event.away}</h4>
+              <p class="text-md text-gray-600">{event.date.toLocaleDateString()} | {event.fieldName}</p>
+            </li>
+          ))
+        }
+      </ul>
     </section>
     
     <!-- NEWS -->
-    <section class="text-right">
+    <section class="text-right mb-24">
       <div class="text-2xl">
         <strong>
           <i class="bi bi-megaphone-fill inline-block mr-8 text-5xl -rotate-45"></i>
@@ -94,25 +101,37 @@ function formatDate(date): string {
 
       <div class="grid grid-cols-6 p-6 mt-8 mb-6 ml-8 2xs:ml-auto w-auto 2xs:w-3/4 md:w-3/5 text-left bg-gray-300 rounded-xl bubble speech-br">
         <span class="col-span-5">
-          <span class="text">{newest[0].title.rendered}</span>
+          <span class="text">{indexData.newest[0].title.rendered}</span>
           <br>
-          <span class="text-sm text-gray-600">{formatDate(new Date(newest[0].date))}</span>
+          <span class="text-sm text-gray-600">{formatDate(new Date(indexData.newest[0].date))}</span>
         </span>
-        <span class="col-6 self-center text-right"><a href={"/news/" + newest[0].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
+        <span class="col-6 self-center text-right"><a href={"/news/" + indexData.newest[0].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
       </div>
+      
       
       <div class="grid grid-cols-6 p-4 mb-8 mr-8 2xs:mr-auto w-auto 2xs:w-3/4 md:w-3/5 bg-gray-300 rounded-lg text-left bubble speech-bl ">
         <span class="col-span-5">
-          <span class="text">{newest[1].title.rendered}</span>
+          <span class="text">{indexData.newest[1].title.rendered}</span>
           <br>
-          <span class="text-sm text-gray-600">{formatDate(new Date(newest[1].date))}</span>
+          <span class="text-sm text-gray-600">{formatDate(new Date(indexData.newest[1].date))}</span>
         </span>
-        <span class="col-6 self-center text-right"><a href={"/news/" + newest[1].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
+        <span class="col-6 self-center text-right"><a href={"/news/" + indexData.newest[1].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
       </div>
 
       <a href="/news" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Mehr News</a>
     </section>
 
-    <!-- DATES -->
+    <!-- HISTORY -->
+    <section class="mb-24 lg:w-3/5">
+      <div class="text-2xl">
+        <strong>
+          <span class="align-middle inline-block">Geschichte</span>
+          <i class="bi bi-clock-history inline-block ml-6 text-5xl "></i>
+        </strong>
+      </div>
+      <p class="py-8">Aus dem damals ersten Baseballverein der Region, den Bückeburg Bandits, haben sich um 1996 die Minden Bandits entwickelt, und vertreten somit seit über über 25 Jahren im Kreis Minden-Lübbecke den Sport Baseball.</p>
+      <br>
+      <a href="/geschichte" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Weiterlesen</a>
+    </section>
 	</Container>
 </Layout>

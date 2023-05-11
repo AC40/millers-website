@@ -1,30 +1,103 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Container from '@components/container.astro';
+import { Icon } from 'astro-icon';
+import { Picture } from "@astrojs/image/components";
+import { marked } from 'marked';
+import { getCompressedImage, WPResolution } from "Networking/wordpress"
 
-const { slug } = Astro.params;
+const { slug, originPage } = Astro.params;
 
-let res = await fetch(`https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?slug=${slug}`)
-let [post] = await res.json();
+let res = await fetch(`https://wordpress.mindenmillers.de/wp-json/wp/v2/news?slug=${slug}`)
+var [post] = await res.json();
 
 // The getStaticPaths() is required for static Astro sites.
 // If using SSR, you will not need this function.
 export async function getStaticPaths() {
-  let data = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts")
+  let data = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/news")
   let posts = await data.json();
-
+  
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post: post },
   }));
 }
+
+// Get md from post
+const mds = post.acm_fields.text.match(/<pre[\S\s]+<\/pre>/gm)
+post.acm_fields.text = post.acm_fields.text.replace(/<pre[\S\s]+<\/pre>/gm, "")
+
+const parsed: string[] = (mds != null) ? mds.map(md => {
+  if (md != null && md != undefined) {
+    const modified = md.replace(/<[^\r\n>]+>/gm, "")
+    var parsed = marked.parse(modified)
+
+    var cellStyles = "border: 1px solid black; width: 2em; text-align:center;"
+
+    parsed = parsed.replaceAll("<table>", "<table style=\"border: 1px solid black;\" >")
+    parsed = parsed.replaceAll("<thead>", "<thead style=\"background-color: lightgray\" >")
+    parsed = parsed.replaceAll("<td>", `<td style=\"${cellStyles}\" >`)
+    parsed = parsed.replaceAll("<th>", `<th style=\"${cellStyles}\" >`)
+
+    return parsed
+  } else {
+    return ""
+  }
+}) : []
+
+// post = post.acm_fields.text.replace(/<pre.*<\/pre>/gm, "")
+
+function formatDate(date): string {
+    return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
+}
+
+function imageIsWiderThanHigh(post: any): boolean {
+  return ((post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height) > 1)
+}
+
+const img = getCompressedImage(post.acm_fields.coverBild, WPResolution.mdlg, post.acm_fields.coverBild.alt_text)
 ---
-<Layout title={post.title.rendered}>
+<Layout title={post.titel}>
   <Container class="h-full">
-    
-    <article class="wordpress max-w-screen-md mx-auto p-8 mb-8 bg-gray-200 shadow-xl rounded-lg h-full">
-      <h1 class="text-2xl mb-4 font-medium" set:html={post.title.rendered} />
-      <Fragment set:html={post.content.rendered} />
+    <article class="max-w-screen-md mx-auto p-7 mb-7 bg-gray-200 shadow-xl rounded-lg h-full">
+
+      <a href="/news/1" class="font-medium font-sans hover:underline text-gray-500 hover:text-gray-900"><Icon class="w-8 h-8 inline" name="uil:arrow-left" ></Icon>Alle News</a>
+
+      <hr class="bg-gray-600 h-[3px] my-3">
+
+      <div class="wordpress">
+        
+        <h1 class="text-2xl font-medium" set:html={post.acm_fields.titel} />
+        <div class="flex text-slate-700 text-md mb-4 mt-2 ">
+          <p class="">{ formatDate(new Date(post.date)) }</p>
+          <p>{ (post.acm_fields.newsauthor != "") ? " • " + post.acm_fields.newsauthor : "" }</p>
+        </div>
+
+        {
+          (img != undefined)
+          ? <div class:list={[`w-[${post.acm_fields.coverBild.media_details.width}px] sm:w-auto h-[${post.acm_fields.coverBild.media_details.height}px] sm:h-auto bg-clear`]} >
+              <Picture 
+                  src={img.url}
+                  alt={img.alt} 
+                  widths={[300, 600, 900, img.width]} 
+                  sizes="" 
+                  aspectRatio={img.width/img.height} 
+                  class:list={["rounded-md mb-4 linear-background", (imageIsWiderThanHigh(post)) ? "" : "sm:float-right sm:ml-4 mb-4 max-h-96 w-full sm:w-auto object-cover"]} 
+                />
+            </div>
+          : <span class="hidden"/>
+        }
+        <Fragment set:html={post.acm_fields.text} />
+
+        {
+          parsed.map(parsedMD => (
+          <div class="">
+              <div class="mdTable" set:html={parsedMD} />
+          </div>
+          ))
+        }
+      </div>
+      
     </article>
 
   </Container>

@@ -1,35 +1,33 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
+import { Picture } from "@astrojs/image/components";
+import PaginationController from "@components/pagination-controller.astro";
+import NewsPreview from "@components/news-preview.astro";
+import { formatDate, previewHTML } from "Networking/Utility"
 
-const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/posts?categories=4")
+const res = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/news?per_page=15&page=1")
+const total = res.headers.get("X-WP-Total")
+const totalPages = res.headers.get("X-WP-TotalPages")
 const posts = await res.json()
 
-function formatDate(date): string {
-    return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
-}
 ---
 
 <Layout title="News">
-    <Container>
+    <Container class="max-w-3xl">
         <h1 class="text-2xl">Neues von den Millers</h1>
-
-        <ul>
+        <ul id="millers-news-feed" >
             {
                 posts.map((post) => (
-                    <li class="my-4 p-4 bg-slate-200 rounded-md w-full">
-                        <div class="grid ">
-                            <a href={"/news/" + post.slug + "/"}>
-                                <h2 class="text-slate-900 text-xl" set:html={post.title.rendered}></h2>
-
-                                <h3 class="text-slate-700 text-md">{ formatDate(new Date(post.date)) }</h3>
-                            </a>
-                        </div>
-                    </li>
+                    <NewsPreview post={post} />
                 ))
             }
             
         </ul>
+        <script>
+            window.location.replace("/news/1")
+        </script>
         
+        <PaginationController total={total} totalPages={totalPages ?? 1} />
     </Container>
 </Layout>

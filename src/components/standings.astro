@@ -1,0 +1,25 @@
+---
+const { url } = Astro.props
+
+const json = await (await fetch(url)).json()
+---
+<table class="w-full overflow-auto table-auto mb-8 border border-slate-900 border-collapse">
+    <tr class="bg-gray-200 text-right child:px-2 border border-slate-900">
+        <th></th>
+        <th class="text-left">Name</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th class="text-center">Streak</th>
+    </tr>
+    {
+        json.rows.map((row, i) => (
+            <tr class:list={["text-right child:px-2", (i % 2 == 0) ? "bg-gray-50" : "bg-gray-100"]}>
+                <td class="w-10 text-center">{row.rank}</td>
+                <td class="text-left">{row.team_name}</td>
+                <td class="w-24">{row.wins_count}</td>
+                <td class="w-24">{row.losses_count}</td>
+                <td class="w-24 text-center">{row.streak}</td>
+            </tr>
+        ))
+    }
+</table>

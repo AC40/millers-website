@@ -4,6 +4,7 @@ import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import Container from "@components/container.astro";
 import millersLogo from "/src/assets/millers/logo.png";
 import Dropdown from "./dropdown.astro";
+import { shouldShowCalendar } from "Networking/nav";
 
 const menuitems = [
 	{
@@ -11,12 +12,14 @@ const menuitems = [
 		path: "/",
 	},
 	{
-		title: "Inhalte",
-		path: "#",
-		children: [
-			{ title: "News", path: "/news", external: false },
+		title: shouldShowCalendar ? "Inhalte" : "News",
+		path: shouldShowCalendar ? "#" : "/news/1",
+		children: shouldShowCalendar
+		? [
+			{ title: "News", path: "/news/1", external: false },
 			{ title: "Kalender", path: "/spiele", external: false },
-		],
+		]
+		: null,
 	},
 	{
 		title: "Teams",
