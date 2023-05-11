@@ -13,7 +13,7 @@ import { lime } from "tailwindcss/colors";
   <!-- Header img -->
   <div class:list={["w-full md:min-h-0 max-h-128 relative"]}>
 
-    <section class:list={["relative w-full linear-background max-h-128", `aspect-[2560/1707]`]}>
+    <section class:list={["hidden sm:block", "relative w-full linear-background max-h-128", `aspect-[2560/1707]`]}>
       {/*  <img src={WPimage.url} alt={WPimage.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */}
       <Picture
         src={indexData.heroImg.url}
@@ -28,7 +28,7 @@ import { lime } from "tailwindcss/colors";
       
 
       {/* For some reason, on this image i can set a min-height. So it could work with the code-block below instead of the colorful card beneath */}
-      <img src={indexData.heroImg.url} alt="foo" class="block sm:hidden w-full min-h-[500px] h-full object-cover overflow-hidden">
+      <img src={indexData.heroImg.url} alt="foo" class="block sm:hidden w-full min-h-[500px] h-full object-cover overflow-hidden linear-background">
       
       <div class="absolute w-full top-0 left-0 h-full  maxh-128 bg-[#262626b3] z-10">
         <Container class="text-white">

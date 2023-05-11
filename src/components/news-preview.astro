@@ -1,15 +1,22 @@
 ---
 import { Picture } from "@astrojs/image/components";
 import { formatDate, previewHTML } from "Networking/Utility"
+import { WPResolution, getCompressedImage, WPimage } from "Networking/wordpress";
 
 // Get post object as prop
 const { post } = Astro.props
+
+var img: WPimage | undefined 
+
+if (post != undefined && post.acm_fields.coverBild != undefined) {
+    img = getCompressedImage(post.acm_fields.coverBild, WPResolution.small, post.acm_fields.coverBild.alt_text)
+}
 ---
 <li class="my-4 mb-6 last:mb-0 bg-slate-200 rounded-md w-full overflow-hidden">
     <a href={"/news/" + post.slug + "/"} class="grid grid-cols-1 sm:grid-cols-3 sm:h-48">
         {
-            (post.acm_fields.coverBild.media_details != undefined)
-            ? <Picture src={post.acm_fields.coverBild.source_url} alt={post.acm_fields.coverBild.alt_text} widths={[300, 656]} sizes="" aspectRatio={post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height} class="col-span-1 row-span-2 rounded-t-md sm:rounded-tr-none sm:rounded-l-md object-cover object-center h-48 w-full" />
+            (img != undefined)
+            ? <Picture src={img.url} alt={img.alt} widths={[300, 656, img.width]} sizes="" aspectRatio={img.width/img.height} class="col-span-1 row-span-2 rounded-t-md sm:rounded-tr-none sm:rounded-l-md object-cover object-center h-48 w-full" />
             : <span class="hidden"/>
         }
 

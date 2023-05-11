@@ -8,12 +8,52 @@ export interface WPimage {
     height: number;
 }
 
+export enum WPResolution {
+    mdlg = "medium_large",
+    small = "thumbnail",
+    md = "medium",
+    full = "full",
+}
 
-export function getImage(res: any): WPimage {
-    const url = res[0].acm_fields.bild.source_url
-    const width = res[0].acm_fields.bild.media_details.width
-    const height = res[0].acm_fields.bild.media_details.height
-    const alt = res[0].acm_fields.bild.alt_text
+
+export function getCompressedImage(img: any, resolution: WPResolution, altText: string): WPimage | undefined {
+    if (img.media_details == undefined) {
+        return undefined
+    }
+    const sizes = img.media_details.sizes
+    var details;
+
+    switch (resolution) {
+        case WPResolution.small:
+            details = sizes.thumbnail
+        case WPResolution.md:
+            details = sizes.medium
+        case WPResolution.mdlg:
+            details = sizes.medium_large;
+        case WPResolution.full:
+            details = sizes.full;
+    }
+
+    if (details == undefined) {
+        details = sizes.medium
+        console.log("Switched to md");
+        
+    }
+
+    if (details == undefined) {
+        details = sizes.medium_large
+        console.log("Switched to mdlg");
+    }
+
+    if (details == undefined) {
+        details = sizes.full
+        console.log("Switched to full");
+    }
+
+    const url = details.source_url
+    const width = details.width
+    const height = details.height
+    const alt = altText
 
     return { url: url, alt: alt, width: width, height: height } as WPimage
 }
@@ -37,7 +77,7 @@ export function formatDate(date): string {
 // Hero img
 const heroRes = await fetch(wpEndpoint + "websitebilder?slug=startseite-action-hero")
 const heroData = await heroRes.json()
-const heroImg = getImage(heroData)
+const heroImg = getCompressedImage(heroData[0].acm_fields.bild, WPResolution.mdlg, heroData[0].acm_fields.beschreibung)
 
 // Hero text
 const heroTextData = await (await fetch(wpEndpoint + "websitetexte?slug=heroText")).json()

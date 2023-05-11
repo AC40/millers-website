@@ -8,7 +8,10 @@ import { Icon } from "astro-icon";
 import abstechenImg from "../assets/millers/historie/ballpark-stechen.jpg";
 import plans from "../assets/millers/historie/plans.jpg";
 import backstop from "../assets/millers/historie/backstop.jpg";
-import OsmMap from "@components/osm-map.astro";
+import Map from "@components/map.astro";
+
+const ballparkHistoryData = await (await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/websitetexte?slug=ballpark-geschichte")).json()
+const ballparkHistory = ballparkHistoryData[0].acm_fields.text
 ---
 
 <Layout title="Baseballplatz">
@@ -24,11 +27,12 @@ import OsmMap from "@components/osm-map.astro";
 					<p>32425 Minden</p>
 					<p>Deutschland</p>
 					<hr class="mt-2 h-2">
+					<p>Weitere Kartendienste:</p>
 					<div class="mt-4">
 						<a
 							href="https://osm.org/go/0Gw2EZ1fU-?m="
 							target="_blank"
-							class="p-2 bg-green-100 border-green-600 hover:border-green-800 hover:bg-green-800 border-2 rounded border-solid hover:text-white"
+							class="p-2 bg-green-100 border-green-600 hover:border-green-800 hover:bg-green-800 border-2 rounded border-solid hover:text-white whitespace-nowrap"
 							><Icon
 								class="w-4 inline mb-1"
 								name="uil:external-link-alt"
@@ -42,7 +46,7 @@ import OsmMap from "@components/osm-map.astro";
 						<a
 							href="https://goo.gl/maps/bUZrfPfqXhRzAjxj6"
 							target="_blank"
-							class="p-2 bg-orange-100 border-orange-400 hover:border-orange-600 hover:bg-orange-600 border-2 rounded border-solid hover:text-white"
+							class="p-2 bg-orange-100 border-orange-400 hover:border-orange-600 hover:bg-orange-600 border-2 rounded border-solid hover:text-white whitespace-nowrap"
 							><Icon
 								class="w-4 inline mb-1"
 								name="uil:external-link-alt"
@@ -55,7 +59,7 @@ import OsmMap from "@components/osm-map.astro";
 						<a
 							href={`https://maps.apple.com/?address=Tietzelweg%207,%20Innenstadt,%2032425%20Minden,%20Germany&ll=52.310181,8.880242&q=Tietzelweg%207`}
 							target="_blank"
-							class="p-2 bg-blue-100 border-blue-600 hover:border-blue-800 hover:bg-blue-800 border-2 rounded border-solid hover:text-white"
+							class="p-2 bg-blue-100 border-blue-600 hover:border-blue-800 hover:bg-blue-800 border-2 rounded border-solid hover:text-white whitespace-nowrap"
 							><Icon
 								class="w-4 inline mb-1"
 								name="uil:external-link-alt"
@@ -68,7 +72,7 @@ import OsmMap from "@components/osm-map.astro";
 					
 				</div>
 				<div class="mt-8 md:mt-0 md:ml-8 grow border border-slate-900">
-					<OsmMap />
+					<Map />
 					{/* <CookieBanner />
 					<iframe id="osm-embedding-map" width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=8.876717090606691%2C52.30703546237885%2C8.88424873352051%2C52.31307018749841&amp;layer=mapnik&amp;marker=52.310052927774194%2C8.880482912063599" style="border: 1px solid black"></iframe> -->
 					<!-- <iframe
@@ -95,63 +99,8 @@ import OsmMap from "@components/osm-map.astro";
 				widths={[161]}
 				class="float-right w-auto xs:w-64 ml-4 mb-4 rounded shadow"
 			/>
-			<p>
-				Im Jahr 1996 fiel die Entscheidung den Vereinssitz nach Minden
-				zu verlegen. Nach dem Abzug der Britischen Streitkräfte lagen
-				dort viele Sportflächen über Jahre brach und so war auch schnell
-				ein Gelände für die Millers gefunden - das ehemalige
-				Cricketfield in den Kingsley Barracks.
-			</p>
-			<br />
-			<p>
-				Mit einem Sportplatz hatte die Wiese nicht mehr viel gemeinsam,
-				was sich aber bald unter Einsatz vereinter Kräfte der Millers
-				und durch die wohlwollende Unterstützung der Stadt ändern
-				sollte.
-			</p>
-			<br />
-			<p>
-				Am Anfang gab es einen Plan und eine Vision. Am Ende stand ein
-				Baseballfeld mit Aschenlaufbahn, Mound und Backstop. Hinzu kam
-				der Traum vom eigenen Haus. Zwischen dem Traum und dem
-				vollendeten Ballpark lagen mehrere Jahre harter kontinuierlicher
-				Arbeit.
-			</p>
-			<br />
-			<p>
-				Als 1997 die Arbeiten begannen, wurde als erstes die noch
-				vorhandene Kunstrasen Bahn des alten Cricketfield entfernt und
-				die Ausrichtung des Spielfeldes festgelegt. Dann stachen die
-				Millers die Graskanten des Innfields ab, damit schließlich eine
-				vom Grünflächenamt beauftragte Firma die Aschenbahn anlegen
-				konnte. Mitte des Jahres wurde der Backstop in Eigenleistung
-				errichtet. Die wilde Wiese wurde regelmäßig gemäht und gewalzt,
-				so dass sie sich langsam aber sicher wieder in einen Sportrasen
-				verwandelte. Sand und Mutterboden wurden verteilt, um
-				Unebenheiten auszugleichen und für einige Millers schien der
-				tägliche Gang über das Feld, bewaffnet mit Eimerchen und
-				Schäufelchen schon zu einer zwanghaften Handlung zu werden. So
-				nahm der Platz langsam gestalt an und nach der 97er Saison, mit
-				Doppelbelastung durch Platzbau und Spiele auf dem (Fußball-)
-				Ausweichplatz am Weserstadion, konnten die Millers 1998 das
-				erste Spiel im Miller Park austragen.
-			</p>
-			<br />
-			<p>
-				Fast noch mehr Arbeit bedeutete die Übernahme des neben dem Feld
-				gelegenen Umkleide- und Duschgebäudes. Nach einer notwendigen
-				Dachsanierung ging es ans Innenleben. Die ersten Duschen waren
-				2001 nutzbar und im Winter 2002/2003 nahmen - dank des
-				unermesslichen Einsatzes von Martin Carden - endlich auch die
-				Umkleideräume gestalt an. Inzwischen sind die meisten Räume
-				gestrichen und nutzbar.
-			</p>
-			<br />
-			<p>
-				Um <i>Haus und Hof</i> haben sich mittlerweile eine Reihe weiterer
-				Annehmlichkeiten angesammelt, wie ein Container zur Lagerung von
-				Geräten und ein Battingcage.
-			</p>
+			
+			<Fragment set:html={ballparkHistory} />
 
 			<div class="xs:flex flex-wrap gap-4 my-8 justify-start">
 				<Picture

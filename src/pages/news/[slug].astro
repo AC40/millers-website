@@ -1,11 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Container from '@components/container.astro';
-import MdTable from '@components/md-table.astro';
 import { Icon } from 'astro-icon';
 import { Picture } from "@astrojs/image/components";
 import { marked } from 'marked';
-import { log } from 'astro/dist/core/logger/core';
+import { getCompressedImage, WPResolution } from "Networking/wordpress"
 
 const { slug, originPage } = Astro.params;
 
@@ -55,6 +54,8 @@ function formatDate(date): string {
 function imageIsWiderThanHigh(post: any): boolean {
   return ((post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height) > 1)
 }
+
+const img = getCompressedImage(post.acm_fields.coverBild, WPResolution.mdlg, post.acm_fields.coverBild.alt_text)
 ---
 <Layout title={post.titel}>
   <Container class="h-full">
@@ -73,15 +74,15 @@ function imageIsWiderThanHigh(post: any): boolean {
         </div>
 
         {
-          (post.acm_fields.coverBild.media_details != undefined)
+          (img != undefined)
           ? <div class:list={[`w-[${post.acm_fields.coverBild.media_details.width}px] sm:w-auto h-[${post.acm_fields.coverBild.media_details.height}px] sm:h-auto bg-clear`]} >
               <Picture 
-                  src={post.acm_fields.coverBild.source_url} 
-                  alt={post.acm_fields.coverBild.alt_text} 
-                  widths={[300, 600, 900, post.acm_fields.coverBild.media_details.width]} 
+                  src={img.url}
+                  alt={img.alt} 
+                  widths={[300, 600, 900, img.width]} 
                   sizes="" 
-                  aspectRatio={post.acm_fields.coverBild.media_details.width/post.acm_fields.coverBild.media_details.height} 
-                  class:list={["rounded-md mb-4", (imageIsWiderThanHigh(post)) ? "" : "sm:float-right sm:ml-4 mb-4 max-h-96 w-full sm:w-auto object-cover"]} 
+                  aspectRatio={img.width/img.height} 
+                  class:list={["rounded-md mb-4 linear-background", (imageIsWiderThanHigh(post)) ? "" : "sm:float-right sm:ml-4 mb-4 max-h-96 w-full sm:w-auto object-cover"]} 
                 />
             </div>
           : <span class="hidden"/>
