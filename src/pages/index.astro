@@ -83,7 +83,7 @@ import { lime } from "tailwindcss/colors";
           nextEvents(3).map((event) => (
             <li class="mb-4 last:mb-0">
               <h4 class="text-lg">{event.home} vs. {event.away}</h4>
-              <p class="text-md text-gray-600">{event.date.toLocaleDateString()} | {event.fieldName}</p>
+              <p class="text-md text-gray-600">{event.date.toLocaleDateString("de")} | {event.fieldName}</p>
             </li>
           ))
         }
