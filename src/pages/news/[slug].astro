@@ -27,6 +27,14 @@ export async function getStaticPaths() {
 const mds = post.acm_fields.text.match(/<pre[\S\s]+<\/pre>/gm)
 post.acm_fields.text = post.acm_fields.text.replace(/<pre[\S\s]+<\/pre>/gm, "")
 
+// Obfuscate all email addresses in the news 
+const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g;
+
+
+
+post.acm_fields.text = post.acm_fields.text.replace(emailRegex, (match, p1) => reverseEmailAndWrapInSpan(p1));
+
+// Get all tables from the News and display it at bottom of news as html table with minimum styling
 const parsed: string[] = (mds != null) ? mds.map(md => {
   if (md != null && md != undefined) {
     const modified = md.replace(/<[^\r\n>]+>/gm, "")
@@ -45,7 +53,10 @@ const parsed: string[] = (mds != null) ? mds.map(md => {
   }
 }) : []
 
-// post = post.acm_fields.text.replace(/<pre.*<\/pre>/gm, "")
+//MARK: Utility functions
+function reverseEmailAndWrapInSpan(email: string): string {
+  return `<span style="unicode-bidi:bidi-override; direction:rtl;">${email.split('').reverse().join('')}</span>`
+}
 
 function formatDate(date): string {
     return date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
