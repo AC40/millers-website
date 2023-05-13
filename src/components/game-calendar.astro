@@ -1,5 +1,7 @@
 ---
-import { eventsJSON } from "../Networking/events"
+import { events } from "../Networking/events";
+
+console.log(events);
 ---
 
 <head>
@@ -10,32 +12,12 @@ import { eventsJSON } from "../Networking/events"
 		import { Calendar } from "fullcalendar";
 		import dayGridPlugin from "@fullcalendar/daygrid";
 		import listPlugin from "@fullcalendar/list";
-		import { Match } from "Networking/BSMMatches";
 
 		var prevWidth = 0;
 		const storageEl = document.querySelector('#bsm-data-storage')
+		const events = JSON.parse((storageEl as HTMLElement).dataset.events ?? "")
 
-		function createMatchTitle(match) {
-			// return match.away_team_name + " @ " + match.home_team_name
-			return match.home_league_entry.team.short_name == "MIN" ? "Heimspiel" : "Auswärts"
-		}
-
-		function createMatchDescription(match) {
-			return  `<div class=\"custom-event-description\">${match.away_team_name + " @ " + match.home_team_name}<br>Wo: ${match.field?.name}</div>`
-		}
-
-		const json = JSON.parse((storageEl as HTMLElement).dataset.bsmstorage ?? "")
-		const matches = json.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
-
-		const valid = matches.map((match) => Object.create({
-			start: new Date(match.time.replace(/-/g, "/")).toISOString(),
-			title: createMatchTitle(match),
-			extendedProps: {
-				match: match,
-			},
-			description: createMatchDescription(match)
-		}))
-
+		console.log(events);
 		function getWidth() {
 			return Math.max(
 				document.body.scrollWidth,
@@ -57,7 +39,7 @@ import { eventsJSON } from "../Networking/events"
 				locale: "de",
 				firstDay: 1,
 				plugins: [dayGridPlugin, listPlugin],
-				events: valid,
+				events: events,
 				initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
 				headerToolbar: {
 					left: "prev,next today",
@@ -77,7 +59,7 @@ import { eventsJSON } from "../Networking/events"
 					info.el.classList.add("tooltip")
 					const tooltip = document.createElement('div')
 					tooltip.className = "tooltiptext"
-					tooltip.innerHTML = createMatchDescription(info.event.extendedProps.match)
+					tooltip.innerHTML = info.event.extendedProps.description
 					info.el.appendChild(tooltip)
 
 					// const fcTitle = info.el.querySelector('.fc-event-title')
@@ -109,4 +91,4 @@ import { eventsJSON } from "../Networking/events"
 
 <div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto overflow-hidden">
 </div>
-<span id="bsm-data-storage" data-bsmstorage={eventsJSON} ></span>
+<span id="bsm-data-storage" data-events={JSON.stringify(events)} ></span>
