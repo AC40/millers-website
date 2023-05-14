@@ -5,7 +5,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://astroship.web3templates.com",
+  site: "https://mindenmillers.de",
   integrations: [
     tailwind({
       // Example: Disable injecting a basic `base.css` import on every page.

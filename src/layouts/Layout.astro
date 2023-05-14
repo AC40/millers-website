@@ -11,15 +11,11 @@ export interface Props {
   title: string;
 }
 
-// const { src } = await getImage({
-//   src: "../../assets/hero.png",
-//   width: 800,
-//   height: 742,
-//   format: "avif",
-// });
-// console.log(src);
-
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+console.log(Astro.url.pathname);
+console.log(Astro.site);
+
+
 
 const { title } = Astro.props;
 
@@ -49,18 +45,23 @@ const makeTitle = title
     <!-- SEO -->
     <SEO
       title={makeTitle}
-      description="Die offizielle Website der Minden Millers."
+      description="Die interessiert dich für amerikanischen Sport? Wir, die Minden Millers/Maniacs, sind der einzige lokale Baseball- und Softball-Verein aus der Region Minden-Lübbecke. Hier findest du Informationen zu unseren Teams, Trainingszeiten und -orten."
       canonical={canonicalURL}
+      charset="UTF-8"
       openGraph={{
         basic: {
           url: canonicalURL,
           type: "website",
-          title: "Die offizielle Website der Minden Millers.",
-          image: "",
+          title: "Die offizielle Website der Minden Millers/Maniacs",
+          image: "../assets/millers/logo.png",
+        },
+        optional: {
+          locale: "de",
         },
       }}
     />
   </head>
+
   <body class="absolute inset-0 table w-full h-full">
     <header class="table-row">
       <Navbar class="table-cell" />
