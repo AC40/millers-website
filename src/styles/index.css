@@ -1,0 +1,7 @@
+@tailwind base;
+
+@layer base {
+	.index-more-btn {
+        @apply text-lg text-yellow-500 px-8 py-4 my-4 bg-gray-700 rounded hover:bg-yellow-500 hover:text-black transition duration-200 hover:shadow shadow-yellow-800;
+	}
+}

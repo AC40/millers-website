@@ -27,6 +27,7 @@ module.exports = {
       },
       spacing: {
         '128': '32rem',
+        '132': '33rem'
       },
       lineHeight: {
         '12': '3rem'
