@@ -1,12 +1,12 @@
 ---
 import { Picture } from "@astrojs/image/components";
 import { formatDate, previewHTML } from "Networking/Utility"
-import { WPResolution, getCompressedImage, WPimage } from "Networking/wordpress";
+import { WPResolution, getCompressedImage, WPImage } from "Networking/wordpress";
 
 // Get post object as prop
 const { post } = Astro.props
 
-var img: WPimage | undefined 
+var img: WPImage | undefined 
 
 if (post != undefined && post.acm_fields.coverBild != undefined) {
     img = getCompressedImage(post.acm_fields.coverBild, WPResolution.small, post.acm_fields.coverBild.alt_text)

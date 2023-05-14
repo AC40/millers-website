@@ -25,11 +25,11 @@ hr {
 
 /* Wordpress styling */
 .wordpress a {
-	color: blue
+	color: rgb(59 130 246);
 }
 
 .wordpress a:hover {
-	text-decoration: underline
+	text-decoration: underline;
 }
 
 .wordpress ul {
