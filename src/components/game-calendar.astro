@@ -1,9 +1,8 @@
 ---
 import { events } from "../Networking/events";
-console.log(events);
 
 ---
-<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto h-132">
+<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto">
 </div>
 <span id="bsm-data-storage" data-events={JSON.stringify(events)} ></span>
 
@@ -21,7 +20,6 @@ console.log(events);
 	const storageEl = document.querySelector('#bsm-data-storage')
 	const events = JSON.parse((storageEl as HTMLElement).dataset.events ?? "")
 
-	console.log(events);
 	function getWidth() {
 		return Math.max(
 			document.body.scrollWidth,
@@ -47,9 +45,13 @@ console.log(events);
 			eventColor: '#E1341E',
 			initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
 			headerToolbar: {
-				left: "prev,next today",
+				left: "prev,next",
 				center: "title",
 				right: "dayGridMonth,listMonth",
+			},
+			titleFormat: {
+				year: 'numeric',
+				month: 'short',
 			},
 			buttonText: {
 				today: "Heute",
@@ -59,14 +61,14 @@ console.log(events);
 				list: "Liste",
 			},
 			views: {},
-			height: "100%",
+			height: "auto",
 			eventDidMount: function(info) {
 				const id = info.event.extendedProps.id
 				tippy(`.tippy-content-id-${id}`, {
 					content: info.event.extendedProps.description,
 					allowHTML: true,
 					interactive: true,
-					interactiveDebounce: 20,
+					delay: 100,
 					// This is required, because without it the tooltip inherits styling from its parent. This makes it keep its original styling
 					appendTo: () => document.body
 				});
@@ -76,10 +78,19 @@ console.log(events);
 		window.addEventListener("resize", function () {
 			const width = getWidth();
 			if (width >= 600 && prevWidth < 600) {
+				// Change Calendar view type
 				calendar.changeView("dayGridMonth");
-			} else if (width < 600 && prevWidth > 600) {
+
+
+				const title = (document.getElementsByClassName('fc-toolbar-title')[0] as HTMLElement)
+				title.style.fontSize = "1.75em"
+
+			} else if (width < 600 && prevWidth >= 600) {
+				// Change Calendar view type
 				calendar.changeView("listMonth");
-				calendar;
+
+				const title = (document.getElementsByClassName('fc-toolbar-title')[0] as HTMLElement)
+				title.style.fontSize = "5.0vw"
 			}
 			prevWidth = width;
 		});
@@ -87,6 +98,17 @@ console.log(events);
 		// fetchGames();
 		calendar.render();
 
+		// Add click/hover notice below header toolbar
+		const header = document.getElementsByClassName('fc-header-toolbar')[0];
+		var notice = document.createElement("p");
+		notice.style.marginBottom = '0.4em';
+		notice.innerHTML = `<i style="margin-bottom: 0.4em;color:gray;">Klicke/Hover über ein Event um Details zu sehen</i>`;
+
+		(header as HTMLElement).style.marginBottom = '0.75em';
+		(header.firstElementChild as HTMLElement).style.marginRight = '5px';
+		(header.lastElementChild as HTMLElement).style.marginLeft = '5px';
+		header.parentNode!.insertBefore(notice, header.nextSibling)
+		
 	});
 
 	// Place tooltips on all events

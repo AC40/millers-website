@@ -107,4 +107,7 @@ hr {
 	.custom-event h4 {
 		@apply font-medium text-white mb-1;
 	}
+	.custom-event a {
+		@apply text-blue-400 hover:underline;
+	}
 }

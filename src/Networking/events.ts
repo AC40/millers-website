@@ -14,25 +14,28 @@ const miscEvents = miscEventsJSON.map((event, i) => {
     return { 
         title: event.acm_fields.titel,
         start: date.toISOString(),
+        allDay: true,
         description: createEventDescription(event),
         classNames: [`tippy-content-id-${i + '-misc'}`],
-        color: (date.getTime() < Date.now()) ? '#0957F6' : '#24B13D',
+        color: '#B1E5CD',
+        textColor: '#000',
         extendedProps: {
             description: createEventDescription(event),
             id: i.toString() + '-misc'
         }
     } 
 })
-console.log(miscEvents);
 
 const games = sorted.map((match, i) => {
     const date = matchDate(match)
     return { 
         title: createMatchTitle(match),
         start: date.toISOString(),
+        allDay: true,
         description: createMatchDescription(match),
         classNames: [`tippy-content-id-${i}-match`],
-        color: (date.getTime() < Date.now()) ? '#0957F6' : '#24B13D',
+        color: '#F5DE8D',
+        textColor: '#000',
         extendedProps: {
             description: createMatchDescription(match),
             id: i.toString() + '-match'
@@ -92,12 +95,12 @@ function createMatchTitle(match) {
 
 function createMatchDescription(match) {
     const date = matchDate(match)
+    const mindenIsHome = (match.home_league_entry.team.short_name == "MIN")
     return  `
     <div class=\"custom-event\">
         <h4>${match.away_team_name + " @ " + match.home_team_name}</h4>
-        ${(date.getTime() < Date.now()) ? `Ergebnis: <b>${match.home_runs}:${match.away_runs}</b><br>` : ''}
-        Wo: <b>${match.field?.name}</b>
-        <br>Wann: <b>${matchDate(match).toLocaleDateString('de')}</b>
+        ${(date.getTime() < Date.now()) ? `Ergebnis: <b>${match.home_runs}:${match.away_runs}</b><br>` : `Spielbeginn: ${date.getHours()}:${(date.getMinutes() == 0) ? "00" : date.getMinutes()} Uhr<br>`}
+        Wo: <a href=${(mindenIsHome) ? "/millers-park" : `https://www.google.com/maps/search/?api=1&query=${match.field.latitude},${match.field.longitude}`} ${(mindenIsHome) ? "" : `target="_blank" rel="noreferrer noopener"`}><b>${match.field?.name}</b></a>
     </div>`
 }
 
