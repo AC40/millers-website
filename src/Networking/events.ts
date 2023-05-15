@@ -1,37 +1,47 @@
-const json = await (await fetch("https://bsm.baseball-softball.de/clubs/354/matches.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw")).json()
+import { wpEndpoint } from "./wordpress"
 
-
-//MARK: Utility functions
-function matchDate(match: any): Date {
-    return new Date(match.time.replace(/-/g, "/"))
-}
-
-function createMatchTitle(match) {
-    // return match.away_team_name + " @ " + match.home_team_name
-    return match.home_league_entry.team.short_name == "MIN" ? "Heimspiel" : "Auswärts"
-}
-
-function createMatchDescription(match) {
-    return  `<div class=\"custom-event-description\">${match.away_team_name + " @ " + match.home_team_name}<br>Wo: ${match.field?.name}</div>`
-}
-
-const matches = json.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
-    
+// Get Season matches
+const matchesJSON = await (await fetch("https://bsm.baseball-softball.de/clubs/354/matches.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw")).json()
+const matches = matchesJSON.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
 const sorted = matches.sort((a, b) => {
     return matchDate(a) > matchDate(b)
 })
 
-// Exports
-export const events = sorted.map((match) => {
+// Get custom events from wp
+const miscEventsJSON = await (await fetch(wpEndpoint + "events")).json()
+const miscEvents = miscEventsJSON.map((event, i) => {
+    const date = new Date(event.acm_fields.datum)
+    return { 
+        title: event.acm_fields.titel,
+        start: date.toISOString(),
+        description: createEventDescription(event),
+        classNames: [`tippy-content-id-${i + '-misc'}`],
+        color: (date.getTime() < Date.now()) ? '#0957F6' : '#24B13D',
+        extendedProps: {
+            description: createEventDescription(event),
+            id: i.toString() + '-misc'
+        }
+    } 
+})
+console.log(miscEvents);
+
+const games = sorted.map((match, i) => {
+    const date = matchDate(match)
     return { 
         title: createMatchTitle(match),
-        start: new Date(match.time.replace(/-/g, "/")).toISOString(),
+        start: date.toISOString(),
         description: createMatchDescription(match),
+        classNames: [`tippy-content-id-${i}-match`],
+        color: (date.getTime() < Date.now()) ? '#0957F6' : '#24B13D',
         extendedProps: {
-            description: createMatchDescription(match)
+            description: createMatchDescription(match),
+            id: i.toString() + '-match'
         }
     }
 })
+
+// Exports
+export const events = games.concat(miscEvents)
 
 export interface Event {
     home: string
@@ -41,7 +51,7 @@ export interface Event {
 }
 
 export function nextEvents(n: number): Event[] {
-    const matches = json.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
+    const matches = matchesJSON.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
     
     const filtered = matches.filter((match) => {
         return matchDate(match).getTime() > Date.now()
@@ -66,4 +76,37 @@ export function nextEvents(n: number): Event[] {
     }
 
     return []
+}
+
+
+
+//MARK: Utility functions
+function matchDate(match: any): Date {
+    return new Date(match.time.replace(/-/g, "/"))
+}
+
+function createMatchTitle(match) {
+    // return match.away_team_name + " @ " + match.home_team_name
+    return ` ${match.home_league_entry.team.short_name} vs. ${match.away_league_entry.team.short_name}` 
+}
+
+function createMatchDescription(match) {
+    const date = matchDate(match)
+    return  `
+    <div class=\"custom-event\">
+        <h4>${match.away_team_name + " @ " + match.home_team_name}</h4>
+        ${(date.getTime() < Date.now()) ? `Ergebnis: <b>${match.home_runs}:${match.away_runs}</b><br>` : ''}
+        Wo: <b>${match.field?.name}</b>
+        <br>Wann: <b>${matchDate(match).toLocaleDateString('de')}</b>
+    </div>`
+}
+
+function createEventDescription(event) {
+    const date = new Date(event.acm_fields.datum)
+    return  `
+    <div class=\"custom-event\">
+        <h4>${event.acm_fields.titel}</h4>
+        ${(event.acm_fields.ort != "") ? `Wo: <b>${event.acm_fields.ort}</b>` : ''}
+        ${(event.acm_fields.beschreibung != "") ? `<br>${event.acm_fields.beschreibung}` : ''}
+    </div>`
 }

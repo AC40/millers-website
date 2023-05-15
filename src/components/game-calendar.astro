@@ -1,94 +1,93 @@
 ---
 import { events } from "../Networking/events";
-
 console.log(events);
+
 ---
-
-<head>
-	<!-- FullCalendar -->
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
-
-	<script>
-		import { Calendar } from "fullcalendar";
-		import dayGridPlugin from "@fullcalendar/daygrid";
-		import listPlugin from "@fullcalendar/list";
-
-		var prevWidth = 0;
-		const storageEl = document.querySelector('#bsm-data-storage')
-		const events = JSON.parse((storageEl as HTMLElement).dataset.events ?? "")
-
-		console.log(events);
-		function getWidth() {
-			return Math.max(
-				document.body.scrollWidth,
-				document.documentElement.scrollWidth,
-				document.body.offsetWidth,
-				document.documentElement.offsetWidth,
-				document.documentElement.clientWidth
-			);
-		}
-
-		document.addEventListener("DOMContentLoaded", function () {
-			var calendarEl = document.getElementById("game-calendar");
-
-			if (calendarEl == null) {
-				return;
-			}
-
-			var calendar = new Calendar(calendarEl, {
-				locale: "de",
-				firstDay: 1,
-				plugins: [dayGridPlugin, listPlugin],
-				events: events,
-				initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
-				headerToolbar: {
-					left: "prev,next today",
-					center: "title",
-					right: "dayGridMonth,listMonth",
-				},
-				buttonText: {
-					today: "Heute",
-					month: "Monat",
-					week: "Woche",
-					day: "Tag",
-					list: "Liste",
-				},
-				views: {},
-				height: "100%",
-				eventDidMount: function(info) {
-					info.el.classList.add("tooltip")
-					const tooltip = document.createElement('div')
-					tooltip.className = "tooltiptext"
-					tooltip.innerHTML = info.event.extendedProps.description
-					info.el.appendChild(tooltip)
-
-					// const fcTitle = info.el.querySelector('.fc-event-title')
-					
-					// if (fcTitle != null) {
-					// 	fcTitle.insertAdjacentHTML("beforeend","<br/>" + createMatchDescription(info.event.extendedProps.match)); 
-					// } else {
-					// 	console.log("EEE");
-					// }
-				},
-			});
-
-			window.addEventListener("resize", function () {
-				const width = getWidth();
-				if (width >= 600 && prevWidth < 600) {
-					calendar.changeView("dayGridMonth");
-				} else if (width < 600 && prevWidth > 600) {
-					calendar.changeView("listMonth");
-					calendar;
-				}
-				prevWidth = width;
-			});
-
-			// fetchGames();
-			calendar.render();
-		});
-	</script>
-</head>
-
-<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto overflow-hidden">
+<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto h-132">
 </div>
 <span id="bsm-data-storage" data-events={JSON.stringify(events)} ></span>
+
+<!-- FullCalendar Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
+
+<script>
+	import { Calendar } from "fullcalendar";
+	import dayGridPlugin from "@fullcalendar/daygrid";
+	import listPlugin from "@fullcalendar/list";
+	import tippy from 'tippy.js';
+	import 'tippy.js/dist/tippy.css'; // optional for styling
+
+	var prevWidth = 0;
+	const storageEl = document.querySelector('#bsm-data-storage')
+	const events = JSON.parse((storageEl as HTMLElement).dataset.events ?? "")
+
+	console.log(events);
+	function getWidth() {
+		return Math.max(
+			document.body.scrollWidth,
+			document.documentElement.scrollWidth,
+			document.body.offsetWidth,
+			document.documentElement.offsetWidth,
+			document.documentElement.clientWidth
+		);
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		var calendarEl = document.getElementById("game-calendar");
+
+		if (calendarEl == null) {
+			return;
+		}
+
+		var calendar = new Calendar(calendarEl, {
+			locale: "de",
+			firstDay: 1,
+			plugins: [dayGridPlugin, listPlugin],
+			events: events,
+			eventColor: '#E1341E',
+			initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
+			headerToolbar: {
+				left: "prev,next today",
+				center: "title",
+				right: "dayGridMonth,listMonth",
+			},
+			buttonText: {
+				today: "Heute",
+				month: "Monat",
+				week: "Woche",
+				day: "Tag",
+				list: "Liste",
+			},
+			views: {},
+			height: "100%",
+			eventDidMount: function(info) {
+				const id = info.event.extendedProps.id
+				tippy(`.tippy-content-id-${id}`, {
+					content: info.event.extendedProps.description,
+					allowHTML: true,
+					interactive: true,
+					interactiveDebounce: 20,
+					// This is required, because without it the tooltip inherits styling from its parent. This makes it keep its original styling
+					appendTo: () => document.body
+				});
+			},
+		});
+
+		window.addEventListener("resize", function () {
+			const width = getWidth();
+			if (width >= 600 && prevWidth < 600) {
+				calendar.changeView("dayGridMonth");
+			} else if (width < 600 && prevWidth > 600) {
+				calendar.changeView("listMonth");
+				calendar;
+			}
+			prevWidth = width;
+		});
+
+		// fetchGames();
+		calendar.render();
+
+	});
+
+	// Place tooltips on all events
+</script>

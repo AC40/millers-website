@@ -1,3 +1,5 @@
+@tailwind base;
+
 /* The following two classes to what the say respectivly while applying basic styles to everything hat can be done in wp richtext fields */
 /* Remove tailwind styling */
 .remove-default-styling {
@@ -98,6 +100,11 @@ hr {
 	opacity: 1;
 }
 
-.custom-event-description {
-	font-weight: 500;
+@layer base {
+	.custom-event {
+		@apply text-gray-200 p-1 leading-5;
+	}
+	.custom-event h4 {
+		@apply font-medium text-white mb-1;
+	}
 }
