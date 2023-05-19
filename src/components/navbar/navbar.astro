@@ -6,6 +6,11 @@ import millersLogo from "/src/assets/millers/logo.png";
 import Dropdown from "./dropdown.astro";
 import { shouldShowCalendar } from "Networking/nav";
 
+// Get static paths for teams
+const teamsRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/mannschaften");
+const teams = await teamsRes.json();
+const teamSlugs = teams.map((team) => (team.acm_fields.diplayName))
+
 const menuitems = [
 	{
 		title: "Home",
@@ -24,10 +29,10 @@ const menuitems = [
 	{
 		title: "Teams",
 		path: "#",
-		children: [
-			{ title: "Herren", path: "/millers", external: false },
-			{ title: "Damen", path: "/maniacs", external: false },
-		],
+		children: teams.map((team) => {
+			return { title: team.acm_fields.diplayName, path: `/${team.acm_fields.teamslug}`, external: false }
+		}),
+		
 	},
 	{
 		title: "Verein",

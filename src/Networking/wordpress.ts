@@ -17,7 +17,7 @@ export enum WPResolution {
 
 
 export function getCompressedImage(img: any, resolution: WPResolution, altText: string): WPImage | undefined {
-    if (img.media_details == undefined) {
+    if (img == undefined || img.media_details == undefined) {
         return undefined
     }
     const sizes = img.media_details.sizes
