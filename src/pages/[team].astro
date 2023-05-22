@@ -1,0 +1,140 @@
+---
+import Container from "@components/container.astro";
+import Layout from "@layouts/Layout.astro";
+import Standings from "@components/standings.astro";
+import { Picture } from "@astrojs/image/components";
+import { getCompressedImage, WPResolution } from "Networking/wordpress";
+import Secret from "../components/Secret.astro";
+
+import baseballIcon from "../assets/icons/baseball-on-fire-fill.png"
+
+export async function getStaticPaths() {
+	// Get team data
+	const teamsRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/mannschaften");
+	const teams = await teamsRes.json();
+
+	const coachesPromises = teams.map((team) => {
+		const coachesRes = fetch(`https://wordpress.mindenmillers.de/wp-json/wp/v2/trainer?team=${team.acm_fields.teamTaxonomyID}`)
+		.then(res => res.json())
+		
+		return coachesRes
+	})
+
+	const coaches = await Promise.all(coachesPromises)
+
+	const pages = teams.map((team, i) => {
+        return  {
+            slug: team.acm_fields.teamslug,
+            name: team.acm_fields.name,
+            img: getCompressedImage(team.acm_fields.bild, WPResolution.mdlg, `Ein Teamfoto der ${team.acm_fields.name}`),
+            practice: team.acm_fields.training,
+			miniText: team.acm_fields.minitext,
+			coaches: coaches[i]
+        }
+    });
+
+	return pages.map(({ slug, name, img, practice, miniText, coaches }) => {
+		return {
+			params: { team: slug },
+			props: { name, img, practice, miniText, coaches },
+		};
+	});
+}
+
+const { name, img, practice, miniText, coaches } = Astro.props;
+---
+
+<Layout title="Millers">
+	{/* } Works as placeholder while image is loading */}
+	<section
+		class="relative w-full max-h-[calc(100vh_-_115px)] aspect-[4/3] linear-background">
+		{
+			/*  <img src={img.url} alt={img.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */
+		}
+		<Picture
+			src={img.url}
+			alt="Ein Teamfoto der Minden Millers"
+			widths={[400, 800, 1600]}
+			sizes="100%"
+			class="w-full max-h-[calc(100vh_-_115px)] object-cover"
+			aspectRatio={img.width / img.height}
+		/>
+		<div
+			class="absolute bottom-0 w-full md:h-24 h-12 md:text-3xl text-xl text-white bg-gray-800/75">
+			<h3
+				class="text-center my-auto align-middle md:leading-[6rem] leading-[3rem]">
+				Herrenmannschaft
+			</h3>
+		</div>
+	</section>
+
+	<Container>
+		{/* 
+		<!-- Standings Table -->
+        <!-- Dieses feature existiert (scheinbar nur für unsere Liga) nicht -->
+        <h3 class="text-lg">Rangliste der aktuellen Saison</h3>
+        <section>
+            <Standings url="https://bsm.baseball-softball.de/leagues/5275/table.json?api_key=Sm1o1iRAB2jB_U8xVUfpvw"/>
+        </section>
+        */}
+
+		<!-- Training Times -->
+		<center>
+			<section class="bg-black/90 text-slate-100 max-w-2xl p-8 mx-auto mb-12 flex sm:inline-flex flex-nowrap sm:gap-8 rounded-xl shadow-lg shadow-gray-500/80 text-left">
+				<Picture 
+					src={baseballIcon}
+					alt="An Icon of a baseball on fire"
+					widths={[200]}
+					sizes="100%"
+					class="hidden sm:block w-32 h-32 rotate-180"
+					aspectRatio={1/1}
+				/>
+				<div class="">
+					<h3 class="text-lg text-gray-300 font-medium">Unsere Trainingszeiten</h3>
+					<div class="my-2">
+						{
+							practice.map((practice) => (
+								<p class="text-xl font-bold" set:html={practice} />
+							))
+						}
+					</div>
+	
+					<p class="text-lg text-gray-300"><i>Komm vorbei!</i></p>
+				</div>
+			</section>
+		</center>
+		
+
+		<!-- About Text -->
+		<h3 class="text-xl mb-1">Über Uns</h3>
+		<section class="relative mb-8 p-4 overflow-hidden">
+			<div class="-z-20 absolute top-0 left-0 w-full h-full rounded bg-yellow-50"></div>
+			<div class="-z-20 absolute top-0 left-0 w-full h-full rounded bg-yellow-400/70"></div>
+			<div class="-z-20 absolute top-0 left-0 w-full h-full rounded bg-white/60"></div>
+			<div class="-z-10 absolute top-0 left-0 w-full h-full p-2 rounded bg-[url:theme(backgroundImage.logo)] bg-contain bg-no-repeat bg-center bg-origin-content opacity-20 scale-100 -rotate-6"></div>
+			<div class="-z-10 absolute top-0 left-0 w-full h-full rounded bg-white/40 "></div>
+			{
+				<div class="z-10 w-full h-full"><div class="wordpress remove-default-styling"><Fragment set:html={miniText} /></div></div>
+			}
+		</section>
+
+		<!-- Trainer -->
+		<h3 class="text-xl mb-1">Trainer</h3>
+		<section class="flex flex-wrap gap-4 pb-4">
+			{
+				coaches.map((coach) => (
+					<div class="grow p-5 bg-slate-200 rounded">
+						<strong>{coach.acm_fields.name}</strong>
+						<p>
+							<Secret
+								string={coach.acm_fields.email}
+								link={"mailto:" + coach.acm_fields.email}
+								nostyle={true}
+							/>
+						</p>
+					</div>
+				))
+			}
+		</section>
+	</Container>
+</Layout>

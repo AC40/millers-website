@@ -2,11 +2,12 @@
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import { Picture } from "@astrojs/image/components";
-import { indexData, formatDate } from "Networking/wordpress";
-import { Event, nextEvents } from "Networking/events"
+import { indexData, formatDate } from "Networking/index";
+import { nextEvents } from "Networking/events"
+import { Icon } from "astro-icon";
 
 import "../styles/speech-bubble.css"
-import { lime } from "tailwindcss/colors";
+import "../styles/index.css"
 ---
 
 <Layout title="Home">
@@ -14,7 +15,7 @@ import { lime } from "tailwindcss/colors";
   <div class:list={["w-full md:min-h-0 max-h-128 relative"]}>
 
     <section class:list={["hidden sm:block", "relative w-full linear-background max-h-128", `aspect-[2560/1707]`]}>
-      {/*  <img src={WPimage.url} alt={WPimage.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */}
+      {/*  <img src={WPImage.url} alt={WPImage.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */}
       <Picture
         src={indexData.heroImg.url}
         widths={[200, 400, 800, 1000]}
@@ -39,7 +40,7 @@ import { lime } from "tailwindcss/colors";
         </Container>
 
         <div class="md:block absolute md:static bottom-0  w-full items-center text-white">
-          <div class="md:mx-auto mt-auto md:w-128 p-8 bg-gray-400/40 backdrop-blur-sm md:rounded-lg">
+          <div class="md:mx-auto mt-auto md:w-132 p-8 bg-gray-400/40 backdrop-blur-sm md:rounded-lg">
             {/* <p>Egal ob du schon double plays gemacht hast, oder noch nie einen Baseball in der Hand hattest, fühl dich frei zum Training zu kommen und sei dabei wenn es heißt<br class="hidden md:inline"> „<strong>Batter up!</strong>“</p> */}
             <p set:html={indexData.heroText}></p>
             <hr class="my-4 border-none h-0.5 bg-gray-400 text-gray-400 rounded-sm">
@@ -67,34 +68,48 @@ import { lime } from "tailwindcss/colors";
       </div>
 
     </div> */}
- 
-    
-    <!-- NEXT EVENTS -->
-    <section class="mb-24">
-      <div class="text-2xl mb-4">
-        <strong>
-          <span class="align-middle inline-block">Anstehende Events</span>
-          <i class="bi bi-calendar-range inline-block ml-6 text-5xl"></i>
-        </strong>
-      </div>
 
-      <ul class="list-disc ml-4">
-        {
-          nextEvents(3).map((event) => (
-            <li class="mb-4 last:mb-0">
-              <h4 class="text-lg">{event.home} vs. {event.away}</h4>
-              <p class="text-md text-gray-600">{event.date.toLocaleDateString()} | {event.fieldName}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    <div class="grid lg:grid-cols-2 mb-16">
+      <!-- Introductory Text -->
+      <div class="relative lg:border-r border-black lg:pr-8 lg:mr-8 mb-12 lg:mb-0">
+        <h2 class=" absolute top-0 left-0 text-2xl rounded bg-yellow-400/80 p-3">Wer sind wir?<svg class="inline w-8 h-8 mb-1 ml-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19.02 4.976A9.927 9.927 0 1 0 15.74 21.2a9.908 9.908 0 0 0 6.19-9.2a9.856 9.856 0 0 0-2.91-7.024Zm-13.34.71a8.9 8.9 0 0 1 6.04-2.61a8.461 8.461 0 0 1-.34 2.26l-.34-.19a.5.5 0 0 0-.5.86l.5.29a9.227 9.227 0 0 1-1.57 2.47l-.35-.35a.5.5 0 0 0-.7 0a.5.5 0 0 0 0 .71l.34.34a8.875 8.875 0 0 1-2.47 1.58l-.29-.51a.5.5 0 0 0-.68-.19a.505.505 0 0 0-.18.69l.2.34a8.2 8.2 0 0 1-2.26.35a8.827 8.827 0 0 1 2.6-6.04ZM11.74 17a.5.5 0 1 0-.5.87l.49.29a10.008 10.008 0 0 0-.45 2.74a8.9 8.9 0 0 1-8.18-8.17a9.378 9.378 0 0 0 2.75-.46l.29.5a.5.5 0 0 0 .43.25a.475.475 0 0 0 .25-.07a.493.493 0 0 0 .18-.68l-.21-.36a9.461 9.461 0 0 0 2.68-1.73l.36.36a.5.5 0 0 0 .35.15a.508.508 0 0 0 .36-.15a.513.513 0 0 0 0-.71l-.36-.36A9.665 9.665 0 0 0 11.9 6.8l.37.21a.475.475 0 0 0 .25.07a.511.511 0 0 0 .44-.25a.494.494 0 0 0-.19-.68l-.51-.29a9.789 9.789 0 0 0 .46-2.76a8.924 8.924 0 0 1 8.18 8.18a10.08 10.08 0 0 0-2.74.46l-.28-.49a.505.505 0 0 0-.69-.18a.491.491 0 0 0-.18.68l.2.35a9.684 9.684 0 0 0-2.68 1.73l-.35-.35a.5.5 0 0 0-.71 0a.5.5 0 0 0 0 .7l.36.36a9.2 9.2 0 0 0-1.73 2.67Zm6.58 1.32a8.851 8.851 0 0 1-6.04 2.6a8.388 8.388 0 0 1 .34-2.25l.35.2a.451.451 0 0 0 .25.07a.5.5 0 0 0 .43-.25a.505.505 0 0 0-.18-.69l-.51-.29a8.7 8.7 0 0 1 1.57-2.47l.36.36a.5.5 0 0 0 .7-.71l-.36-.36a9.124 9.124 0 0 1 2.48-1.57l.3.52a.5.5 0 0 0 .43.25a.451.451 0 0 0 .25-.07a.505.505 0 0 0 .19-.68l-.21-.36a8.449 8.449 0 0 1 2.25-.34a8.992 8.992 0 0 1-.66 3.14a9.172 9.172 0 0 1-1.94 2.896Z"/></svg></h2>
+        <div class="mt-10 ml-3 left-0 bg-yellow-400/25 rounded-lg p-8 text-lg">
+          <div class="wordpress">
+            <Fragment set:html={indexData.text} />
+          </div>
+        </div>
+      </div>
+      
+   
+      
+      <!-- NEXT EVENTS -->
+      <section class="">
+        <div class="text-2xl mb-4">
+          <strong>
+            <span class="align-middle inline-block">Anstehende Events</span>
+            <i class="bi bi-calendar-range inline-block ml-6 text-5xl" aria-hidden="true"></i>
+          </strong>
+        </div>
+  
+        <ul class="list-disc ml-4">
+          {
+            nextEvents(3).map((event) => (
+              <li class="mb-4 last:mb-0">
+                <h4 class="text-lg">{event.home} vs. {event.away}</h4>
+                <p class="text-md text-gray-600">{event.date.toLocaleDateString("de")} | {event.fieldName}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+    
     
     <!-- NEWS -->
-    <section class="text-right mb-24">
+    <section class="text-right mb-16">
       <div class="text-2xl">
         <strong>
-          <i class="bi bi-megaphone-fill inline-block mr-8 text-5xl -rotate-45"></i>
+          <i class="bi bi-megaphone-fill inline-block mr-8 text-5xl -rotate-45" aria-hidden="true"></i>
           <span class="align-middle inline-block">News</span>
         </strong>
       </div>
@@ -118,11 +133,11 @@ import { lime } from "tailwindcss/colors";
         <span class="col-6 self-center text-right"><a href={"/news/" + indexData.newest[1].slug + "/" }><i class="bi bi-arrow-right-circle text-3xl text-gray-600 hover:text-black transition duration-75"></i></a></span>
       </div>
 
-      <a href="/news" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Mehr News</a>
+      <a href="/news" class="index-more-btn pretty-focus">Mehr News</a>
     </section>
 
     <!-- HISTORY -->
-    <section class="mb-24 lg:w-3/5">
+    <section class="mb-12 lg:w-3/5">
       <div class="text-2xl">
         <strong>
           <span class="align-middle inline-block">Geschichte</span>
@@ -131,7 +146,7 @@ import { lime } from "tailwindcss/colors";
       </div>
       <p class="py-8">Aus dem damals ersten Baseballverein der Region, den Bückeburg Bandits, haben sich um 1996 die Minden Bandits entwickelt, und vertreten somit seit über über 25 Jahren im Kreis Minden-Lübbecke den Sport Baseball.</p>
       <br>
-      <a href="/geschichte" class="font-serif text-lg text-white px-8 py-4 my-4 bg-gray-700 rounded hover:bg-gray-300 hover:text-black transition duration-200">Weiterlesen</a>
+      <a href="/geschichte" class="index-more-btn pretty-focus">Weiterlesen</a>
     </section>
 	</Container>
 </Layout>

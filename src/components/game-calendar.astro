@@ -1,112 +1,115 @@
 ---
-import { eventsJSON } from "../Networking/events"
+import { events } from "../Networking/events";
+
 ---
-
-<head>
-	<!-- FullCalendar -->
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
-
-	<script>
-		import { Calendar } from "fullcalendar";
-		import dayGridPlugin from "@fullcalendar/daygrid";
-		import listPlugin from "@fullcalendar/list";
-		import { Match } from "Networking/BSMMatches";
-
-		var prevWidth = 0;
-		const storageEl = document.querySelector('#bsm-data-storage')
-
-		function createMatchTitle(match) {
-			// return match.away_team_name + " @ " + match.home_team_name
-			return match.home_league_entry.team.short_name == "MIN" ? "Heimspiel" : "Auswärts"
-		}
-
-		function createMatchDescription(match) {
-			return  `<div class=\"custom-event-description\">${match.away_team_name + " @ " + match.home_team_name}<br>Wo: ${match.field?.name}</div>`
-		}
-
-		const json = JSON.parse((storageEl as HTMLElement).dataset.bsmstorage ?? "")
-		const matches = json.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
-
-		const valid = matches.map((match) => Object.create({
-			start: new Date(match.time.replace(/-/g, "/")).toISOString(),
-			title: createMatchTitle(match),
-			extendedProps: {
-				match: match,
-			},
-			description: createMatchDescription(match)
-		}))
-
-		function getWidth() {
-			return Math.max(
-				document.body.scrollWidth,
-				document.documentElement.scrollWidth,
-				document.body.offsetWidth,
-				document.documentElement.offsetWidth,
-				document.documentElement.clientWidth
-			);
-		}
-
-		document.addEventListener("DOMContentLoaded", function () {
-			var calendarEl = document.getElementById("game-calendar");
-
-			if (calendarEl == null) {
-				return;
-			}
-
-			var calendar = new Calendar(calendarEl, {
-				locale: "de",
-				firstDay: 1,
-				plugins: [dayGridPlugin, listPlugin],
-				events: valid,
-				initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
-				headerToolbar: {
-					left: "prev,next today",
-					center: "title",
-					right: "dayGridMonth,listMonth",
-				},
-				buttonText: {
-					today: "Heute",
-					month: "Monat",
-					week: "Woche",
-					day: "Tag",
-					list: "Liste",
-				},
-				views: {},
-				height: "100%",
-				eventDidMount: function(info) {
-					info.el.classList.add("tooltip")
-					const tooltip = document.createElement('div')
-					tooltip.className = "tooltiptext"
-					tooltip.innerHTML = createMatchDescription(info.event.extendedProps.match)
-					info.el.appendChild(tooltip)
-
-					// const fcTitle = info.el.querySelector('.fc-event-title')
-					
-					// if (fcTitle != null) {
-					// 	fcTitle.insertAdjacentHTML("beforeend","<br/>" + createMatchDescription(info.event.extendedProps.match)); 
-					// } else {
-					// 	console.log("EEE");
-					// }
-				},
-			});
-
-			window.addEventListener("resize", function () {
-				const width = getWidth();
-				if (width >= 600 && prevWidth < 600) {
-					calendar.changeView("dayGridMonth");
-				} else if (width < 600 && prevWidth > 600) {
-					calendar.changeView("listMonth");
-					calendar;
-				}
-				prevWidth = width;
-			});
-
-			// fetchGames();
-			calendar.render();
-		});
-	</script>
-</head>
-
-<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto overflow-hidden">
+<div id="game-calendar" class="m-5 max-w-screen-xl xl:mx-auto">
 </div>
-<span id="bsm-data-storage" data-bsmstorage={eventsJSON} ></span>
+<span id="bsm-data-storage" data-events={JSON.stringify(events)} ></span>
+
+<!-- FullCalendar Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
+
+<script>
+	import { Calendar } from "fullcalendar";
+	import dayGridPlugin from "@fullcalendar/daygrid";
+	import listPlugin from "@fullcalendar/list";
+	import tippy from 'tippy.js';
+	import 'tippy.js/dist/tippy.css'; // optional for styling
+
+	var prevWidth = 0;
+	const storageEl = document.querySelector('#bsm-data-storage')
+	const events = JSON.parse((storageEl as HTMLElement).dataset.events ?? "")
+
+	function getWidth() {
+		return Math.max(
+			document.body.scrollWidth,
+			document.documentElement.scrollWidth,
+			document.body.offsetWidth,
+			document.documentElement.offsetWidth,
+			document.documentElement.clientWidth
+		);
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		var calendarEl = document.getElementById("game-calendar");
+
+		if (calendarEl == null) {
+			return;
+		}
+
+		var calendar = new Calendar(calendarEl, {
+			locale: "de",
+			firstDay: 1,
+			plugins: [dayGridPlugin, listPlugin],
+			events: events,
+			eventColor: '#E1341E',
+			initialView: getWidth() >= 600 ? "dayGridMonth" : "listMonth",
+			headerToolbar: {
+				left: "prev,next",
+				center: "title",
+				right: "dayGridMonth,listMonth",
+			},
+			titleFormat: {
+				year: 'numeric',
+				month: 'short',
+			},
+			buttonText: {
+				today: "Heute",
+				month: "Monat",
+				week: "Woche",
+				day: "Tag",
+				list: "Liste",
+			},
+			views: {},
+			height: "auto",
+			eventDidMount: function(info) {
+				const id = info.event.extendedProps.id
+				tippy(`.tippy-content-id-${id}`, {
+					content: info.event.extendedProps.description,
+					allowHTML: true,
+					interactive: true,
+					delay: 100,
+					// This is required, because without it the tooltip inherits styling from its parent. This makes it keep its original styling
+					appendTo: () => document.body
+				});
+			},
+		});
+
+		window.addEventListener("resize", function () {
+			const width = getWidth();
+			if (width >= 600 && prevWidth < 600) {
+				// Change Calendar view type
+				calendar.changeView("dayGridMonth");
+
+
+				const title = (document.getElementsByClassName('fc-toolbar-title')[0] as HTMLElement)
+				title.style.fontSize = "1.75em"
+
+			} else if (width < 600 && prevWidth >= 600) {
+				// Change Calendar view type
+				calendar.changeView("listMonth");
+
+				const title = (document.getElementsByClassName('fc-toolbar-title')[0] as HTMLElement)
+				title.style.fontSize = "5.0vw"
+			}
+			prevWidth = width;
+		});
+
+		// fetchGames();
+		calendar.render();
+
+		// Add click/hover notice below header toolbar
+		const header = document.getElementsByClassName('fc-header-toolbar')[0];
+		var notice = document.createElement("p");
+		notice.style.marginBottom = '0.4em';
+		notice.innerHTML = `<i style="margin-bottom: 0.4em;color:gray;">Klicke/Hover über ein Event um Details zu sehen</i>`;
+
+		(header as HTMLElement).style.marginBottom = '0.75em';
+		(header.firstElementChild as HTMLElement).style.marginRight = '5px';
+		(header.lastElementChild as HTMLElement).style.marginLeft = '5px';
+		header.parentNode!.insertBefore(notice, header.nextSibling)
+		
+	});
+
+	// Place tooltips on all events
+</script>

@@ -1,0 +1,113 @@
+@tailwind base;
+
+/* The following two classes to what the say respectivly while applying basic styles to everything hat can be done in wp richtext fields */
+/* Remove tailwind styling */
+.remove-default-styling {
+	all: revert;
+}
+
+.remove-default-styling * {
+	all: revert;
+}
+
+/*
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  height: 1px;
+}
+*/
+.rich-text-styling blockquote {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
+}
+
+/* Wordpress styling */
+.wordpress a {
+	color: rgb(59 130 246);
+}
+
+.wordpress a:hover {
+	text-decoration: underline;
+}
+
+.wordpress ul {
+	margin: 0.5em 0;
+	list-style: inside;
+}
+
+/* Global placeholder shimmer */
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.linear-background {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 1000px 104px;
+    position: relative;
+    overflow: hidden;
+}
+
+.fade-out-bottom-text {
+	-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+	mask-image: linear-gradient(to bottom, black 25%, transparent 100%);
+}
+
+/* Generic custom tooltip */
+.tooltip .tooltiptext {
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: left;
+	border-radius: 6px;
+	padding: 5px;
+	position: absolute;
+	z-index: 10;
+	bottom: 125%;
+	left: 0;
+	margin-left: -60px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}
+
+@layer base {
+	.custom-event {
+		@apply text-gray-200 p-1 leading-5;
+	}
+	.custom-event h4 {
+		@apply font-medium text-white mb-1;
+	}
+	.custom-event a {
+		@apply text-blue-400 hover:underline;
+	}
+}
