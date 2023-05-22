@@ -21,6 +21,7 @@ module.exports = {
       },
       backgroundImage: {
         'index-hero': `url('/action-hero.JPG'}')`,
+        'logo': "url('/src/assets/millers/logo.png')"
       },
       fontFamily: {
         sans: ['InterVariable', 'Inter', ...defaultTheme.fontFamily.sans],
