@@ -4,7 +4,7 @@ import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import Container from "@components/container.astro";
 import millersLogo from "/src/assets/millers/logo.png";
 import Dropdown from "./dropdown.astro";
-import { shouldShowCalendar } from "Networking/nav";
+import { shouldShowCalendar } from "Networking/variables";
 
 // Get static paths for teams
 const teamsRes = await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/mannschaften");

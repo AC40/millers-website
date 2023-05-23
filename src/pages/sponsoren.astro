@@ -4,44 +4,74 @@ import Container from "@components/container.astro";
 import { Picture } from "@astrojs/image/components";
 
 import baseballministerLogo from "../assets/sponsors/baseballminister-logo.png";
+import westfalenbandeLogo from "../assets/sponsors/westfalen-bande-logo.png"
+
+import { westfalenbandeText, baseballMinisterText } from "../Networking/sponsors"
 ---
 
 <Layout title="Sponsoren">
 	<Container>
 		<h1 class="text-2xl">Sponsoren</h1>
 
-		<div class="bg-green-100 rounded-xl md:max-w-lg w-auto p-10 my-10">
-			<Picture
-				src={baseballministerLogo}
-				alt="Das Logo von 'Baseballminister'"
-				widths={[1000]}
-				sizes="300px"
-                class=""
-			/>
-            <hr class="my-2 border-black">
-			<p>
-				Baseballminister ist <strong>die</strong> Anlaufstelle für jegliches
-				Baseballequipment, egal ob Handschuhe, Schläger oder Bälle. Seit
-				2010 besteht eine enge Kooperation mit Baseballminister.
-			</p>
-			<p>
-				Dadurch haben die Minden Millers dort ihren eigenen shop, wo man
-				ausgewähltes Equipment, sowie Merchandise erwerben kann.
-			</p>
+		<div class="md:flex basis-1/2 gap-8 flex-wrap mt-8">
+			{/* Baseballminister */}
+			<article class="bg-green-100 md:max-w-lg rounded-xl p-10">
+				<Picture
+					src={baseballministerLogo}
+					alt="Das Logo von 'Baseballminister'"
+					widths={[1000]}
+					sizes="100%"
+					class=""
+				/>
+				<hr class="my-2 border-black">
+				<Fragment set:html={baseballMinisterText} />
 
-			<div class="grid gap-4 mt-5 grid-cols-1 sm:grid-cols-2 text-center">
-				<a
-					href="https://www.baseballminister.de/"
-					class="bg-green-800 rounded py-2 px-3 text-white ">
-					Baseballminister.de
-				</a>
-				<a
-					href="https://www.baseballminister.de/Teamshop-Minden-Millers"
-					class="bg-green-800 rounded py-2 px-3 text-white"
-                    >
-					Millers Fan Shop
-				</a>
-			</div>
+				<div class="grid gap-4 mt-5 grid-cols-1 sm:grid-cols-2 text-center">
+					<a
+						href="https://www.baseballminister.de/"
+						class="bg-green-800 rounded py-2 px-3 text-white ">
+						Baseballminister.de
+					</a>
+					<a
+						href="https://www.baseballminister.de/Teamshop-Minden-Millers"
+						class="bg-green-800 rounded py-2 px-3 text-white"
+						>
+						Millers Fan Shop
+					</a>
+				</div>
+			</article>
+
+
+			{/* Baseballminister */}
+			<article class="bg-red-50 rounded-xl md:max-w-lg h-fit p-10 mt-8 md:mt-0">
+				<div class="flex flex-nowrap align-center items-center gap-4 mb-2">
+					<Picture
+						src={westfalenbandeLogo}
+						alt="Das Logo der 'Westfalenbande'"
+						widths={[1000]}
+						sizes="100%"
+						class="w-20 float-left my-auto"
+					/>
+					<h3 class="text-4xl font-bold">Westfalenbande</h3>
+				</div>
+				<hr class="my-2 border-black">
+				<Fragment set:html={westfalenbandeText} />
+				
+				<div class="grid gap-4 mt-5 grid-cols-1 sm:grid-cols-2 text-center">
+					<a
+						href="https://www.baseballminister.de/"
+						class="bg-red-700 rounded py-2 px-3 text-white ">
+						Baseballminister.de
+					</a>
+					<a
+						href="https://www.baseballminister.de/Teamshop-Minden-Millers"
+						class="bg-red-700 rounded py-2 px-3 text-white"
+						>
+						Millers Fan Shop
+					</a>
+				</div>
+			</article>
 		</div>
+		
 	</Container>
 </Layout>
