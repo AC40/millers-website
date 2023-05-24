@@ -16,9 +16,9 @@ import Secret from "./Secret.astro";
 	<div class="my-auto text-left sm:text-center">
 		<p class="text-sm text-slate-800">
 			<span class="inline-block"
-				>Copyright © {new Date().getFullYear()} Minden
+				>Copyright © {new Date().getFullYear()}
 			</span>
-			<span class="inline-block">Bandits/Millers |</span>
+			<span class="inline-block">Minden Bandits Baseball und Softball Team 1996 e.V. |</span>
 			<span class="inline-block">Alle Rechte vorbehalten.</span>
 		</p>
 		{/*
@@ -40,14 +40,12 @@ import Secret from "./Secret.astro";
 	<hr class="sm:hidden border border-slate-500">
 
 	<div class="text-left sm:text-center md:text-right my-auto">
-		<a href="mailto:minden@millers.de" class="footer-a">
-			<Secret
-				string="minden.millers@gmail.com"
-				link="mailto:minden.millers@gmail.com"
-				nostyle={true}
-			/>
-			
-		</a>
+		<Secret
+			string="verein@mindenmillers.de"
+			link="mailto:verein@mindenmillers.de"
+			nostyle={true}
+			class="footer-a"
+		/>
 		<br />
 		<a href="/mitgliedsantrag.pdf" class="footer-a">Mitgliedsantrag</a>
 	</div>
