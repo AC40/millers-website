@@ -26,6 +26,7 @@ export async function getStaticPaths() {
         return  {
             slug: team.acm_fields.teamslug,
             name: team.acm_fields.name,
+			displayName: team.acm_fields.diplayName,
             img: getCompressedImage(team.acm_fields.bild, WPResolution.mdlg, `Ein Teamfoto der ${team.acm_fields.name}`),
             practice: team.acm_fields.training,
 			miniText: team.acm_fields.minitext,
@@ -33,15 +34,15 @@ export async function getStaticPaths() {
         }
     });
 
-	return pages.map(({ slug, name, img, practice, miniText, coaches }) => {
+	return pages.map(({ slug, name, displayName, img, practice, miniText, coaches }) => {
 		return {
 			params: { team: slug },
-			props: { name, img, practice, miniText, coaches },
+			props: { name, displayName, img, practice, miniText, coaches },
 		};
 	});
 }
 
-const { name, img, practice, miniText, coaches } = Astro.props;
+const { name, displayName, img, practice, miniText, coaches } = Astro.props;
 ---
 
 <Layout title="Millers">
@@ -63,7 +64,7 @@ const { name, img, practice, miniText, coaches } = Astro.props;
 			class="absolute bottom-0 w-full md:h-24 h-12 md:text-3xl text-xl text-white bg-gray-800/75">
 			<h3
 				class="text-center my-auto align-middle md:leading-[6rem] leading-[3rem]">
-				Herrenmannschaft
+				{ displayName }mannschaft
 			</h3>
 		</div>
 	</section>
