@@ -99,7 +99,7 @@ function createMatchDescription(match) {
     return  `
     <div class=\"custom-event\">
         <h4>${match.away_team_name + " @ " + match.home_team_name}</h4>
-        ${(date.getTime() < Date.now()) ? `Ergebnis: <b>${match.home_runs}:${match.away_runs}</b><br>` : `Spielbeginn: ${date.getHours()}:${(date.getMinutes() == 0) ? "00" : date.getMinutes()} Uhr<br>`}
+        ${(date.getTime() < Date.now()) ? `Ergebnis: <b>${match.home_runs}:${match.away_runs}</b><br>` : `Spielbeginn: ${date.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'})} Uhr<br>`}
         Wo: <a href=${(mindenIsHome) ? "/millers-park" : `https://www.google.com/maps/search/?api=1&query=${match.field.latitude},${match.field.longitude}`} ${(mindenIsHome) ? "" : `target="_blank" rel="noreferrer noopener"`}><b>${match.field?.name}</b></a>
     </div>`
 }
