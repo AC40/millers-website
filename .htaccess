@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Reroute all http connections to https
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+# Set 404.html as default site when 404 error is thrown
+ErrorDocument 404 /404.html
