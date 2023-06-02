@@ -95,11 +95,13 @@ function createMatchTitle(match) {
 
 function createMatchDescription(match) {
     const date = matchDate(match)
+    console.log(date.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'}));
+    
     const mindenIsHome = (match.home_league_entry.team.short_name == "MIN")
     return  `
     <div class=\"custom-event\">
         <h4>${match.away_team_name + " @ " + match.home_team_name}</h4>
-        ${(date.getTime() < Date.now()) ? `Ergebnis: <b>${match.home_runs}:${match.away_runs}</b><br>` : `Spielbeginn: ${date.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'})} Uhr<br>`}
+        ${(date.getTime() < Date.now()) ? `Ergebnis: <b>${match.home_runs}:${match.away_runs}</b><br>` : `Spielbeginn: ${new Intl.DateTimeFormat('de-DE', { dateStyle: undefined, timeStyle: 'short', timeZone: 'Europe/Berlin' }).format(date)} Uhr<br>`}
         Wo: <a href=${(mindenIsHome) ? "/millers-park" : `https://www.google.com/maps/search/?api=1&query=${match.field.latitude},${match.field.longitude}`} ${(mindenIsHome) ? "" : `target="_blank" rel="noreferrer noopener"`}><b>${match.field?.name}</b></a>
     </div>`
 }
