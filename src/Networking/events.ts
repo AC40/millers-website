@@ -90,7 +90,7 @@ function matchDate(match: any): Date {
 
 function createMatchTitle(match) {
     // return match.away_team_name + " @ " + match.home_team_name
-    return ` ${match.home_league_entry.team.short_name} vs. ${match.away_league_entry.team.short_name}` 
+    return ` ${match.home_league_entry.team.short_name} vs. ${match.away_league_entry.team.short_name}`
 }
 
 function createMatchDescription(match) {
