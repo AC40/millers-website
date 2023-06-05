@@ -95,7 +95,6 @@ function createMatchTitle(match) {
 
 function createMatchDescription(match) {
     const date = matchDate(match)
-    console.log(date.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'}));
     
     const mindenIsHome = (match.home_league_entry.team.short_name == "MIN")
     return  `
