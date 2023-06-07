@@ -9,6 +9,13 @@ import bückeburgBanditsTeam from "../assets/millers/historie/bückeburg-bandits
 import hitterPortrait from "../assets/millers/historie/schlagmann.jpg";
 import mindenMillersTeam from "../assets/millers/historie/minden-millers.jpg";
 import newField1 from "../assets/millers/historie/newField1.jpg";
+
+const historyData = await (await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/geschichte")).json()
+const history = historyData.map((year) => {
+	return year.acm_fields
+}).reverse()
+
+
 ---
 
 <Layout title="Historisches">
@@ -17,193 +24,18 @@ import newField1 from "../assets/millers/historie/newField1.jpg";
 
 		<div class="timeline">
 			<ul>
-				<li>
-					<span>1993</span>
-					<div class="content">
-						<h3>Anfänge in Bückeburg</h3>
-						<p>
-							Der erste Baseball Verein der Region gründete sich
-							in Bückeburg. Unter dem Vorsitzenden Norman Arnold
-							spielten die Bückeburg Bandits ihre erste Saison in
-							Niedersachsen.
-						</p>
-					</div>
-				</li>
-				<li>
-					<span>1995 A</span>
-					<div class="content">
-						<h3>Das erste Spielfeld</h3>
-						<p>
-							Nach einigen Problemen, ein passendes Spielfeld zu
-							finden, erfolgte 1995 die Fusion mit dem VfR Evesen.
-							Doch auf hier gab es Probleme: Das Baseballfeld
-							musste improvisiert werden und lag zum größten Teil
-							auf einem Fußballplatz. Da Baseballspiele in der
-							Regen keiner Zeitbegrenzung unterliegen, kam es zu
-							Abstimmungsproblemen mit der Fußballabteilung.
-						</p>
-					</div>
-				</li>
-				<li>
-					<span>1995 B</span>
-					<div class="content">
-						<h3>Die Idee des Umzugs</h3>
-						<p>
-							Noch im gleichen Jahr entstanden durch intensive
-							Bemühungen von Voker Türk erste Kontakte zu Stadt
-							Minden, die die nötige Weitsicht besaß mit der
-							Ansiedlung eines Baseballvereins das sportliche
-							Angebot insbesondere für Jugendliche zu erweitern.
-							Nach einigen Gesprächen war klar: Ein Wechsel der
-							Vereins nach Minden bot langfristige Perspektiven.
-						</p>
-					</div>
-				</li>
-				<li>
-					<span>1996</span>
-					<div class="content">
-						<h3>Der Umzug nach Minden</h3>
-						<p>
-							Im folgenden Jahr wurde der Umzug dann formell
-							vollzogen und der Verein Minden Bandits Baseball und
-							Softball Team 1996 e. V. gegründet. Da im
-							nordrhein-westfälischen Landesverband jedoch bereits
-							eine Mannschaft mit Namen Bandits spielte, musste
-							ein neuer Name für das spielende Team her. Nach
-							kurzer Überlegung kam man überein, dass das Herren
-							Team als Minden Millers, in Anspielung auf den
-							Mühlenkreis, in der Kreisliga antreten sollte.
-						</p>
-					</div>
-				</li>
-				<li>
-					<span>1998</span>
-					<div class="content">
-						<h3>In Minden angekommen</h3>
-						<p>
-							Norman Arnold, langjähriger Vorsitzender und Trainer der
-							Bandits hatte den Umzug noch begleitet, musste dann aber
-							aus beruflichen Gründen seine Posten im Verein aufgeben.
-							Der besonders schmerzliche Verlust des qualifizierten
-							Trainers und präsenten Organisators traf das Team.
-							Volker Türk übernahm die Leitung des Vereins und
-							glücklicherweise konnte wenig später mit dem Amerikaner
-							Keith Meeker, dem US Verbindungsoffizier der
-							Heeresflieger Waffenschule in Bückeburg, ein
-							hervorragender Trainer gefunden werden. So führte Meeker
-							das nun als Millers bekannte Team 1998 zur
-							Kreismeisterschaft und stand für konstante Leistungen in
-							der Bezirksliga in den folgenden Jahren.
-						</p>
-					</div>
-				</li>
+				{
+					history.map((year) => (
+						<li>
+							<span>{year.jahr}</span>
+							<div class="content">
+								<h3>{year.titel}</h3>	
+								<p>{year.text}</p>
+							</div>
+						</li>
+					))
+				}
 			</ul>
 		</div>
-		
-
-		{/*
-		<div class="space-y-4">
-			<div class="">
-				<h2 class="text-xl">Die Anfänge in Bückeburg</h2>
-				<div class="lg:grid grid-cols-2 gap-2">
-					<Picture
-						src={hitterPortrait}
-						alt="Ein foto der Minden Bandits aus ihrer Anfangszeit"
-						widths={[400]}
-						sizes="300px"
-						class="col-start-2 col-end-2 lg:m-auto float-right lg:float-none"
-					/>
-					<div
-						class="basis-3/4 row-start-1 row-end-1 col-start-1 col-end-1">
-						<p>
-							Der erste Baseball Verein der Region gründete sich
-							1993 in Bückeburg. Unter dem Vorsitzenden Norman
-							Arnold spielten die Bückeburg Bandits ihre erste
-							Saison in Niedersachsen. Nach einigen Problemen, ein
-							passendes Spielfeld zu finden, erfolgte 1995 die
-							Fusion mit dem VfR Evesen. Doch auf hier gab es
-							Probleme: Das Baseballfeld musste improvisiert
-							werden und lag zum größten Teil auf einem
-							Fußballplatz. Da Baseballspiele in der Regen keiner
-							Zeitbegrenzung unterliegen, kam es zu
-							Abstimmungsproblemen mit der Fußballabteilung.
-						</p>
-						<p>
-							Noch im gleichen Jahr entstanden durch intensive
-							Bemühungen von Voker Türk erste Kontakte zu Stadt
-							Minden, die die nötige Weitsicht besaß mit der
-							Ansiedlung eines Baseballvereins das sportliche
-							Angebot insbesondere für Jugendliche zu erweitern.
-							Nach einigen Gesprächen war klar: Ein Wechsel der
-							Vereins nach Minden bot langfristige Perspektiven.
-						</p>
-						<Picture
-							src={bückeburgBanditsTeam}
-							alt="Ein foto der Minden Bandits aus ihrer Anfangszeit"
-							widths={[400]}
-							sizes="200px"
-							class=""
-						/>
-					</div>
-				</div>
-			</div>
-
-			<hr class="my-3" />
-
-			<div class="">
-				<h2 class="text-xl">Der Umzug nach Minden</h2>
-				<div class="basis-3/4">
-					<Picture
-						src={mindenMillersTeam}
-						alt="Ein Foto der Minden Millers nach Neugründung 1996"
-						widths={[400]}
-						sizes="200px"
-						class="basis-1/4 float-right ml-8"
-					/>
-					<p>
-						Im folgenden Jahr wurde der Umzug dann formell vollzogen
-						und der Verein Minden Bandits Baseball und Softball Team
-						1996 e. V. gegründet. Da im nordrhein-westfälischen
-						Landesverband jedoch bereits eine Mannschaft mit Namen
-						Bandits spielte, musste ein neuer Name für das spielende
-						Team her. Nach kurzer Überlegung kam man überein, dass
-						das Herren Team als Minden Millers, in Anspielung auf d
-						en Mühlenkreis, in der Kreisliga antreten sollte.
-					</p>
-				</div>
-			</div>
-
-			<hr class="" />
-
-			<div class="grid grid-cols-2">
-				<div class="col-2">
-					<h2 class="text-xl">In Minden angekommen</h2>
-					<p>
-						Norman Arnold, langjähriger Vorsitzender und Trainer der
-						Bandits hatte den Umzug noch begleitet, musste dann aber
-						aus beruflichen Gründen seine Posten im Verein aufgeben.
-						Der besonders schmerzliche Verlust des qualifizierten
-						Trainers und präsenten Organisators traf das Team.
-						Volker Türk übernahm die Leitung des Vereins und
-						glücklicherweise konnte wenig später mit dem Amerikaner
-						Keith Meeker, dem US Verbindungsoffizier der
-						Heeresflieger Waffenschule in Bückeburg, ein
-						hervorragender Trainer gefunden werden. So führte Meeker
-						das nun als Millers bekannte Team 1998 zur
-						Kreismeisterschaft und stand für konstante Leistungen in
-						der Bezirksliga in den folgenden Jahren.
-					</p>
-				</div>
-
-				<Picture
-					src={newField1}
-					alt="Ein foto des neu gebauten Millers Ballpark"
-					widths={[100, 200]}
-					sizes="200px"
-					class="col-2"
-				/>
-			</div>
-		</div>
-		*/}
 	</Container>
 </Layout>

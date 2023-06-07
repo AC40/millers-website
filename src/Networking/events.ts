@@ -90,12 +90,11 @@ function matchDate(match: any): Date {
 
 function createMatchTitle(match) {
     // return match.away_team_name + " @ " + match.home_team_name
-    return ` ${match.home_league_entry.team.short_name} vs. ${match.away_league_entry.team.short_name}` 
+    return ` ${match.home_league_entry.team.short_name} vs. ${match.away_league_entry.team.short_name}`
 }
 
 function createMatchDescription(match) {
     const date = matchDate(match)
-    console.log(date.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'}));
     
     const mindenIsHome = (match.home_league_entry.team.short_name == "MIN")
     return  `

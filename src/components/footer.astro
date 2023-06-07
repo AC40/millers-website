@@ -1,5 +1,8 @@
 ---
 import Secret from "./Secret.astro";
+import { Image } from '@astrojs/image/components';
+
+import instaIcon from "../assets/icons/instagram.svg"
 ---
 <div
 	class="grid grid-cols-1 sm:grid-cols-3 text-left sm:text-center md:text-left gap-y-4 bg-yellow-200/75 w-full py-8 px-8">
@@ -39,14 +42,16 @@ import Secret from "./Secret.astro";
 
 	<hr class="sm:hidden border border-slate-500">
 
-	<div class="text-left sm:text-center md:text-right my-auto">
+	<div class="grid text-left sm:text-center md:text-right my-auto gap-0">
+		<a href="https://www.instagram.com/mindenmillers/" target="_blank" class="justify-self-end mb-2">
+			<Image src={instaIcon} width={25} height={25} alt="The logo of instagram"/>
+		</a>
 		<Secret
 			string="verein@mindenmillers.de"
 			link="mailto:verein@mindenmillers.de"
 			nostyle={true}
 			class="footer-a"
 		/>
-		<br />
 		<a href="/mitgliedsantrag.pdf" class="footer-a">Mitgliedsantrag</a>
 	</div>
 </div>
