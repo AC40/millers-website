@@ -27,3 +27,4 @@ jobs:
         local-dir: ./dist/
         dry-run: true
         log-level: verbose
+        port: 22
