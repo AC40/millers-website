@@ -23,6 +23,6 @@ jobs:
       with:
         server: home352391793.1and1-data.host
         username: u61526157-jens
-        password: ${{ secrets.password }}
+        password: ${{ Secrets.FTP_SERVER_PASSWORD }}
         dry-run: true
         log-level: verbose
