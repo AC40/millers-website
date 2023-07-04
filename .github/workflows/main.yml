@@ -24,5 +24,6 @@ jobs:
         server: home352391793.1and1-data.host
         username: u61526157-jens
         password: ${{ secrets.FTP_SERVER_PASS }}
+        local-dir: ./dist/
         dry-run: true
         log-level: verbose
