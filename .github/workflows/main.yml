@@ -17,7 +17,11 @@ jobs:
       run: |
         npm install
         npm run build
-    
+    - name: Stire dist as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist/ # or path/to/artifact
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
