@@ -25,9 +25,6 @@ jobs:
       with:
         name: dist
         path: dist/ # or path/to/artifact
-        
-    - name: Checkout
-      uses: actions/checkout@v2
     - name: SFTP Upload
       uses: Dylan700/sftp-upload-action@v1.1.4
       with:
