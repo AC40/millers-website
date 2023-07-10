@@ -39,7 +39,7 @@ jobs:
         # If true, outputs the results of the upload, without actually uploading.
         dry-run: false
         # A list of folders to upload in the format of `folder/ => upload_folder/`
-        uploads: ./dist/
+        uploads: dist/
         # If true, any existing files in the remote upload directories are deleted.
         delete: false
       # uses: SamKirkland/FTP-Deploy-Action@v4.3.4
