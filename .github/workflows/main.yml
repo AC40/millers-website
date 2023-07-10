@@ -8,34 +8,34 @@ jobs:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
-      
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '19.4'
-      
-    - name: 🔨 Build Project
-      run: |
-        npm install
-        npm run build
-    - name: 💾 Store build output (dist) as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: dist
-        path: dist/ # or path/to/artifact
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '19.4'
+
+      - name: 🔨 Build Project
+        run: |
+          npm install
+          npm run build
+      - name: 💾 Store build output (dist) as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/ # or path/to/artifact
     
-    - name: Deploy file
-    uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-    with:
-        username: u61526157-jens
-        server: home352391793.1and1-data.host
-        port: 22
-        local_path: './dist/*'
-        remote_path: '/'
-        sftp_only: true
-        password: ${{ secrets.FTP_SERVER_PASS }}
+      - name: Deploy file
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: u61526157-jens
+          server: home352391793.1and1-data.host
+          port: 22
+          local_path: './dist/*'
+          remote_path: '/'
+          sftp_only: true
+          password: ${{ secrets.FTP_SERVER_PASS }}
   #web-deploy:
   #  name: 🎉 Deploy
   #  runs-on: ubuntu-latest
