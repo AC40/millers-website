@@ -1,0 +1,49 @@
+on:
+  push:
+    branches:
+      - main
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '19.4'
+      
+    - name: 🔨 Build Project
+      run: |
+        npm install
+        npm run build
+    - name: 💾 Store build output (dist) as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist/ # or path/to/artifact
+        
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: 📂 Sync files
+      uses: wlixcc/SFTP-Deploy-Action@v1.0
+      with:
+        username: 'u61526157-jens'
+        server: 'home352391793.1and1-data.host'
+        ssh_private_key: ${{ secrets.FTP_SERVER_PASS }} 
+        local_path: './dist/'
+        remote_path: '/'
+        args: ''
+      # uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      # with:
+      #   server: home352391793.1and1-data.host
+      #   username: u61526157-jens
+      #   password: ${{ secrets.FTP_SERVER_PASS }}
+      #   local-dir: ./dist/
+      #   dry-run: true
+      #   log-level: verbose
+      #   port: 22
