@@ -28,16 +28,23 @@ jobs:
         
     - name: Checkout
       uses: actions/checkout@v2
-      
-    - name: 📂 Sync files
-      uses: wlixcc/SFTP-Deploy-Action@v1.0
+    - name: SFTP Upload
+      uses: Dylan700/sftp-upload-action@v1.1.4
       with:
-        username: 'u61526157-jens'
-        server: 'home352391793.1and1-data.host'
-        ssh_private_key: ${{ secrets.FTP_SERVER_PASS }} 
-        local_path: './dist/'
-        remote_path: '/'
-        args: ''
+        # The SFTP server (e.g. sftp.server.com).
+        server: home352391793.1and1-data.host
+        # The SFTP username.
+        username: u61526157-jens
+        # The SFTP password.
+        password: ${{ secrets.FTP_SERVER_PASS }} 
+        # The SFTP port.
+        port: 22
+        # If true, outputs the results of the upload, without actually uploading.
+        dry-run: true
+        # A list of folders to upload in the format of `folder/ => upload_folder/`
+        uploads: ./dist/
+        # If true, any existing files in the remote upload directories are deleted.
+        delete: false
       # uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       # with:
       #   server: home352391793.1and1-data.host
