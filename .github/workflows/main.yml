@@ -26,28 +26,29 @@ jobs:
         name: dist
         path: dist/ # or path/to/artifact
     - name: SFTP Upload
-      uses: Dylan700/sftp-upload-action@v1.1.4
+    #  uses: Dylan700/sftp-upload-action@v1.1.4
+    #  with:
+    #    # The SFTP server (e.g. sftp.server.com).
+    #    server: home352391793.1and1-data.host
+    #    # The SFTP username.
+    #    username: u61526157-jens
+    #    # The SFTP password.
+    #    password: ${{ secrets.FTP_SERVER_PASS }} 
+    #    # The SFTP port.
+    #    port: 22
+    #    # If true, outputs the results of the upload, without actually uploading.
+    #    dry-run: false
+    #    # A list of folders to upload in the format of `folder/ => upload_folder/`
+    #    uploads: dist/
+    #    # If true, any existing files in the remote upload directories are deleted.
+    #    delete: false
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        # The SFTP server (e.g. sftp.server.com).
         server: home352391793.1and1-data.host
-        # The SFTP username.
         username: u61526157-jens
-        # The SFTP password.
-        password: ${{ secrets.FTP_SERVER_PASS }} 
-        # The SFTP port.
+        password: ${{ secrets.FTP_SERVER_PASS }}
+        protocol: ftps
+        local-dir: ./dist/
+        dry-run: true
+        log-level: verbose
         port: 22
-        # If true, outputs the results of the upload, without actually uploading.
-        dry-run: false
-        # A list of folders to upload in the format of `folder/ => upload_folder/`
-        uploads: dist/
-        # If true, any existing files in the remote upload directories are deleted.
-        delete: false
-      # uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      # with:
-      #   server: home352391793.1and1-data.host
-      #   username: u61526157-jens
-      #   password: ${{ secrets.FTP_SERVER_PASS }}
-      #   local-dir: ./dist/
-      #   dry-run: true
-      #   log-level: verbose
-      #   port: 22
