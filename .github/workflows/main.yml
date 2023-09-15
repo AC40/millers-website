@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-      - UpdatedYML
   schedule:
     # Triggers once per day at midnight
     - cron: 0 0 * * *
@@ -31,13 +30,13 @@ jobs:
         name: dist
         path: dist/ # or path/to/artifact
 
-    #- name: Deploy file
-    #  uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-    #  with:
-    #    username: u61526157-jens
-    #    server: home352391793.1and1-data.host
-    #    port: 22
-    #    local_path: './dist/*'
-    #    remote_path: '/'
-    #    sftp_only: true
-    #    password: ${{ secrets.FTP_SERVER_PASS }}
+    - name: Deploy file
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      with:
+        username: u61526157-jens
+        server: home352391793.1and1-data.host
+        port: 22
+        local_path: './dist/*'
+        remote_path: '/'
+        sftp_only: true
+        password: ${{ secrets.FTP_SERVER_PASS }}
