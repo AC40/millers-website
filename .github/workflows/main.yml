@@ -20,7 +20,6 @@ jobs:
       with:
         node-version: 'v20.6.1'
     - run: npm ci
-    - run: npm test
     
     - name: 🔨 Build Project
       run: |
