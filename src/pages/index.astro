@@ -8,6 +8,8 @@ import { Icon } from "astro-icon";
 
 import "../styles/speech-bubble.css"
 import "../styles/index.css"
+
+const nextThree = nextEvents(3)
 ---
 
 <Layout title="Home">
@@ -93,12 +95,14 @@ import "../styles/index.css"
   
         <ul class="list-disc ml-4">
           {
-            nextEvents(3).map((event) => (
-              <li class="mb-4 last:mb-0">
-                <h4 class="text-lg">{event.home} vs. {event.away}</h4>
-                <p class="text-md text-gray-600">{event.date.toLocaleDateString("de")} | {event.fieldName}</p>
-              </li>
-            ))
+            nextThree.length > 0
+            ? nextThree.map((event) => (
+                <li class="mb-4 last:mb-0">
+                  <h4 class="text-lg">{event.home} vs. {event.away}</h4>
+                  <p class="text-md text-gray-600">{event.date.toLocaleDateString("de")} | {event.fieldName}</p>
+                </li>
+              ))
+            : <span>Demnächst stehen keine Events an...</span>
           }
         </ul>
       </section>

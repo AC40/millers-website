@@ -1,3 +1,4 @@
+import { log } from "astro/dist/core/logger/core"
 import { wpEndpoint } from "./wordpress"
 
 // Get Season matches
@@ -38,7 +39,10 @@ const games = sorted.map((match, i) => {
         textColor: '#000',
         extendedProps: {
             description: createMatchDescription(match),
-            id: i.toString() + '-match'
+            id: i.toString() + '-match',
+            home: match.home_team_name,
+            away: match.away_team_name,
+            fieldName: match.field.name
         }
     }
 })
@@ -54,34 +58,32 @@ export interface Event {
 }
 
 export function nextEvents(n: number): Event[] {
-    const matches = matchesJSON.filter(match => (match.home_league_entry.team.short_name == "MIN" || match.away_league_entry.team.short_name == "MIN"))
+
+    let now = new Date().toISOString()
     
-    const filtered = matches.filter((match) => {
-        return matchDate(match).getTime() > Date.now()
+    const filtered = events.filter((event) => {
+        return event.start > now
     })
     
     const sorted = filtered.sort((a, b) => {
-        return matchDate(a) > matchDate(b)
+        return a.start < b.start
     })
 
-    var n = n;
-    while (sorted.length >= n) {
-        return sorted.slice(0, n).map((match) => {
-            return { 
-                home: match.home_team_name,
-                away: match.away_team_name,
-                date: matchDate(match),
-                fieldName: match.field.name
-            } as Event
-        })
+    const firstN: Event[] = sorted.slice(0, n).map((event) => {
+        return {
+            home: event.extendedProps.home,
+            away: event.extendedProps.away,
+            date: new Date(event.start),
+            fieldName: event.extendedProps.fieldName,
+        } as Event
+    })
 
-        n -= 1
+    if (firstN.length > 0) {
+        return firstN
+    } else {
+        return []
     }
-
-    return []
 }
-
-
 
 //MARK: Utility functions
 function matchDate(match: any): Date {
