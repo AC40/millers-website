@@ -36,6 +36,6 @@
 	"packageManager": "pnpm@9.2.0",
 	"engines": {
 		"node": "v20.6.1",
-		"npm": "9.2.0"
+		"npm": "9.8.1"
 	}
 }
