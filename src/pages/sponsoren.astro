@@ -5,8 +5,9 @@ import { Picture } from "@astrojs/image/components";
 
 import baseballministerLogo from "../assets/sponsors/baseballminister-logo.png";
 import westfalenbandeLogo from "../assets/sponsors/westfalen-bande-logo.png"
+import fischbäckerLogo from "../assets/sponsors/fischbäcker-logo.png"
 
-import { westfalenbandeText, baseballMinisterText } from "../Networking/sponsors"
+import { westfalenbandeText, baseballMinisterText, fischbäckerText } from "../Networking/sponsors"
 ---
 
 <Layout title="Sponsoren">
@@ -14,8 +15,33 @@ import { westfalenbandeText, baseballMinisterText } from "../Networking/sponsors
 		<h1 class="text-2xl">Sponsoren</h1>
 
 		<div class="md:flex basis-1/2 gap-8 flex-wrap mt-8">
+
+			{/* Fischbäcker */}
+			<article class="bg-blue-50 rounded-xl md:max-w-lg h-fit p-10">
+				<div class="flex flex-nowrap align-center items-center gap-4 mb-2">
+					<Picture
+						src={fischbäckerLogo}
+						alt="Das Logo der 'Westfalenbande'"
+						widths={[1000]}
+						sizes="100%"
+						class="w-20 float-left my-auto"
+					/>
+					<h3 class="text-4xl font-bold">Zum Fischbäcker</h3>
+				</div>
+				<hr class="my-2 border-black">
+				<Fragment set:html={fischbäckerText} />
+				
+				<div class="grid gap-4 mt-5 grid-cols-1 text-center">
+					<a
+						href="https://fischbaecker-minden.de"
+						class="bg-blue-600 rounded py-2 px-3 text-white ">
+						fischbaecker-minden.de
+					</a>
+				</div>
+			</article>
+
 			{/* Baseballminister */}
-			<article class="bg-green-100 md:max-w-lg rounded-xl p-10">
+			<article class="bg-green-100 md:max-w-lg rounded-xl p-10 mt-8 md:mt-0">
 				<Picture
 					src={baseballministerLogo}
 					alt="Das Logo von 'Baseballminister'"
@@ -65,6 +91,8 @@ import { westfalenbandeText, baseballMinisterText } from "../Networking/sponsors
 					</a>
 				</div>
 			</article>
+
+			
 		</div>
 		
 	</Container>
