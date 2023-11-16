@@ -4,7 +4,7 @@ on:
       - main
   schedule:
     # Triggers once per day at midnight
-    - cron: 0 0 * * *
+    - cron: 0 0 * * 3,6
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
