@@ -92,14 +92,6 @@ const ballparkHistory = ballparkHistoryData[0].acm_fields.text
 		<br />
 		<section>
 			<h2 class="text-xl font-bold">Historie</h2>
-			<Picture
-				src={abstechenImg}
-				alt="Ein historisches Bild des Abstechens"
-				sizes="auto"
-				widths={[161]}
-				class="float-right w-auto xs:w-64 ml-4 mb-4 rounded shadow"
-			/>
-			
 			<Fragment set:html={ballparkHistory} />
 
 			<div class="xs:flex flex-wrap gap-4 my-8 justify-start">
