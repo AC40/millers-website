@@ -25,10 +25,10 @@ jobs:
         npm install
         npm run build
     - name: 💾 Store build output (dist) as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.6.0
       with:
         name: dist
-        path: dist/ # or path/to/artifact
+        path: dist/
 
     - name: Deploy file
       uses: wlixcc/SFTP-Deploy-Action@v1.2.4
