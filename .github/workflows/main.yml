@@ -3,7 +3,7 @@ on:
     branches:
       - main
   schedule:
-    # Triggers once per day at midnight
+    # Triggers wednesday and Saturday at midnight
     - cron: 0 0 * * 3,6
 name: 🚀 Deploy website on push
 jobs:
