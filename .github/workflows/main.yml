@@ -5,7 +5,7 @@ on:
   schedule:
     # Triggers wednesday and Saturday at midnight
     - cron: 0 0 * * 3,6
-name: 🚀 Deploy website on push
+name: 🚀 Deploy
 jobs:
   web-deploy:
     name: 🎉 Deploy
