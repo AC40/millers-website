@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Container from '@components/container.astro';
-import { Icon } from 'astro-icon';
-import { Picture } from "@astrojs/image/components";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 import { marked } from 'marked';
 import { getCompressedImage, WPResolution } from "Networking/wordpress"
 
@@ -38,7 +38,7 @@ post.acm_fields.text = post.acm_fields.text.replace(emailRegex, (match, p1) => r
 const parsed: string[] = (mds != null) ? mds.map(md => {
   if (md != null && md != undefined) {
     const modified = md.replace(/<[^\r\n>]+>/gm, "")
-    var parsed = marked.parse(modified)
+    var parsed = marked.parse(modified) as string
 
     var cellStyles = "border: 1px solid black; width: 2em; text-align:center;"
 
@@ -87,13 +87,12 @@ const img = getCompressedImage(post.acm_fields.coverBild, WPResolution.mdlg, pos
         {
           (img != undefined)
           ? <div class:list={[`w-[${post.acm_fields.coverBild.media_details.width}px] sm:w-auto h-[${post.acm_fields.coverBild.media_details.height}px] sm:h-auto bg-clear`]} >
-              <Picture 
+              <Image
                   src={img.url}
-                  alt={img.alt} 
-                  widths={[300, 600, 900, img.width]} 
-                  sizes="" 
-                  aspectRatio={img.width/img.height} 
-                  class:list={["rounded-md mb-4 linear-background", (imageIsWiderThanHigh(post)) ? "" : "sm:float-right sm:ml-4 mb-4 max-h-96 w-full sm:w-auto object-cover"]} 
+                  alt={img.alt}
+                  width={img.width}
+                  height={img.height}
+                  class:list={["rounded-md mb-4 linear-background", (imageIsWiderThanHigh(post)) ? "" : "sm:float-right sm:ml-4 mb-4 max-h-96 w-full sm:w-auto object-cover"]}
                 />
             </div>
           : <span class="hidden"/>

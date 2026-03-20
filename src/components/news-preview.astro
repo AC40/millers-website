@@ -1,7 +1,8 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import { formatDate, previewHTML } from "Networking/Utility"
-import { WPResolution, getCompressedImage, WPImage } from "Networking/wordpress";
+import { WPResolution, getCompressedImage } from "Networking/wordpress";
+import type { WPImage } from "Networking/wordpress";
 
 // Get post object as prop
 const { post } = Astro.props
@@ -16,7 +17,7 @@ if (post != undefined && post.acm_fields.coverBild != undefined) {
     <a href={"/news/" + post.slug + "/"} class="grid grid-cols-1 sm:grid-cols-3 sm:h-48">
         {
             (img != undefined)
-            ? <Picture src={img.url} alt={img.alt} widths={[300, 656, img.width]} sizes="" aspectRatio={img.width/img.height} class="col-span-1 row-span-2 rounded-t-md sm:rounded-tr-none sm:rounded-l-md object-cover object-center h-48 w-full" />
+            ? <Image src={img.url} alt={img.alt} width={img.width} height={img.height} class="col-span-1 row-span-2 rounded-t-md sm:rounded-tr-none sm:rounded-l-md object-cover object-center h-48 w-full" />
             : <span class="hidden"/>
         }
 

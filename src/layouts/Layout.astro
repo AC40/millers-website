@@ -2,7 +2,7 @@
 import { SEO } from "astro-seo";
 import Footer from "@components/footer.astro";
 import Navbar from "@components/navbar/navbar.astro";
-import "@fontsource/inter/variable.css";
+import "@fontsource-variable/inter";
 
 import '../styles/base.css';
 import "../styles/global.css"
@@ -30,7 +30,7 @@ const makeTitle = title
 
     <!-- LINKS -->
     <!-- bootstrap icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
     
     <!-- favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
@@ -46,7 +46,6 @@ const makeTitle = title
       title={makeTitle}
       description="Die interessiert dich für amerikanischen Sport? Wir, die Minden Millers/Maniacs, sind der einzige lokale Baseball- und Softball-Verein aus der Region Minden-Lübbecke. Hier findest du Informationen zu unseren Teams, Trainingszeiten und -orten."
       canonical={canonicalURL}
-      charset="UTF-8"
       openGraph={{
         basic: {
           url: canonicalURL,

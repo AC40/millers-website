@@ -1,6 +1,6 @@
 ---
 import Dropdown from "./dropdown.astro";
-import { Image } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 import { shouldShowCalendar } from "Networking/variables";
 
@@ -63,20 +63,16 @@ const path = Astro.url.pathname.toString()
 	<div class="lg:grid lg:grid-cols-[auto_auto] p-4 items-center bg-gray-800">
 		<div class="flex grid-col-1 w-full lg:w-auto items-center justify-between mb-2 sm:m-4">
 			<a href="/" class="text-lg">
-				{ //@ts-ignore
 				<Image
 					src={millersLogo}
 					alt="Das logo der Minden Millers"
 					class="inline-block mr-4 w-24 sm:w-32"
 				/>
-				}
-				{ //@ts-ignore
 				<Image
 					src={maniacsLogo}
 					alt="Das logo der Minden Maniacs"
 					class="inline-block w-24 sm:w-32"
 				/>
-				}
 			</a>
 			<div class="block lg:hidden pr-4">
 				<MenuIcon class="w-6 h-6 text-nav-a" />

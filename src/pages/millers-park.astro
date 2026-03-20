@@ -1,11 +1,9 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
-import CookieBanner from "@components/cookie-banner.astro"
-import { Picture } from "@astrojs/image/components";
-import { Icon } from "astro-icon";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
-import abstechenImg from "../assets/millers/historie/ballpark-stechen.jpg";
 import plans from "../assets/millers/historie/plans.jpg";
 import backstop from "../assets/millers/historie/backstop.jpg";
 import Map from "@components/map.astro";
@@ -95,18 +93,14 @@ const ballparkHistory = ballparkHistoryData[0].acm_fields.text
 			<Fragment set:html={ballparkHistory} />
 
 			<div class="xs:flex flex-wrap gap-4 my-8 justify-start">
-				<Picture
+				<Image
 					src={plans}
 					alt="Ein historisches Bild der originalen Skizzen für den Millers ballpark"
-					sizes=""
-					widths={[161]}
 					class="xs:w-64"
 				/>
-				<Picture
+				<Image
 					src={backstop}
 					alt="Ein Bild des ersten backstops im Millers Ballpark"
-					sizes=""
-					widths={[161]}
 					class="xs:w-64 mt-4 xs:mt-0"
 				/>
 			</div>

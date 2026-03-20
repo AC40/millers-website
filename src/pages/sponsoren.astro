@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 
 import baseballministerLogo from "../assets/sponsors/baseballminister-logo.png";
 import westfalenbandeLogo from "../assets/sponsors/westfalen-bande-logo.png"
@@ -19,11 +19,9 @@ import { westfalenbandeText, baseballMinisterText, fischbäckerText } from "../N
 			{/* Fischbäcker */}
 			<article class="bg-blue-50 rounded-xl md:max-w-lg h-fit p-10">
 				<div class="flex flex-nowrap align-center items-center gap-4 mb-2">
-					<Picture
+					<Image
 						src={fischbäckerLogo}
 						alt="Das Logo der 'Westfalenbande'"
-						widths={[1000]}
-						sizes="100%"
 						class="w-20 float-left my-auto"
 					/>
 					<h3 class="text-4xl font-bold">Zum Fischbäcker</h3>
@@ -42,12 +40,9 @@ import { westfalenbandeText, baseballMinisterText, fischbäckerText } from "../N
 
 			{/* Baseballminister */}
 			<article class="bg-green-100 md:max-w-lg rounded-xl p-10 mt-8 md:mt-0">
-				<Picture
+				<Image
 					src={baseballministerLogo}
 					alt="Das Logo von 'Baseballminister'"
-					widths={[1000]}
-					sizes="100%"
-					class=""
 				/>
 				<hr class="my-2 border-black">
 				<Fragment set:html={baseballMinisterText} />
@@ -71,11 +66,9 @@ import { westfalenbandeText, baseballMinisterText, fischbäckerText } from "../N
 			{/* Baseballminister */}
 			<article class="bg-red-50 rounded-xl md:max-w-lg h-fit p-10 mt-8 md:mt-0">
 				<div class="flex flex-nowrap align-center items-center gap-4 mb-2">
-					<Picture
+					<Image
 						src={westfalenbandeLogo}
 						alt="Das Logo der 'Westfalenbande'"
-						widths={[1000]}
-						sizes="100%"
 						class="w-20 float-left my-auto"
 					/>
 					<h3 class="text-4xl font-bold">Westfalenbande</h3>

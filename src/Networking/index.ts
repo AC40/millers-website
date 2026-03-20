@@ -1,4 +1,5 @@
-import { getCompressedImage, WPResolution, WPImage } from "./wordpress";
+import { getCompressedImage, WPResolution } from "./wordpress";
+import type { WPImage } from "./wordpress";
 import { wpEndpoint } from "./wordpress";
 
 // Create img data

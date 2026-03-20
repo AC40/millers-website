@@ -2,7 +2,7 @@
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import Standings from "@components/standings.astro";
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import { getCompressedImage, WPResolution } from "Networking/wordpress";
 import Secret from "../components/Secret.astro";
 
@@ -52,13 +52,12 @@ const { name, displayName, img, practice, miniText, coaches } = Astro.props;
 		{
 			/*  <img src={img.url} alt={img.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */
 		}
-		<Picture
+		<Image
 			src={img.url}
 			alt="Ein Teamfoto der Minden Millers"
-			widths={[400, 800, 1600]}
-			sizes="100%"
+			width={img.width}
+			height={img.height}
 			class="w-full max-h-[calc(100vh_-_115px)] object-cover"
-			aspectRatio={img.width / img.height}
 		/>
 		<div
 			class="absolute bottom-0 w-full md:h-24 h-12 md:text-3xl text-xl text-white bg-gray-800/75">
@@ -82,13 +81,10 @@ const { name, displayName, img, practice, miniText, coaches } = Astro.props;
 		<!-- Training Times -->
 		<center>
 			<section class="bg-black/90 text-slate-100 max-w-2xl p-8 mx-auto mb-12 flex sm:inline-flex flex-nowrap sm:gap-8 rounded-xl shadow-lg shadow-gray-500/80 text-left">
-				<Picture 
+				<Image
 					src={baseballIcon}
 					alt="An Icon of a baseball on fire"
-					widths={[200]}
-					sizes="100%"
 					class="hidden sm:block w-32 h-32 rotate-180"
-					aspectRatio={1/1}
 				/>
 				<div class="">
 					<h3 class="text-lg text-gray-300 font-medium">Unsere Trainingszeiten</h3>
