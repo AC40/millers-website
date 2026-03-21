@@ -1,11 +1,9 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import { indexData, formatDate } from "Networking/index";
 import { nextEvents } from "Networking/events"
-import { Icon } from "astro-icon";
-
 import "../styles/speech-bubble.css"
 import "../styles/index.css"
 
@@ -18,13 +16,11 @@ const nextThree = nextEvents(3)
 
     <section class:list={["hidden sm:block", "relative w-full linear-background max-h-128", `aspect-[2560/1707]`]}>
       {/*  <img src={WPImage.url} alt={WPImage.alt} class="w-full max-h-[calc(100vh_-_115px)] object-cover"> */}
-      <Picture
+      <Image
         src={indexData.heroImg.url}
-        widths={[200, 400, 800, 1000]}
-        sizes="(max-width: 800px) 100vw, 800px"
+        width={indexData.heroImg.width}
+        height={indexData.heroImg.height}
         alt={indexData.heroImg.alt}
-        fit="cover"
-        aspectRatio={indexData.heroImg.width/indexData.heroImg.height}
         class="w-full hidden sm:block min-h-32 h-auto max-h-128 object-cover relative"
       />
   </section>

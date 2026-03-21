@@ -1,4 +1,3 @@
-import { log } from "astro/dist/core/logger/core"
 import { wpEndpoint } from "./wordpress"
 
 // Get Season matches

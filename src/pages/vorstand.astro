@@ -3,10 +3,10 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Email from "@components/email.astro"
 import Phone from "@components/phone.astro"
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import { getVorstandsMitglieder } from "../Networking/vorstand"
 import { WPResolution, getCompressedImage } from "Networking/wordpress"
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 
 // Get member data
 const data = await (await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/vorstandsmitglieder")).json()
@@ -25,7 +25,7 @@ const image = getCompressedImage(imgData[0].acm_fields.bild, WPResolution.mdlg, 
 
             {
                 (image != undefined)
-                ?  <Picture src={image.url} alt={image.alt} widths={[400, 800, 1600]} sizes="100%" aspectRatio={image.width/image.height} class="rounded"></Picture>
+                ?  <Image src={image.url} alt={image.alt} width={image.width} height={image.height} class="rounded" />
                 : <span></span>
             }
 

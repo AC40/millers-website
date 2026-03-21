@@ -1,14 +1,8 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
-import { Picture } from "@astrojs/image/components";
 
 import "../styles/timeline.css";
-
-import bückeburgBanditsTeam from "../assets/millers/historie/bückeburg-bandits.jpg";
-import hitterPortrait from "../assets/millers/historie/schlagmann.jpg";
-import mindenMillersTeam from "../assets/millers/historie/minden-millers.jpg";
-import newField1 from "../assets/millers/historie/newField1.jpg";
 
 const historyData = await (await fetch("https://wordpress.mindenmillers.de/wp-json/wp/v2/geschichte")).json()
 const history = historyData.map((year) => {

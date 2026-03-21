@@ -10,32 +10,27 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/image": "^0.14.1",
-		"@astrojs/mdx": "^0.16.2",
-		"@astrojs/sitemap": "^1.4.0",
-		"@astrojs/tailwind": "^3.1.3",
-		"@fontsource/inter": "^4.5.15",
-		"@fullcalendar/icalendar": "^6.1.8",
-		"@types/marked": "^4.3.1",
-		"astro": "^2.10.15",
-		"astro-feather-icons": "^1.0.2",
-		"astro-icon": "^0.8.1",
-		"astro-navbar": "^1.2.3",
-		"astro-seo": "^0.7.6",
-		"bootstrap-icons": "^1.11.0",
-		"fullcalendar": "^6.1.8",
-		"ical.js": "^1.5.0",
-		"marked": "^4.3.0",
-		"tailwindcss": "^3.3.3",
+		"@astrojs/mdx": "^4.3.14",
+		"@astrojs/sitemap": "^3.7.1",
+		"@astrojs/tailwind": "^6.0.2",
+		"@fontsource-variable/inter": "^5.2.8",
+		"@iconify-json/uil": "^1.2.3",
+		"astro": "^5.18.1",
+		"astro-icon": "^1.1.5",
+		"astro-navbar": "^2.4.0",
+		"astro-seo": "^1.1.0",
+		"bootstrap-icons": "^1.13.1",
+		"fullcalendar": "^6.1.20",
+		"marked": "^17.0.5",
+		"tailwindcss": "^3.4.19",
 		"tippy.js": "^6.3.7"
 	},
 	"devDependencies": {
-		"@tailwindcss/typography": "^0.5.10",
-		"sharp": "^0.31.3"
+		"@tailwindcss/typography": "^0.5.19",
+		"sharp": "^0.34.5"
 	},
-	"packageManager": "pnpm@9.2.0",
+	"packageManager": "pnpm@9.15.9",
 	"engines": {
-		"node": "v20.6.1",
-		"npm": "9.8.1"
+		"node": ">=22"
 	}
 }
