@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   keepalive:
@@ -15,8 +16,21 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Push empty commit to reset inactivity timer
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+          branch="chore/keepalive-${GITHUB_RUN_ID}"
+          git checkout -b "$branch"
           git commit --allow-empty -m "chore: keep workflows alive [skip ci]"
-          git push
+          git push -u origin "$branch"
+
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "chore: keep workflows alive [skip ci]" \
+            --body "Automated keepalive commit to reset the 60-day inactivity timer."
+
+          gh pr merge --squash --delete-branch
