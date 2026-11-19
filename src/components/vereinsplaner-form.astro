@@ -2,8 +2,8 @@
 /**
  * Click-to-load embed for a Vereinsplaner form.
  *
- * Nothing is requested from vereinsplaner.com until the visitor clicks the
- * load button: the iframe lives inside a <template> and is only cloned into
+ * Nothing is requested from vereinsplaner.com until the visitor clicks
+ * "Formular öffnen": the iframe lives inside a <template> and is only cloned into
  * the page on click. The external link to the form is always visible, so the
  * form stays reachable without JavaScript or without loading the embed.
  */
@@ -20,26 +20,29 @@ const { src, fallbackUrl, title } = Astro.props;
 ---
 
 <vereinsplaner-form class="block">
-	<div
-		data-consent
-		class="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-6 sm:p-8 text-center">
-		<p class="font-medium text-lg text-gray-800">Online-Formular laden</p>
-		<p class="mt-3 text-slate-600 max-w-xl mx-auto">
-			Das Formular wird von unserem Dienstleister Vereinsplaner
-			bereitgestellt. Mit Klick auf „Formular laden“ werden Inhalte
-			von <strong>formular.vereinsplaner.com</strong> geladen. Dabei
-			wird u.&nbsp;a. deine IP-Adresse an den Anbieter übertragen und es
-			können technisch notwendige Cookies gesetzt werden. Weitere
-			Informationen findest du in unserer{" "}
-			<a href="/datenschutz" class="underline hover:text-millers-gold">Datenschutzerklärung</a>.
-		</p>
+	<div data-consent class="rounded-lg bg-gray-50 px-5 py-6 sm:px-8 text-center">
+		<p class="text-slate-700">Das Formular wird von Vereinsplaner bereitgestellt.</p>
 		<button
 			type="button"
 			data-load
 			hidden
-			class="mt-6 rounded px-5 py-2.5 bg-black text-white border-2 border-transparent hover:bg-gray-800 transition focus-visible:ring-2 ring-offset-2 ring-gray-400">
-			Formular laden
+			class="mt-4 rounded px-5 py-2.5 bg-black text-white border-2 border-transparent hover:bg-gray-800 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-900 focus-visible:ring-offset-gray-50">
+			Formular öffnen
 		</button>
+		<details class="mt-4 text-sm text-slate-600 max-w-xl mx-auto">
+			<summary
+				class="inline-block cursor-pointer rounded px-1 underline underline-offset-2 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900">
+				Hinweis zum Datenschutz
+			</summary>
+			<p class="mt-2 text-left sm:text-center">
+				Mit Klick auf „Formular öffnen“ werden Inhalte
+				von <span class="font-medium">formular.vereinsplaner.com</span> geladen.
+				Dabei wird u.&nbsp;a. deine IP-Adresse an Vereinsplaner übertragen und
+				es können technisch notwendige Cookies gesetzt werden. Mehr dazu in
+				unserer{" "}
+				<a href="/datenschutz" class="underline underline-offset-2 hover:text-gray-900">Datenschutzerklärung</a>.
+			</p>
+		</details>
 	</div>
 
 	<div data-target></div>
