@@ -1,9 +1,50 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import Sectionhead from "@components/sectionhead.astro";
+import VereinsplanerForm from "@components/vereinsplaner-form.astro";
+
+const FORM_EMBED_URL = "https://formular.vereinsplaner.com/embed/1d5e50af-9f7e-4c87-a848-c424788a0567";
+const FORM_URL = "https://formular.vereinsplaner.com/1d5e50af-9f7e-4c87-a848-c424788a0567";
 ---
 
 <Layout title="Mitgliedsantrag">
-    <script>
-        window.location.replace("/mitgliedsantrag.pdf")
-    </script>
+	<Container>
+		<Sectionhead>
+			<Fragment slot="title">Mitgliedsantrag</Fragment>
+			<Fragment slot="desc">Werde Teil der Minden Millers &amp; Maniacs!</Fragment>
+		</Sectionhead>
+
+		<div class="mx-auto max-w-4xl mt-12">
+			<section aria-labelledby="online-antrag">
+				<h2 id="online-antrag" class="font-medium text-2xl text-gray-800">
+					Digitaler Mitgliedsantrag
+				</h2>
+				<p class="text-lg leading-relaxed text-slate-500 mt-3 mb-6">
+					Am schnellsten geht es online: Fülle den Antrag direkt hier
+					aus und sende ihn ab – ganz ohne Ausdrucken.
+				</p>
+				<VereinsplanerForm
+					src={FORM_EMBED_URL}
+					fallbackUrl={FORM_URL}
+					title="Digitaler Mitgliedsantrag der Minden Millers (Formular von Vereinsplaner)"
+				/>
+			</section>
+
+			<section aria-labelledby="pdf-antrag" class="mt-12 mb-8">
+				<h2 id="pdf-antrag" class="font-medium text-xl text-gray-800">
+					Lieber auf Papier?
+				</h2>
+				<p class="text-slate-500 mt-2">
+					Du kannst den Mitgliedsantrag auch weiterhin als PDF
+					herunterladen, ausdrucken und unterschrieben bei uns abgeben.
+				</p>
+				<a
+					href="/mitgliedsantrag.pdf"
+					class="inline-block mt-4 rounded px-4 py-2 bg-white border-2 border-black hover:bg-gray-100 text-black transition"
+					>Mitgliedsantrag als PDF</a
+				>
+			</section>
+		</div>
+	</Container>
 </Layout>

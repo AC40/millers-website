@@ -1,0 +1,94 @@
+---
+/**
+ * Click-to-load embed for a Vereinsplaner form.
+ *
+ * Nothing is requested from vereinsplaner.com until the visitor clicks the
+ * load button: the iframe lives inside a <template> and is only cloned into
+ * the page on click. The external link to the form is always visible, so the
+ * form stays reachable without JavaScript or without loading the embed.
+ */
+export interface Props {
+	/** iframe src (the /embed/ URL from Vereinsplaner) */
+	src: string;
+	/** Direct link to the form, used as the always-visible fallback */
+	fallbackUrl: string;
+	/** Accessible title for the iframe */
+	title: string;
+}
+
+const { src, fallbackUrl, title } = Astro.props;
+---
+
+<vereinsplaner-form class="block">
+	<div
+		data-consent
+		class="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-6 sm:p-8 text-center">
+		<p class="font-medium text-lg text-gray-800">Online-Formular laden</p>
+		<p class="mt-3 text-slate-600 max-w-xl mx-auto">
+			Das Formular wird von unserem Dienstleister Vereinsplaner
+			bereitgestellt. Mit Klick auf „Formular laden“ werden Inhalte
+			von <strong>formular.vereinsplaner.com</strong> geladen. Dabei
+			wird u.&nbsp;a. deine IP-Adresse an den Anbieter übertragen und es
+			können technisch notwendige Cookies gesetzt werden. Weitere
+			Informationen findest du in unserer{" "}
+			<a href="/datenschutz" class="underline hover:text-millers-gold">Datenschutzerklärung</a>.
+		</p>
+		<button
+			type="button"
+			data-load
+			hidden
+			class="mt-6 rounded px-5 py-2.5 bg-black text-white border-2 border-transparent hover:bg-gray-800 transition focus-visible:ring-2 ring-offset-2 ring-gray-400">
+			Formular laden
+		</button>
+	</div>
+
+	<div data-target></div>
+
+	<template data-embed>
+		<iframe
+			src={src}
+			title={title}
+			loading="lazy"
+			referrerpolicy="no-referrer"
+			sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-modals"
+			class="block w-full h-[2800px] md:h-[2100px] border-0 rounded-lg bg-white"
+		></iframe>
+	</template>
+
+	<p class="mt-4 text-sm text-slate-600 text-center">
+		Formular lässt sich nicht laden oder du möchtest es lieber separat öffnen?{" "}
+		<a
+			href={fallbackUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="underline hover:text-millers-gold whitespace-nowrap"
+			>Formular in neuem Tab öffnen</a
+		>
+	</p>
+</vereinsplaner-form>
+
+<script>
+	class VereinsplanerForm extends HTMLElement {
+		connectedCallback() {
+			const button = this.querySelector<HTMLButtonElement>("[data-load]");
+			const consent = this.querySelector<HTMLElement>("[data-consent]");
+			const target = this.querySelector<HTMLElement>("[data-target]");
+			const template = this.querySelector<HTMLTemplateElement>("template[data-embed]");
+			if (!button || !consent || !target || !template) return;
+
+			// Only show the button when JS runs; without JS the fallback link remains.
+			button.hidden = false;
+			button.addEventListener(
+				"click",
+				() => {
+					target.appendChild(template.content.cloneNode(true));
+					consent.hidden = true;
+					target.querySelector("iframe")?.focus();
+				},
+				{ once: true },
+			);
+		}
+	}
+
+	customElements.define("vereinsplaner-form", VereinsplanerForm);
+</script>
