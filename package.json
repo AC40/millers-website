@@ -11,39 +11,41 @@
 		"test": "node --test \"tests/**/*.test.mjs\""
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^7.0.3",
-		"@astrojs/sitemap": "^3.7.3",
-		"@fontsource-variable/inter": "^5.2.8",
-		"@fullcalendar/daygrid": "^6.1.20",
-		"@fullcalendar/list": "^6.1.20",
+		"@astrojs/mdx": "^7.0.8",
+		"@astrojs/sitemap": "^3.7.6",
+		"@fontsource-variable/inter": "^5.3.0",
+		"@fullcalendar/daygrid": "^6.1.22",
+		"@fullcalendar/list": "^6.1.22",
 		"@iconify-json/uil": "^1.2.3",
-		"astro": "^7.1.3",
-		"astro-icon": "^1.1.5",
+		"astro": "^7.4.13",
+		"astro-icon": "^1.2.0",
 		"astro-navbar": "^2.4.0",
-		"astro-seo": "^1.1.0",
-		"bootstrap-icons": "^1.13.1",
-		"fullcalendar": "^6.1.20",
-		"marked": "^17.0.5",
+		"astro-seo": "^1.2.0",
+		"bootstrap-icons": "^1.13.2",
+		"fullcalendar": "^6.1.22",
+		"marked": "^17.0.6",
 		"tailwindcss": "^3.4.19",
 		"tippy.js": "^6.3.7"
 	},
 	"devDependencies": {
-		"@tailwindcss/typography": "^0.5.19",
-		"autoprefixer": "^10.4.21",
-		"postcss": "^8.5.18",
-		"sharp": "^0.35.0"
+		"@tailwindcss/typography": "^0.5.20",
+		"autoprefixer": "^10.7.0",
+		"postcss": "^8.5.33",
+		"sharp": "^0.35.5"
 	},
 	"pnpm": {
 		"overrides": {
 			"tar": ">=7.5.21",
 			"postcss": ">=8.5.18",
-			"js-yaml": "4.3.0",
-			"fast-uri": ">=4.1.2",
-			"svgo": ">=4.0.2",
+			"js-yaml": ">=4.3.2",
+			"fast-uri": ">=4.2.3",
+			"svgo": ">=4.1.0",
 			"undici": ">=7.28.0",
 			"yaml": ">=2.8.3",
 			"picomatch@2": "2.3.2",
-			"smol-toml": ">=1.6.1"
+			"smol-toml": ">=1.9.0",
+			"source-map-js": ">=1.2.2",
+			"postcss-selector-parser": ">=6.1.5"
 		}
 	},
 	"packageManager": "pnpm@9.15.9",
